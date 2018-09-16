@@ -3,3 +3,67 @@
  * Framework overrides and customization goes here.
  */
 
+
+ $md-nhl-trade-analyzer-tool: (
+    50 : #e2e2e2,
+    100 : #b8b8b8,
+    200 : #888888,
+    300 : #585858,
+    400 : #353535,
+    500 : #111111,
+    600 : #0f0f0f,
+    700 : #0c0c0c,
+    800 : #0a0a0a,
+    900 : #050505,
+    A100 : #ff4e4e,
+    A200 : #ff1b1b,
+    A400 : #e70000,
+    A700 : #ce0000,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+
+ @import '~@angular/material/theming';
+ // Plus imports for other components in your app.
+ 
+ // Include the common styles for Angular Material. We include this here so that you only
+ // have to load a single css file for Angular Material in your app.
+ // Be sure that you only ever include this mixin once!
+ @include mat-core();
+ 
+ // Define the palettes for your theme using the Material Design palettes available in palette.scss
+ // (imported above). For each palette, you can optionally specify a default, lighter, and darker
+ // hue. Available color palettes: https://material.io/design/color/
+ $app-primary: mat-palette($md-nhl-trade-analyzer-tool);
+ $app-accent:  mat-palette($md-nhl-trade-analyzer-tool);
+ 
+ // The warn palette is optional (defaults to red).
+ $app-warn:    mat-palette($md-nhl-trade-analyzer-tool);
+ 
+ // Create the theme object (a Sass map containing all of the palettes).
+ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+ 
+ // Include theme styles for core and each component used in your app.
+ // Alternatively, you can import and @include the theme mixins for each component
+ // that you are using.
+ @include angular-material-theme($app-theme);
+
+ // Global Font
+* {
+    font-family: 'Open Sans', sans-serif;
+}

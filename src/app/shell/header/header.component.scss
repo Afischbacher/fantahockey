@@ -1,9 +1,3 @@
-@import "src/theme/theme-variables";
-
-.navbar {
-  margin-bottom: $spacer;
-}
-
-.nav-link.dropdown-toggle {
-  cursor: pointer;
+mat-toolbar{
+    background-color: transparent;
 }
