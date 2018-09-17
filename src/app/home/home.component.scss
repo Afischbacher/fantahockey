@@ -1,20 +1,17 @@
-.logo {
-  width: 100px;
-}
-
-q {
-  font-style: italic;
-  font-size: 1.2rem;
-  quotes: "« " " »";
-}
-
 #background-dashboard {
   position: fixed; 
-  top: 0; 
+  top: 60px; 
   left: 0;
   min-width: 100%;
   min-height: 100%;
   background: url('../../assets/nhl-fantasy-trade-tool-dashboard-background.jpg') no-repeat center fixed;  
   background-size: cover;
   z-index: -9999;
+}
+
+@media all and (max-width: 660px){
+  
+#background-dashboard {
+  top: 55px;
+  }
 }

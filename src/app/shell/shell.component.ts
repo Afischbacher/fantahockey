@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { NavService } from '@app/core/services/nav.service';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { NavItem } from '@app/core/models/nav-item';
 
 @Component({
   selector: 'app-shell',
@@ -7,8 +10,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShellComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() { }
-
+   // icons for menu
+   faBars = faBars;
+  
+   constructor(public navService: NavService) { }
+ 
+   ngOnInit() {     
+ 
+   }
+ 
+   @ViewChild('appDrawer') appDrawer: ElementRef;
+   
+   navItems: NavItem[] = [
+     {
+       displayName: 'Dashboard',
+       iconName: 'menu',
+       children: [
+         
+       ],
+       route: "/dashboard"
+     }
+   ];
+ 
+   ngAfterViewInit() {
+     this.navService.appDrawer = this.appDrawer;
+   }
+ 
 }

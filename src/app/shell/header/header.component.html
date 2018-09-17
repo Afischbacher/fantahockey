@@ -1,4 +1,5 @@
-<mat-toolbar>
-        <fa-icon [icon]="faBars"></fa-icon>
-
+<mat-toolbar color="primary">
+  <button mat-icon-button id="menu" (click)="navService.openNav()">
+     <fa-icon [icon]="faBars"></fa-icon>
+  </button>
 </mat-toolbar>

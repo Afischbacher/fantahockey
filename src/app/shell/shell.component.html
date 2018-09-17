@@ -1,2 +1,12 @@
+<div class="sidenav-container">
 <app-header></app-header>
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+<mat-sidenav #appDrawer [mode]="over" opened="false"> 
+    <span> NHL Fantasy Trader Tool</span>  
+          <mat-nav-list>
+            <menu-list-item *ngFor="let item of navItems" [item]="item"></menu-list-item>
+          </mat-nav-list>
+        </mat-sidenav>
+        <router-outlet></router-outlet>
+</mat-sidenav-container>
+</div>
