@@ -4,35 +4,46 @@
 
             <form>
                 <mat-card>
-                    <mat-form-field>
-                        <input class="search-input" matInput placeholder="Search Players" aria-label="Player" [matAutocomplete]="auto"
-                            [matAutocompleteDisabled]="!auto" [formControl]="playerControl" />
-                        <mat-autocomplete #searchPlayerAutocomplete>
-                            <mat-option *ngFor="let player of filteredPlayerSet" [value]="player.fullName">
-                                <span>{{player.fullName}}</span>
+                    <mat-form-field class="full-width-search">
+                        <input class="search-input" matInput placeholder="Search Players" aria-label="Player"
+                            [matAutocomplete]="auto" [formControl]="playerControl" />
+                        <mat-autocomplete #auto>
+                            <mat-option *ngFor="let player of filteredPlayerSet" [value]="player.person.fullName">
+                                <div *ngIf="player.position.code !== 'G'">
+                                    <span class="player-position">{{player.position.code}}</span>
+                                    <span>{{player.person.fullName}}</span>
+                                    <span *ngIf="player.overallStats.stats[0].splits?.length === 0 ">
+                                        | <small>No player data available</small>
+                                    </span>
+                                    <span *ngFor="let stat of player.overallStats.stats[0].splits">
+                                        | <small>Goals: {{stat.stat.goals}}</small>
+                                        | <small>Assists: {{stat.stat.assists}}</small>
+                                        | <small>+/-: {{stat.stat.plusMinus}}</small>
+                                        | <small>TOI: {{stat.stat.timeOnIce}}</small>
+                                    </span>
+
+                                </div>
+                                <div *ngIf="player.position.code === 'G'">
+
+                                    <span class="player-position">{{player.position.code}}</span>
+                                    <span>{{player.person.fullName}}</span>|
+
+
+                                    <span *ngIf="player.overallStats.stats[0].splits?.length === 0 ">
+                                        | <small>No player data available</small>
+                                    </span>
+                                    <span *ngFor="let stat of player.overallStats.stats[0].splits">
+                                        | <small>Wins: {{stat.stat.wins}}</small>
+                                        | <small>Save %: {{stat.stat.savePercentage}}</small>
+                                        | <small>GAA: {{stat.stat.goalAgainstAverage}}</small>
+                                        | <small>Shutouts: {{stat.stat.shutouts}}</small>
+                                    </span>
+                                </div>
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
                 </mat-card>
-
             </form>
         </div>
-        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-6">
-                <form>
-                        <mat-card>
-                            <mat-form-field>
-                                <input class="search-input" matInput placeholder="Search Players" aria-label="Player" [matAutocomplete]="auto"
-                                    [matAutocompleteDisabled]="!auto" [formControl]="playerControl" />
-                                <mat-autocomplete #searchPlayerAutocomplete>
-                                    <mat-option *ngFor="let player of filteredPlayerSet" [value]="player.fullName">
-                                        <span>{{player.fullName}}</span>
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </mat-form-field>
-                        </mat-card>
-        
-                    </form>
-        </div>
-
     </div>
 </div>

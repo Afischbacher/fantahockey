@@ -1,13 +1,11 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import { finalize, startWith, map } from 'rxjs/operators';
+import { startWith, switchMap } from 'rxjs/operators';
 
-import { QuoteService } from '@app/trade-dashboard/trade-dashboard.service';
 import { FormControl } from '@angular/forms';
 import { NhlDataService } from '@app/core/services/nhl-data.service';
-import { Observable, pipe } from 'rxjs';
-import { NhlPlayerProfile } from '@app/core/interfaces/nhl-player-profile';
 import { HttpClient } from '@angular/common/http';
-import { Roster } from '@app/core/interfaces/roster';
+import { TeamRoster, TeamPlayer, OverallStats } from '@app/core/interfaces/roster';
+import { Team } from '@app/core/interfaces/team';
 
 @Component({
   selector: 'trade-dashboard',
@@ -15,57 +13,46 @@ import { Roster } from '@app/core/interfaces/roster';
   styleUrls: ['./trade-dashboard.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewChecked {
-  ngAfterViewChecked(): void {
 
-
-  }
+  ngAfterViewChecked(): void { }
 
   playerControl = new FormControl();
-  filteredPlayerSet : any[] = [];
-  playerSet: any[] = [];
+  teams: Team[];
+  filteredPlayerSet: TeamPlayer[] = [];
+  playerSet: TeamPlayer[] = [];
 
   constructor(private nhlDataService: NhlDataService, private http: HttpClient) {
-    
-    this.playerControl.valueChanges.pipe(startWith('')).subscribe(query  => {
-        if(query.length > 2){
-          
-        }
+
+    this.playerControl.valueChanges.pipe(startWith('')).subscribe((query: string) => {
+      if (query.length < 2) this.filteredPlayerSet = [];
+
+      if (query.length > 3)
+        this.filteredPlayerSet = this.playerSet.filter(x => x.person.fullName.toLowerCase().includes(query.toLowerCase()));
+
+
     }, error => {
       console.log(error);
     })
   }
 
-  ngOnInit() : void {
-
-    for(let i = 1; i <= 30; i++){
-
-      if(i === 11 || i === 27) {continue;}
-      
-      this.http.get(`https://statsapi.web.nhl.com/api/v1/teams/${i}/roster`)
-        .subscribe((response: Roster) => {
-            
-            this.playerSet.push(response);
-
-        }, error => console.error(error));
-    }
+  ngOnInit(): void {
+    this.getPlayerData();
   }
 
-  
+ async getPlayerData() {
 
-  private _filteredPlayers(value: string) {
-     
-     const filterValue = value.toLowerCase();
+    const teams = await this.nhlDataService.getCurrentTeams().pipe(switchMap(val => val.teams));
 
-     let playerSet: any[];
+    teams.forEach(async (team) => {
 
-     this.nhlDataService.searchPlayers(filterValue).subscribe((response: any) =>{
-   
-     this.filteredPlayerSet = response;
-     console.log(response);
+       await this.nhlDataService.getCurrentRoster(team.id).pipe((switchMap((res: TeamRoster) => res.roster))).subscribe(async (teamPlayer: TeamPlayer) => {
 
-     this.filteredPlayerSet = response;
-      
-    }, error => console.log(error));
-    
+        await this.nhlDataService.getPlayerStats(teamPlayer.person.link).subscribe(async (stat) =>  teamPlayer.overallStats = await stat);
+        await this.playerSet.push(teamPlayer);
+
+      });
+
+    });
     }
 }
+
