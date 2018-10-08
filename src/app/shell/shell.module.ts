@@ -20,11 +20,12 @@ import {MatButtonModule} from '@angular/material/button';
     NgbModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatIconModule,
     RouterModule,
     FontAwesomeModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
+
   ],
   declarations: [
     HeaderComponent,

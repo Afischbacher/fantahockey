@@ -4,9 +4,9 @@
   {{item.displayName}}
   <span fxFlex *ngIf="item.children && item.children.length">
     <span fxFlex></span>
-    <fa-icon [icon]="faChevronCircleDown" [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
+    <mat-icon [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
       expand_more
-    </fa-icon>
+    </mat-icon>
   </span>
 </a>
 <div *ngIf="expanded">

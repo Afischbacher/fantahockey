@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { NavItem } from '@app/core/models/nav-item';
+import { NavItem } from '@app/core/interfaces/nav-item';
 import { NavService } from '@app/core/services/nav.service';
 @Component({
   selector: 'app-header',

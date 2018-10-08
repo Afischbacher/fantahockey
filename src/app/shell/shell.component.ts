@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NavService } from '@app/core/services/nav.service';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { NavItem } from '@app/core/models/nav-item';
+import { NavItem } from '@app/core/interfaces/nav-item';
 
 @Component({
   selector: 'app-shell',
@@ -25,9 +25,7 @@ export class ShellComponent implements OnInit {
      {
        displayName: 'Dashboard',
        iconName: 'menu',
-       children: [
-         
-       ],
+       children: [],
        route: "/dashboard"
      }
    ];

@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-6">
+
+            <form>
+                <mat-card>
+                    <mat-form-field>
+                        <input class="search-input" matInput placeholder="Search Players" aria-label="Player" [matAutocomplete]="auto"
+                            [matAutocompleteDisabled]="!auto" [formControl]="playerControl" />
+                        <mat-autocomplete #searchPlayerAutocomplete>
+                            <mat-option *ngFor="let player of filteredPlayerSet" [value]="player.fullName">
+                                <span>{{player.fullName}}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </mat-card>
+
+            </form>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-6">
+                <form>
+                        <mat-card>
+                            <mat-form-field>
+                                <input class="search-input" matInput placeholder="Search Players" aria-label="Player" [matAutocomplete]="auto"
+                                    [matAutocompleteDisabled]="!auto" [formControl]="playerControl" />
+                                <mat-autocomplete #searchPlayerAutocomplete>
+                                    <mat-option *ngFor="let player of filteredPlayerSet" [value]="player.fullName">
+                                        <span>{{player.fullName}}</span>
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </mat-card>
+        
+                    </form>
+        </div>
+
+    </div>
+</div>

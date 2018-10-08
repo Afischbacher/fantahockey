@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
-import { HomeModule } from './home/home.module';
+import { TradeDashboardModule } from './trade-dashboard/trade-dashboard.module';
 import { ShellModule } from './shell/shell.module';
 import { AboutModule } from './about/about.module';
 import { AppComponent } from './app.component';
@@ -27,7 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
     CoreModule,
     SharedModule, 
     ShellModule,
-    HomeModule,
+    TradeDashboardModule,
     AboutModule,
     AppRoutingModule
   ],

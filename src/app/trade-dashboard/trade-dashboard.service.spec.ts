@@ -2,7 +2,7 @@ import { TestBed, inject, async } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { CoreModule, HttpCacheService } from '@app/core';
-import { QuoteService } from './quote.service';
+import { QuoteService } from '@app/trade-dashboard/trade-dashboard.service';
 
 describe('QuoteService', () => {
   let quoteService: QuoteService;

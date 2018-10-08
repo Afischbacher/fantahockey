@@ -1,5 +1,5 @@
 import {Component, HostBinding, Input, OnInit} from '@angular/core';
-import {NavItem} from '../../core/models/nav-item';
+import {NavItem} from '@app/core/interfaces/nav-item';
 import {Router} from '@angular/router';
 import {NavService} from '../../core/services/nav.service';
 import {faChevronCircleDown} from '@fortawesome/free-solid-svg-icons';
@@ -11,17 +11,21 @@ import {animate, state, style, transition, trigger } from '@angular/animations';
     styleUrls:['./menu-list-item.component.scss'],
     animations:[
         trigger('indicatorRotate', [
+
             state('collapsed', style({transform:'rotate(0deg)'})),
+
             state('expanded', style({transform: 'rotate(180deg)'})),
+
             transition('expanded <=> collapsed',
+
             animate('225ms cubic-bezier(0.4,0.0,0.2,1)'))
+
         ])
     ]
 })
 export class MenuListItemComponent{
-    faChevronCircleDown = faChevronCircleDown;
+    expanded: boolean = false;
 
-    expanded: boolean;
     @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
     @Input() item : NavItem;
     @Input() depth: number;
