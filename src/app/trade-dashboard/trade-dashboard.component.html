@@ -1,42 +1,46 @@
+<video autoplay muted="muted" loop id="background">
+    <source src="../../assets/background.mp4" type="video/mp4">
+</video>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-6">
-
             <form>
                 <mat-card>
                     <mat-form-field class="full-width-search">
                         <input class="search-input" matInput placeholder="Search Players" aria-label="Player"
                             [matAutocomplete]="auto" [formControl]="playerControl" />
-                        <mat-autocomplete #auto>
-                            <mat-option *ngFor="let player of filteredPlayerSet" [value]="player.person.fullName">
+                        <mat-autocomplete (optionSelected)="addPlayerToList($event.option.value)" [displayWith]="displayPlayerName"
+                            #auto>
+                            <mat-option *ngFor="let player of filteredPlayerSet" [value]="player">
                                 <div *ngIf="player.position.code !== 'G'">
-                                    <span class="player-position">{{player.position.code}}</span>
+                                    <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
+                                    <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
                                     <span>{{player.person.fullName}}</span>
-                                    <span *ngIf="player.overallStats.stats[0].splits?.length === 0 ">
+                                    <span *ngIf="player?.overallStats?.stats[0].splits?.length === 0 ">
                                         | <small>No player data available</small>
                                     </span>
-                                    <span *ngFor="let stat of player.overallStats.stats[0].splits">
-                                        | <small>Goals: {{stat.stat.goals}}</small>
-                                        | <small>Assists: {{stat.stat.assists}}</small>
+                                    <span *ngFor="let stat of player?.overallStats?.stats[0]?.splits">
+                                        | <small>GP: {{stat.stat.games}}</small>
+                                        | <small>G: {{stat.stat.goals}}</small>
+                                        | <small>A: {{stat.stat.assists}}</small>
                                         | <small>+/-: {{stat.stat.plusMinus}}</small>
-                                        | <small>TOI: {{stat.stat.timeOnIce}}</small>
                                     </span>
 
                                 </div>
                                 <div *ngIf="player.position.code === 'G'">
 
-                                    <span class="player-position">{{player.position.code}}</span>
-                                    <span>{{player.person.fullName}}</span>|
+                                    <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
+                                    <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
+                                    <span>{{player.person.fullName}}</span>
 
-
-                                    <span *ngIf="player.overallStats.stats[0].splits?.length === 0 ">
+                                    <span *ngIf="player?.overallStats?.stats[0]?.splits?.length === 0 ">
                                         | <small>No player data available</small>
                                     </span>
-                                    <span *ngFor="let stat of player.overallStats.stats[0].splits">
-                                        | <small>Wins: {{stat.stat.wins}}</small>
-                                        | <small>Save %: {{stat.stat.savePercentage}}</small>
+                                    <span *ngFor="let stat of player?.overallStats?.stats[0].splits">
+                                        | <small>W: {{stat.stat.wins}}</small>
+                                        | <small>%: {{stat.stat.savePercentage}}</small>
                                         | <small>GAA: {{stat.stat.goalAgainstAverage}}</small>
-                                        | <small>Shutouts: {{stat.stat.shutouts}}</small>
+                                        | <small>SO: {{stat.stat.shutouts}}</small>
                                     </span>
                                 </div>
                             </mat-option>
@@ -44,6 +48,46 @@
                     </mat-form-field>
                 </mat-card>
             </form>
+
+            <mat-card *ngFor="let player of currentPlayerSelection">
+                <div *ngIf="player.position.code !== 'G'">
+                    <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
+                    <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
+
+                    <span>{{player.person.fullName}}</span>
+                    <span *ngIf="player?.overallStats?.stats[0].splits?.length === 0 ">
+                        | <small>No player data available</small>
+                    </span>
+                    <span *ngFor="let stat of player?.overallStats?.stats[0]?.splits">
+                        | <small>GP: {{stat.stat.games}}</small>
+                        | <small>G: {{stat.stat.goals}}</small>
+                        | <small>A: {{stat.stat.assists}}</small>
+                        | <small>+/-: {{stat.stat.plusMinus}}</small>
+                    </span>
+
+                </div>
+                <div *ngIf="player.position.code === 'G'">
+
+                    <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
+                    <span>{{player.person.fullName}}</span>
+
+                    <span *ngIf="player?.overallStats?.stats[0]?.splits?.length === 0 ">
+                        | <small>No player data available</small>
+                    </span>
+                    <span *ngFor="let stat of player?.overallStats?.stats[0].splits">
+                        | <small>W: {{stat.stat.wins}}</small>
+                        | <small>%: {{stat.stat.savePercentage}}</small>
+                        | <small>GAA: {{stat.stat.goalAgainstAverage}}</small>
+                        | <small>SO: {{stat.stat.shutouts}}</small>
+                    </span>
+                </div>
+                <mat-card-actions>
+                        <button mat-button (click)="removePlayer(player)">Remove</button>
+                      </mat-card-actions>
+            </mat-card>
+            <mat-card>
+           Fantasy Point Score <h3>{{currentScore}}</h3>
+            </mat-card>
         </div>
     </div>
 </div>

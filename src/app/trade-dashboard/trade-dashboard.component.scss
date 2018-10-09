@@ -25,6 +25,18 @@
   width: 100%;
 }
 
-.player-position{
+.player-item-padding-right{
   padding-right: 5px;
 }
+
+#background{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+  z-index: -9999;
+  filter: grayscale(75%);
+
+}
+

@@ -1,5 +1,5 @@
 import { Person } from "@app/core/interfaces/person";
-
+import { Position } from "@app/core/interfaces/position";
     export interface TeamRoster {
         copyright: string;
         roster: TeamPlayer[];
@@ -8,6 +8,7 @@ import { Person } from "@app/core/interfaces/person";
 
     export interface TeamPlayer {
         person: Person;
+        image: string;
         overallStats: OverallStats;
         jerseyNumber: string;
         position: Position;
@@ -41,10 +42,30 @@ import { Person } from "@app/core/interfaces/person";
             plusMinus: number;
             points: number;
             shifts: number;
-            timeOnIcePerGame: string;
             evenTimeOnIcePerGame: string;
             shortHandedTimeOnIcePerGame: string;
             powerPlayTimeOnIcePerGame: string;
+            ot: number;
+            shutouts: number;
+            ties: number;
+            wins: number;
+            losses: number;
+            saves: number;
+            powerPlaySaves: number;
+            shortHandedSaves: number;
+            evenSaves: number;
+            shortHandedShots: number;
+            evenShots: number;
+            powerPlayShots: number;
+            savePercentage: number;
+            goalAgainstAverage: number;
+            gamesStarted: number;
+            shotsAgainst: number;
+            goalsAgainst: number;
+            timeOnIcePerGame: string;
+            powerPlaySavePercentage: number;
+            shortHandedSavePercentage: number;
+            evenStrengthSavePercentage: number;
         }
     
         export interface Split {
