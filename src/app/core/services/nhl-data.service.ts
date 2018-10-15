@@ -36,11 +36,20 @@ export class NhlDataService {
     }
 
     getLastSeason(): string {
-        return `${new Date().getFullYear() - 1}${new Date().getFullYear()}`;
+
+        if(new Date(`2019-01-01`) < new Date())
+            return `${new Date().getFullYear() - 2}${new Date().getFullYear() - 1}`;
+        else
+            return `${new Date().getFullYear() - 1}${new Date().getFullYear()}`;    
+        
     }
 
     getCurrentSeason(): string {
+   
+        if(new Date(`2019-01-01`) < new Date())
+            return `${new Date().getFullYear() - 1}${new Date().getFullYear()}`;
+        else
+            return `${new Date().getFullYear()}${new Date().getFullYear() + 1}`;
 
-        return `${new Date().getFullYear()}${new Date().getFullYear() + 1}`;
     }
 }

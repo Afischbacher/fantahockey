@@ -12,6 +12,8 @@ import { Position } from "@app/core/interfaces/position";
         overallStats: OverallStats;
         jerseyNumber: string;
         position: Position;
+        fantasyScore: number;
+        lastYearFantasyScore:number;
     }
 
         export interface Type {

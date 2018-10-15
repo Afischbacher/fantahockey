@@ -24,7 +24,7 @@ export class ShellComponent implements OnInit {
    navItems: NavItem[] = [
      {
        displayName: 'Dashboard',
-       iconName: 'menu',
+       iconName: 'delete',
        children: [],
        route: "/dashboard"
      }

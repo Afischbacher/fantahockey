@@ -14,6 +14,8 @@ import { ShellModule } from './shell/shell.module';
 import { AboutModule } from './about/about.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MenuListItemComponent } from '@app/shell/menu-list-item/menu-list-item.component';
 
 @NgModule({
   imports: [
@@ -29,7 +31,7 @@ import { AppRoutingModule } from './app-routing.module';
     ShellModule,
     TradeDashboardModule,
     AboutModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   declarations: [AppComponent],
   providers: [

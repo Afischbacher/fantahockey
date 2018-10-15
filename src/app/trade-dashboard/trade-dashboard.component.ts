@@ -1,109 +1,70 @@
-import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
 import { startWith, switchMap } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { NhlDataService } from '@app/core/services/nhl-data.service';
 import { HttpClient } from '@angular/common/http';
 import { TeamRoster, TeamPlayer, OverallStats } from '@app/core/interfaces/roster';
 import { Team } from '@app/core/interfaces/team';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'trade-dashboard',
   templateUrl: './trade-dashboard.component.html',
-  styleUrls: ['./trade-dashboard.component.scss']
+  styleUrls: ['./trade-dashboard.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(":enter", [
+        style({ opacity: "0" }),
+        animate('.3s ease-in', style({ opacity: "1" })),
+      ]),
+    ]),
+    trigger('fadeOut', [
+      transition(":leave", [
+        style({ opacity: "1" }),
+        animate('.3s ease-out', style({ opacity: "0" })),
+      ]),
+    ]),
+
+  ],
 })
-export class HomeComponent implements OnInit, AfterViewChecked {
+export class TradeDashboardComponent implements OnInit, AfterContentInit {
+  
+  ngAfterContentInit(): void {
+      this.stopLoading();
+  }
 
-  ngAfterViewChecked(): void { }
-
-  playerControl = new FormControl();
-  teams: Team[];
-  filteredPlayerSet: TeamPlayer[] = [];
   playerSet: TeamPlayer[] = [];
-  currentScore: number = 0.00;
-  currentPlayerSelection : TeamPlayer[] = [];
+  isLoading = false;
+  value = 0;
 
-  constructor(private nhlDataService: NhlDataService, private http: HttpClient) {
+  constructor(private nhlDataService: NhlDataService) {
 
-    this.playerControl.valueChanges.pipe(startWith('')).subscribe((query: string) => {
-
-      if (query.length < 2) this.filteredPlayerSet = [];
-
-      if (query.length >= 3)
-        this.filteredPlayerSet = this.playerSet.filter(x => x.person.fullName.toLowerCase().includes(query.toLowerCase()));
-
-
-    }, error => {
-      console.log(error);
-    })
   }
 
-   ngOnInit(): void {
-     this.getPlayerData();
+  ngOnInit(): void {    
+    this.startLoading();
+    this.getPlayerData();
   }
 
- async getPlayerData() {
+  async getPlayerData() {
 
     const teams = await this.nhlDataService.getCurrentTeams().pipe(switchMap(val => val.teams));
 
     teams.forEach(async (team) => {
 
         await this.nhlDataService.getCurrentRoster(team.id).pipe((switchMap((res: TeamRoster) => res.roster))).subscribe(async (teamPlayer: TeamPlayer) => {
-        await this.nhlDataService.getCurrentSeasonPlayerStats(teamPlayer.person.link).subscribe(async (stat) =>  teamPlayer.overallStats = await stat);
+        await this.nhlDataService.getCurrentSeasonPlayerStats(teamPlayer.person.link).subscribe(async (stat) => teamPlayer.overallStats = await stat);
         await this.playerSet.push(teamPlayer);
-
       });
-
-    });  
-  }
-
-  addPlayerToList(player: TeamPlayer){
-      this.currentPlayerSelection.push(player);
-      this.calculateFantasyScore(player);
-      
-  }
-
-  async calculateFantasyScore(player: TeamPlayer) {
-    let lastYear = 0;
-
-    await this.nhlDataService.getLastSeasonPlayerStats(player.person.link).subscribe(async (lastYearPlayer: OverallStats) => {
-    
-      if(player.position.abbreviation !== "G"){
-        lastYear = 
-        (   lastYearPlayer.stats[0].splits[0].stat.assists * 0.3
-         +  lastYearPlayer.stats[0].splits[0].stat.goals * 0.7
-         +  lastYearPlayer.stats[0].splits[0].stat.plusMinus * 0.15
-         +  lastYearPlayer.stats[0].splits[0].stat.hits * 0.05
-         +  lastYearPlayer.stats[0].splits[0].stat.shots * 0.075) * 0.5;
-   
-         this.currentScore += 
-         (player.overallStats.stats[0].splits[0].stat.assists * 0.3
-         +  player.overallStats.stats[0].splits[0].stat.goals * 0.7
-         +  player.overallStats.stats[0].splits[0].stat.plusMinus * 0.15
-         +  player.overallStats.stats[0].splits[0].stat.hits * 0.05
-         +  player.overallStats.stats[0].splits[0].stat.shots * 0.075) + lastYear;
-      }
-      else{
-
-      lastYear = 
-     (   lastYearPlayer.stats[0].splits[0].stat.wins * 0.3
-      +  lastYearPlayer.stats[0].splits[0].stat.savePercentage * 0.7
-      +  lastYearPlayer.stats[0].splits[0].stat.goalAgainstAverage * 0.15
-      +  lastYearPlayer.stats[0].splits[0].stat.gamesStarted * 0.05) * 0.5;
-
-      this.currentScore += 
-      (  lastYearPlayer.stats[0].splits[0].stat.wins * 0.3
-        +  lastYearPlayer.stats[0].splits[0].stat.savePercentage * 0.7
-        +  lastYearPlayer.stats[0].splits[0].stat.goalAgainstAverage * 0.15
-        +  lastYearPlayer.stats[0].splits[0].stat.gamesStarted * 0.05) + lastYear;
-
-
-      }
     });
-
   }
 
-  displayPlayerName(player: TeamPlayer){
-    return player ? player.person.fullName : '';
+   startLoading(){
+    this.isLoading = false;
+  }
+
+  stopLoading(){
+      this.isLoading = true;
   }
 }
 

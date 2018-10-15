@@ -36,7 +36,10 @@
   min-width: 100%; 
   min-height: 100%;
   z-index: -9999;
-  filter: grayscale(75%);
+  filter: grayscale(75%) blur(25px);
 
 }
 
+.icon-remove{
+  margin-right: 5px;
+}

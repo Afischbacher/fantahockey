@@ -2,7 +2,6 @@ import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {NavItem} from '@app/core/interfaces/nav-item';
 import {Router} from '@angular/router';
 import {NavService} from '../../core/services/nav.service';
-import {faChevronCircleDown} from '@fortawesome/free-solid-svg-icons';
 import {animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({

@@ -14,7 +14,10 @@ export class NavService {
     }
 
     openNav(){
-        console.log(this.appDrawer);
         this.appDrawer.open();
+    }
+
+    toggleNav(){
+        this.appDrawer.toggle();
     }
 }
