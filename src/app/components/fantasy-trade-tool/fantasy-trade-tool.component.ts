@@ -1,11 +1,13 @@
-import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef, Input } from '@angular/core';
-import { startWith, switchMap } from 'rxjs/operators';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, AfterViewChecked, Input } from '@angular/core';
+import { startWith } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 import { NhlDataService } from '@app/core/services/nhl-data.service';
 import { HttpClient } from '@angular/common/http';
-import { TeamRoster, TeamPlayer, OverallStats } from '@app/core/interfaces/roster';
+import { TeamPlayer, OverallStats } from '@app/core/interfaces/roster';
 import { Team } from '@app/core/interfaces/team';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { TourService } from 'ngx-tour-md-menu';
+import { Constants } from '@app/core/constants/constants';
 
 @Component({
     selector: 'fantasy-trade-tool',
@@ -39,7 +41,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
     currentPlayerSelection: TeamPlayer[] = [];
     disableSearch: boolean = false;
 
-    constructor(private nhlDataService: NhlDataService, private http: HttpClient) {
+    constructor(private nhlDataService: NhlDataService, private tourService: TourService) {
 
         this.playerControl.valueChanges.pipe(startWith('')).subscribe((query: string) => {
 
@@ -55,7 +57,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {}
 
     addPlayerToList(player: TeamPlayer) {
         const newPlayer = this.currentPlayerSelection
@@ -89,7 +91,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
                             + lastYearPlayer.stats[0].splits[0].stat.blocked * 1)
                 }
 
-                this.currentScore =
+                this.currentScore +=
                     player.overallStats.stats[0].splits[0].stat.assists * 4
                     + player.overallStats.stats[0].splits[0].stat.goals * 6
                     + player.overallStats.stats[0].splits[0].stat.plusMinus * 2

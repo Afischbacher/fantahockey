@@ -15,11 +15,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FantasyTradeToolComponent } from '@app/components/fantasy-trade-tool/fantasy-trade-tool.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { TourMatMenuModule } from 'ngx-tour-md-menu';
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
+    MatToolbarModule,
     CoreModule,
     SharedModule,
     TradeDashboardRoutingModule,
@@ -32,7 +34,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    TourMatMenuModule
   ],
   declarations: [
     TradeDashboardComponent,

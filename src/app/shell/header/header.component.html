@@ -1,6 +1,9 @@
 <mat-toolbar class="menu-toolbar" color="primary">
   <button mat-icon-button id="menu" (click)="navService.toggleNav()">
-     <fa-icon [icon]="faBars" class="bars"></fa-icon>
+    <div tourAnchor="tour2">  <fa-icon [icon]="faBars" class="bars"></fa-icon> </div>
   </button> 
-   NHL Fantasy Trade Tool
+  <div tourAnchor="tour1"> <img src="../../../assets/logo-app.png" height="40" alt="logo"/></div>
+  <span class="spacer"></span>
+  <button (click)="initializeTour()" mat-icon-button><mat-icon>help</mat-icon></button>
 </mat-toolbar>
+  

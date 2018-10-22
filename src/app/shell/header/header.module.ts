@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ShellComponent } from './shell.component';
-import { HeaderComponent } from './header/header.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,13 +25,7 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
     MatIconModule,
     MenuListItemModule,
     TourMatMenuModule
-  ],
-  declarations: [
-    HeaderComponent,
-    ShellComponent,
-    HeaderComponent,
-    MenuListItemComponent
   ]
 })
-export class ShellModule {
+export class HeaderModule {
 }

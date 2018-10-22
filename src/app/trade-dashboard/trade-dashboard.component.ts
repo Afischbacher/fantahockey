@@ -1,11 +1,10 @@
-import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
-import { startWith, switchMap } from 'rxjs/operators';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
+import { switchMap } from 'rxjs/operators';
+
 import { NhlDataService } from '@app/core/services/nhl-data.service';
-import { HttpClient } from '@angular/common/http';
 import { TeamRoster, TeamPlayer, OverallStats } from '@app/core/interfaces/roster';
-import { Team } from '@app/core/interfaces/team';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { TourService } from 'ngx-tour-core';
 
 @Component({
   selector: 'trade-dashboard',
@@ -28,22 +27,24 @@ import { trigger, transition, style, animate } from '@angular/animations';
   ],
 })
 export class TradeDashboardComponent implements OnInit, AfterContentInit {
-  
+
   ngAfterContentInit(): void {
-      this.stopLoading();
+    this.stopLoading();
   }
 
   playerSet: TeamPlayer[] = [];
   isLoading = false;
   value = 0;
 
-  constructor(private nhlDataService: NhlDataService) {
+  constructor(private nhlDataService: NhlDataService, private tourService: TourService) {
 
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
+
     this.startLoading();
     this.getPlayerData();
+  
   }
 
   async getPlayerData() {
@@ -52,19 +53,19 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
 
     teams.forEach(async (team) => {
 
-        await this.nhlDataService.getCurrentRoster(team.id).pipe((switchMap((res: TeamRoster) => res.roster))).subscribe(async (teamPlayer: TeamPlayer) => {
+      await this.nhlDataService.getCurrentRoster(team.id).pipe((switchMap((res: TeamRoster) => res.roster))).subscribe(async (teamPlayer: TeamPlayer) => {
         await this.nhlDataService.getCurrentSeasonPlayerStats(teamPlayer.person.link).subscribe(async (stat) => teamPlayer.overallStats = await stat);
         await this.playerSet.push(teamPlayer);
       });
     });
   }
 
-   startLoading(){
+  startLoading() {
     this.isLoading = false;
   }
 
-  stopLoading(){
-      this.isLoading = true;
+  stopLoading() {
+    this.isLoading = true;
   }
 }
 
