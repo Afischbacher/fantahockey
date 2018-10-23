@@ -1,13 +1,11 @@
-import { Component, OnInit, AfterViewChecked, Input } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, Input, Output, EventEmitter } from '@angular/core';
 import { startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { NhlDataService } from '@app/core/services/nhl-data.service';
-import { HttpClient } from '@angular/common/http';
 import { TeamPlayer, OverallStats } from '@app/core/interfaces/roster';
 import { Team } from '@app/core/interfaces/team';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { TourService } from 'ngx-tour-md-menu';
-import { Constants } from '@app/core/constants/constants';
 
 @Component({
     selector: 'fantasy-trade-tool',
@@ -37,6 +35,8 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
     teams: Team[];
     filteredPlayerSet: TeamPlayer[] = [];
     @Input() playerSet: TeamPlayer[] = [];
+    @Input() tourIds : string[] = [];
+    @Output() scoreValueChange: EventEmitter<number> = new EventEmitter();
     currentScore: number = 0.00;
     currentPlayerSelection: TeamPlayer[] = [];
     disableSearch: boolean = false;
@@ -139,6 +139,8 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
         });
 
+        console.log(this.currentScore);
+        this.scoreValueChange.emit(this.currentScore);
     }
 
     displayPlayerName(player: TeamPlayer) {

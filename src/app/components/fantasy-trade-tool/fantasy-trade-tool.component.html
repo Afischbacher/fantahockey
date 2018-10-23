@@ -1,7 +1,7 @@
 <form class="smooth-player-selection">
     <mat-card>
         <mat-form-field class="full-width-search">
-            <div tourAnchor="tour3"> <input class="search-input" matInput placeholder="Search Players" aria-label="Player"
+            <div [tourAnchor]="tourIds[0]"> <input class="search-input" matInput placeholder="Search Players" aria-label="Player"
                     [matAutocomplete]="auto" [formControl]="playerControl" type="search" [(ngModel)]="playerControl.value" /></div>
             <button mat-button *ngIf="playerControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="playerControl.value = ''">
                 <mat-icon>close</mat-icon>
@@ -11,6 +11,7 @@
 
                 <mat-option *ngFor="let player of filteredPlayerSet" [value]="player">
                     <div *ngIf="player.position.code !== 'G'">
+                        
                         <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
                         <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
                         <span>{{player.person.fullName}}</span>
@@ -94,7 +95,7 @@
         </button>
     </mat-card-actions>
 </mat-card>
-<div tourAnchor="tour4">
+<div [tourAnchor]="tourIds[1]">
     <mat-card>
         Fantasy Point Score <h3>{{currentScore | number:'1.1-3'}}</h3>
     </mat-card>

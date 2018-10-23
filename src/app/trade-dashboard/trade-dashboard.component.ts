@@ -2,9 +2,10 @@ import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/cor
 import { switchMap } from 'rxjs/operators';
 
 import { NhlDataService } from '@app/core/services/nhl-data.service';
-import { TeamRoster, TeamPlayer, OverallStats } from '@app/core/interfaces/roster';
+import { TeamRoster, TeamPlayer } from '@app/core/interfaces/roster';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { TourService } from 'ngx-tour-core';
+import { TourService } from 'ngx-tour-md-menu';
+import { Constants } from '@app/core/constants/constants';
 
 @Component({
   selector: 'trade-dashboard',
@@ -35,6 +36,7 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
   playerSet: TeamPlayer[] = [];
   isLoading = false;
   value = 0;
+  fantasyTradeComponentIds: Array<string[]> = [["tour3", "tour4"], ["tour5", "tour6"]];
 
   constructor(private nhlDataService: NhlDataService, private tourService: TourService) {
 
@@ -44,9 +46,45 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
 
     this.startLoading();
     this.getPlayerData();
-  
+    this.initializeTour();
   }
 
+  showScore($event: any) : void {
+    console.log("event");
+    console.log($event);
+  }
+
+  
+  async initializeTour() {
+
+    this.tourService.initialize([{
+      anchorId: 'tour1',
+      content: 'Welcome to the NHL fantasy trade tool!',
+      title: 'Welcome!',
+      enableBackdrop: true
+    }, {
+      anchorId: 'tour2',
+      content: "Use the menu to check out more features of the tool (it's a work in progress..)",
+      title: 'The Menu',
+      enableBackdrop: true
+    }, {
+      anchorId: 'tour3',
+      content: 'Search for any active NHL player to see the latest stats for the current season',
+      title: 'Search Players',
+      enableBackdrop: true
+    }, {
+      anchorId: 'tour4',
+      content: "Craft trades and watch the fantasy score points to help you make the best trade possible...(exciting I know!)",
+      title: 'Fantasy Scores',
+      enableBackdrop: true
+    }]);
+
+    await this.tourService.start();
+
+    await localStorage.setItem(Constants.initalizedTour, "true");
+
+  }
+  
   async getPlayerData() {
 
     const teams = await this.nhlDataService.getCurrentTeams().pipe(switchMap(val => val.teams));
