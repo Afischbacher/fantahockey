@@ -1,3 +1,5 @@
+import { environment } from "@env/environment";
+
  export class Constants {
-    static readonly initalizedTour = "initializedTour";
+    static readonly initalizedTour: string = `initializedTour-${environment.appName}`;
 }

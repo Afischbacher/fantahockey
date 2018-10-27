@@ -45,12 +45,11 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
 
   ngOnInit(): void {
 
-    this.startLoading();
     this.getPlayerData();
-    this.initializeTour();
+    //this.initializeTour();
   }
 
-  showScore($event: any): void {
+  showScore($event: number): void {
     console.log("event");
     console.log($event);
   }
@@ -102,9 +101,6 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
           
         });
 
-        let imageName = teamPlayer.person.fullName.split(' ');
-        imageName[1].replace("'", '');
-        
         teamPlayer.image = `https://nhl.bamcontent.com/images/headshots/current/168x168/${teamPlayer.person.id}.png`
         await this.playerSet.push(teamPlayer);
 

@@ -1,11 +1,11 @@
 <mat-progress-bar [hidden]="isLoading" mode="indeterminate"></mat-progress-bar>
 <video autoplay [muted]="true" loop id="background">
-   <!-- <source src="../../assets/background.mp4" type="video/mp4"> -->
+  <source src="../../assets/background.mp4" type="video/mp4">
 </video>
 <div class="container-fluid" style="opacity: 0.9">
     <div class="row">
         <div *ngFor="let ids of fantasyTradeComponentIds" class="col-md-12 col-sm-12 col-lg-6 col-xl-6">
-            <fantasy-trade-tool [tourIds]="ids" [playerSet]="playerSet" (scoreValueChange)="showScore()">
+            <fantasy-trade-tool [id]="" [tourIds]="ids" [playerSet]="playerSet" (scoreValueChange)="showScore($event)">
             </fantasy-trade-tool>
         </div>
     </div>

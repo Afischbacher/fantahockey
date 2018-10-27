@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewChecked, Input, Output, EventEmitter } from '@angular/core';
-import { startWith } from 'rxjs/operators';
+import { startWith, distinctUntilChanged, first } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { NhlDataService } from '@app/core/services/nhl-data.service';
 import { TeamPlayer, OverallStats } from '@app/core/interfaces/roster';
@@ -36,11 +36,12 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
     teams: Team[];
     filteredPlayerSet: TeamPlayer[] = [];
     @Input() playerSet: TeamPlayer[] = [];
-    @Input() tourIds : string[] = [];
-    @Output() scoreValueChange: EventEmitter<number> = new EventEmitter();
+    @Input() tourIds: string[] = [];
+    @Output() scoreValueChange = new EventEmitter<number>();
     currentScore: number = 0.00;
     currentPlayerSelection: TeamPlayer[] = [];
     disableSearch: boolean = false;
+    scoreSubject = new BehaviorSubject<number>(this.currentScore);
 
     constructor(private nhlDataService: NhlDataService, private tourService: TourService) {
 
@@ -58,18 +59,19 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     addPlayerToList(player: TeamPlayer) {
         const newPlayer = this.currentPlayerSelection
             .findIndex(x => x.person == player.person && x.position == player.position && x.jerseyNumber == player.jerseyNumber)
 
         if (this.currentPlayerSelection.length < 6 && newPlayer < 0) {
-            
+
             this.currentPlayerSelection.push(player);
             this.toggleSearch();
-            this.calculateFantasyScore(player);
-            console.log(this.currentScore);
+            
+            let fantasyPlayer = this.calculateFantasyScore(player);
+            fantasyPlayer = this.calculateLastYearFantasyScore(fantasyPlayer);  
             this.scoreValueChange.emit(this.currentScore);
 
         }
@@ -78,7 +80,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
     }
 
-      calculateFantasyScore(player: TeamPlayer) {
+     calculateLastYearFantasyScore(player: TeamPlayer): TeamPlayer {
 
          this.nhlDataService.getLastSeasonPlayerStats(player.person.link).subscribe((lastYearPlayer: OverallStats) => {
 
@@ -94,54 +96,61 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
                             + lastYearPlayer.stats[0].splits[0].stat.shots * 0.9
                             + lastYearPlayer.stats[0].splits[0].stat.blocked * 1)
                 }
-
-                this.currentScore +=
-                    player.overallStats.stats[0].splits[0].stat.assists * 4
-                    + player.overallStats.stats[0].splits[0].stat.goals * 6
-                    + player.overallStats.stats[0].splits[0].stat.plusMinus * 2
-                    + player.overallStats.stats[0].splits[0].stat.powerPlayPoints * 2
-                    + player.overallStats.stats[0].splits[0].stat.shots * 0.9
-                    + player.overallStats.stats[0].splits[0].stat.blocked * 1;
-
-                player.fantasyScore = player.overallStats.stats[0].splits[0].stat.assists * 4
-                    + player.overallStats.stats[0].splits[0].stat.goals * 6
-                    + player.overallStats.stats[0].splits[0].stat.plusMinus * 2
-                    + player.overallStats.stats[0].splits[0].stat.powerPlayPoints * 2
-                    + player.overallStats.stats[0].splits[0].stat.shots * 0.9
-                    + player.overallStats.stats[0].splits[0].stat.blocked * 1;
             }
-
             else {
 
-                if (lastYearPlayer.stats[0].splits[0] !== undefined) {
-
-                    player.lastYearFantasyScore =
-                        (
-                            lastYearPlayer.stats[0].splits[0].stat.wins * 5
-                            + lastYearPlayer.stats[0].splits[0].stat.goalAgainstAverage * -3
-                            + lastYearPlayer.stats[0].splits[0].stat.saves * 0.6
-                            + lastYearPlayer.stats[0].splits[0].stat.shutouts * 5
-                        );
-
-                }
-
-                this.currentScore +=
-                    player.overallStats.stats[0].splits[0].stat.wins * 5
-                    + player.overallStats.stats[0].splits[0].stat.goalAgainstAverage * -3
-                    + player.overallStats.stats[0].splits[0].stat.saves * 0.6
-                    + player.overallStats.stats[0].splits[0].stat.shutouts * 5;
-                    
-                player.fantasyScore =
-                    player.overallStats.stats[0].splits[0].stat.wins * 5
-                    + player.overallStats.stats[0].splits[0].stat.goalAgainstAverage * -3
-                    + player.overallStats.stats[0].splits[0].stat.saves * 0.6
-                    + player.overallStats.stats[0].splits[0].stat.shutouts * 5;
-
-
+                player.lastYearFantasyScore =
+                    (
+                        lastYearPlayer.stats[0].splits[0].stat.wins * 5
+                        + lastYearPlayer.stats[0].splits[0].stat.goalAgainstAverage * -3
+                        + lastYearPlayer.stats[0].splits[0].stat.saves * 0.6
+                        + lastYearPlayer.stats[0].splits[0].stat.shutouts * 5
+                    );
             }
-
+            
         });
 
+        return player;
+    }
+
+    calculateFantasyScore(player: TeamPlayer): TeamPlayer {
+
+        if (player !== null && player.position.abbreviation !== "G") {
+
+            this.currentScore +=
+                player.overallStats.stats[0].splits[0].stat.assists * 4
+                + player.overallStats.stats[0].splits[0].stat.goals * 6
+                + player.overallStats.stats[0].splits[0].stat.plusMinus * 2
+                + player.overallStats.stats[0].splits[0].stat.powerPlayPoints * 2
+                + player.overallStats.stats[0].splits[0].stat.shots * 0.9
+                + player.overallStats.stats[0].splits[0].stat.blocked * 1;
+
+            player.fantasyScore = player.overallStats.stats[0].splits[0].stat.assists * 4
+                + player.overallStats.stats[0].splits[0].stat.goals * 6
+                + player.overallStats.stats[0].splits[0].stat.plusMinus * 2
+                + player.overallStats.stats[0].splits[0].stat.powerPlayPoints * 2
+                + player.overallStats.stats[0].splits[0].stat.shots * 0.9
+                + player.overallStats.stats[0].splits[0].stat.blocked * 1;
+        }
+
+        else if (player !== null && player.position.abbreviation === "G") {
+
+            this.currentScore +=
+                player.overallStats.stats[0].splits[0].stat.wins * 5
+                + player.overallStats.stats[0].splits[0].stat.goalAgainstAverage * -3
+                + player.overallStats.stats[0].splits[0].stat.saves * 0.6
+                + player.overallStats.stats[0].splits[0].stat.shutouts * 5;
+
+
+            player.fantasyScore =
+                player.overallStats.stats[0].splits[0].stat.wins * 5
+                + player.overallStats.stats[0].splits[0].stat.goalAgainstAverage * -3
+                + player.overallStats.stats[0].splits[0].stat.saves * 0.6
+                + player.overallStats.stats[0].splits[0].stat.shutouts * 5;
+
+        }
+
+        return player;
     }
 
     displayPlayerName(player: TeamPlayer) {
