@@ -13,7 +13,31 @@
   .icon-remove{
     margin-right: 5px;
   }
+  
 
   .smooth-player-selection{
     transition: all .3s;
+  }
+
+  mat-option{
+    height: 90px;
+  }
+
+ .player-image {
+    
+    border-radius: 50%;
+    height: 60px;
+    animation: fadeIn 1s ease-in;
+  }
+
+  .team-logo-image {
+        
+    border-radius: 50%;
+    height: 60px;
+    animation: fadeIn 1s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {opacity : 0;}
+    to {opacity: 1;}
   }

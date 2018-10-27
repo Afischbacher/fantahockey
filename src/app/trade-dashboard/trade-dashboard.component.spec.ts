@@ -3,12 +3,12 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
-import { HomeComponent } from '@app/trade-dashboard/trade-dashboard.component';
+import { TradeDashboardComponent } from '@app/trade-dashboard/trade-dashboard.component';
 import { QuoteService } from '@app/trade-dashboard/trade-dashboard.service';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('TradeDashboardComponent', () => {
+  let component: TradeDashboardComponent;
+  let fixture: ComponentFixture<TradeDashboardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -17,14 +17,14 @@ describe('HomeComponent', () => {
           SharedModule,
           HttpClientTestingModule
         ],
-        declarations: [HomeComponent],
+        declarations: [TradeDashboardComponent],
         providers: [QuoteService]
       })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(TradeDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -2,10 +2,11 @@ import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/cor
 import { switchMap } from 'rxjs/operators';
 
 import { NhlDataService } from '@app/core/services/nhl-data.service';
-import { TeamRoster, TeamPlayer } from '@app/core/interfaces/roster';
+import { TeamRoster, TeamPlayer, PlayerInfo } from '@app/core/interfaces/roster';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { TourService } from 'ngx-tour-md-menu';
 import { Constants } from '@app/core/constants/constants';
+import { Person } from '@app/core/interfaces/person';
 
 @Component({
   selector: 'trade-dashboard',
@@ -49,12 +50,12 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
     this.initializeTour();
   }
 
-  showScore($event: any) : void {
+  showScore($event: any): void {
     console.log("event");
     console.log($event);
   }
 
-  
+
   async initializeTour() {
 
     this.tourService.initialize([{
@@ -84,7 +85,7 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
     await localStorage.setItem(Constants.initalizedTour, "true");
 
   }
-  
+
   async getPlayerData() {
 
     const teams = await this.nhlDataService.getCurrentTeams().pipe(switchMap(val => val.teams));
@@ -92,10 +93,25 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
     teams.forEach(async (team) => {
 
       await this.nhlDataService.getCurrentRoster(team.id).pipe((switchMap((res: TeamRoster) => res.roster))).subscribe(async (teamPlayer: TeamPlayer) => {
-        await this.nhlDataService.getCurrentSeasonPlayerStats(teamPlayer.person.link).subscribe(async (stat) => teamPlayer.overallStats = await stat);
+        
+        await this.nhlDataService.getCurrentSeasonPlayerStats(teamPlayer.person.link).subscribe(async (stat) =>{ 
+
+          await this.nhlDataService.getPlayerInfo(teamPlayer.person.link).subscribe((playerInfo: any) => { teamPlayer.playerInfo = playerInfo; });
+          
+          teamPlayer.overallStats = await stat;
+          
+        });
+
+        let imageName = teamPlayer.person.fullName.split(' ');
+        imageName[1].replace("'", '');
+        
+        teamPlayer.image = `https://nhl.bamcontent.com/images/headshots/current/168x168/${teamPlayer.person.id}.png`
         await this.playerSet.push(teamPlayer);
+
       });
     });
+
+
   }
 
   startLoading() {

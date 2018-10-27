@@ -11,7 +11,7 @@
 
                 <mat-option *ngFor="let player of filteredPlayerSet" [value]="player">
                     <div *ngIf="player.position.code !== 'G'">
-                        
+                        <img class="player-image" [src]="player.image" height="60"/>
                         <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
                         <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
                         <span>{{player.person.fullName}}</span>
@@ -22,14 +22,13 @@
                             | <small>GP: {{stat.stat.games}}</small>
                             | <small>G: {{stat.stat.goals}}</small>
                             | <small>A: {{stat.stat.assists}}</small>
-                            | <small>PTS: {{stat.stat.goals + stat.stat.assists}}</small>
                             | <small>SOG: {{stat.stat.shots}}</small>
                             | <small>+/-: {{stat.stat.plusMinus}}</small>
                         </span>
 
                     </div>
                     <div *ngIf="player.position.code === 'G'">
-
+                        <img class="player-image" [src]="player.image" height="60" />
                         <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
                         <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
                         <span>{{player.person.fullName}}</span>
@@ -52,6 +51,8 @@
 
 <mat-card class="smooth-player-selection" *ngFor="let player of currentPlayerSelection" @fadeIn @fadeOut>
     <div class="smooth-player-selection" *ngIf="player.position.code !== 'G'">
+            <img [src]="player.image" class="player-image"/>
+
         <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
         <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
 
@@ -63,15 +64,14 @@
             | <small>GP: {{stat.stat.games}}</small>
             | <small>G: {{stat.stat.goals}}</small>
             | <small>A: {{stat.stat.assists}}</small>
-            | <small>Pts: {{stat.stat.goals + stat.stat.assists}}</small>
             | <small>+/-: {{stat.stat.plusMinus}}</small>
             | <small>SOG: {{stat.stat.shots}}</small>
-            | <small>Fantasy Score Last Year: {{player.lastYearFantasyScore}}</small>
-
-        </span>
+            | <small>Fantasy Score Last Year: {{player.lastYearFantasyScore | number:'1.1-3'}}</small>
+          </span>
 
     </div>
     <div class="smooth-player-selection" *ngIf="player.position.code === 'G'">
+            <img [src]="player.image" class="player-image" />
 
         <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
         <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
@@ -85,8 +85,7 @@
             | <small>%: {{stat.stat.savePercentage}}</small>
             | <small>GAA: {{stat.stat.goalAgainstAverage}}</small>
             | <small>SO: {{stat.stat.shutouts}}</small>
-            | <small>Fantasy Score Last Year: {{player.lastYearFantasyScore}}</small>
-
+            | <small>Fantasy Score Last Year: {{player.lastYearFantasyScore | number:'1.1-3'}}</small>
         </span>
     </div>
     <mat-card-actions>

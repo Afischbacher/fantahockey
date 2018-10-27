@@ -14,6 +14,7 @@ import { Position } from "@app/core/interfaces/position";
         position: Position;
         fantasyScore: number;
         lastYearFantasyScore:number;
+        playerInfo: PlayerInfo;
     }
 
         export interface Type {
@@ -70,6 +71,37 @@ import { Position } from "@app/core/interfaces/position";
             evenStrengthSavePercentage: number;
         }
     
+        export interface PlayerInfo {
+            id: number;
+            fullName: string;
+            link: string;
+            firstName: string;
+            lastName: string;
+            primaryNumber: string;
+            birthDate: string;
+            currentAge: number;
+            birthCity: string;
+            birthStateProvince: string;
+            birthCountry: string;
+            nationality: string;
+            height: string;
+            weight: number;
+            active: boolean;
+            alternateCaptain: boolean;
+            captain: boolean;
+            rookie: boolean;
+            shootsCatches: string;
+            rosterStatus: string;
+            currentTeam: CurrentTeam;
+            primaryPosition: PrimaryPosition;
+        }
+
+        export interface PrimaryPosition {
+            code: string;
+            name: string;
+            type: string;
+            abbreviation: string;
+        }
         export interface Split {
             season: string;
             stat: CurrentSeasonStats;
@@ -78,6 +110,12 @@ import { Position } from "@app/core/interfaces/position";
         export interface Stats {
             type: Type;
             splits: Split[];
+        }
+
+        export interface CurrentTeam {
+            id: number;
+            name: string;
+            link: string;
         }
     
         export interface OverallStats {

@@ -6,6 +6,7 @@ import { TeamPlayer, OverallStats } from '@app/core/interfaces/roster';
 import { Team } from '@app/core/interfaces/team';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { TourService } from 'ngx-tour-md-menu';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
     selector: 'fantasy-trade-tool',
@@ -68,15 +69,18 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
             this.currentPlayerSelection.push(player);
             this.toggleSearch();
             this.calculateFantasyScore(player);
+            console.log(this.currentScore);
+            this.scoreValueChange.emit(this.currentScore);
+
         }
 
         this.toggleSearch();
 
     }
 
-    async calculateFantasyScore(player: TeamPlayer) {
+      calculateFantasyScore(player: TeamPlayer) {
 
-        await this.nhlDataService.getLastSeasonPlayerStats(player.person.link).subscribe((lastYearPlayer: OverallStats) => {
+         this.nhlDataService.getLastSeasonPlayerStats(player.person.link).subscribe((lastYearPlayer: OverallStats) => {
 
             if (player.position.abbreviation !== "G") {
 
@@ -98,7 +102,6 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
                     + player.overallStats.stats[0].splits[0].stat.powerPlayPoints * 2
                     + player.overallStats.stats[0].splits[0].stat.shots * 0.9
                     + player.overallStats.stats[0].splits[0].stat.blocked * 1;
-
 
                 player.fantasyScore = player.overallStats.stats[0].splits[0].stat.assists * 4
                     + player.overallStats.stats[0].splits[0].stat.goals * 6
@@ -127,7 +130,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
                     + player.overallStats.stats[0].splits[0].stat.goalAgainstAverage * -3
                     + player.overallStats.stats[0].splits[0].stat.saves * 0.6
                     + player.overallStats.stats[0].splits[0].stat.shutouts * 5;
-
+                    
                 player.fantasyScore =
                     player.overallStats.stats[0].splits[0].stat.wins * 5
                     + player.overallStats.stats[0].splits[0].stat.goalAgainstAverage * -3
@@ -139,8 +142,6 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
         });
 
-        console.log(this.currentScore);
-        this.scoreValueChange.emit(this.currentScore);
     }
 
     displayPlayerName(player: TeamPlayer) {

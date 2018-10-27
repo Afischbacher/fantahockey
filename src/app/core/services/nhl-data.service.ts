@@ -35,6 +35,10 @@ export class NhlDataService {
         return this.http.get(`https://statsapi.web.nhl.com${link}/stats/?stats=statsSingleSeason&season=${this.getLastSeason()}`)
     }
 
+    getPlayerInfo(link: string) {
+        return this.http.get(`https://statsapi.web.nhl.com/${link}`)
+  
+    }
     getLastSeason(): string {
 
         if(new Date(`2019-01-01`) < new Date())
