@@ -4,11 +4,12 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { AboutRoutingModule } from './about-routing.module';
 import { AboutComponent } from './about.component';
+import { MatIconModule } from '@angular/material';
 
 @NgModule({
   imports: [
-    CommonModule,
     TranslateModule,
+    MatIconModule,
     AboutRoutingModule
   ],
   declarations: [

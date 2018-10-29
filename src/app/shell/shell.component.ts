@@ -15,8 +15,6 @@ declare var Fingerprint2: any;
 })
 export class ShellComponent implements OnInit {
 
-  // icons for menu
-  faBars = faBars;
 
   
   constructor(public navService: NavService, private tourService: TourService) { }
@@ -33,6 +31,18 @@ export class ShellComponent implements OnInit {
       iconName: 'trending_up',
       children: [],
       route: "/dashboard"
+    },
+    {
+      displayName: 'Settings',
+      iconName: 'settings',
+      children: [],
+      route: "/settings"
+    },
+    {
+      displayName: 'App Info',
+      iconName: 'info',
+      children: [],
+      route: "/about"
     }
   ];
 

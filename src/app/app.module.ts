@@ -15,6 +15,8 @@ import { AboutModule } from './about/about.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
+import { SettingsModule } from '@app/settings/settings.module';
 
 @NgModule({
   imports: [
@@ -30,8 +32,17 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
     ShellModule,
     TradeDashboardModule,
     AboutModule,
+    SettingsModule,
     TourMatMenuModule.forRoot(),
     AppRoutingModule,
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.circle,
+      backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+      backdropBorderRadius: '4px',
+      primaryColour: '#ffffff', 
+      secondaryColour: 'gray', 
+      tertiaryColour: '#ffffff'
+  })
   ],
   declarations: [AppComponent],
   providers: [

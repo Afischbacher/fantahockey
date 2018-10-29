@@ -14,6 +14,7 @@ import { Position } from "@app/core/interfaces/position";
         position: Position;
         fantasyScore: number;
         lastYearFantasyScore:number;
+        teamLogo: string;
         playerInfo: PlayerInfo;
     }
 

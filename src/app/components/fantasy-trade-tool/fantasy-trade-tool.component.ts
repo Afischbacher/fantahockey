@@ -59,6 +59,10 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
     }
 
+    trackByPlayers(i: number) {
+        return i;
+    }
+
     ngOnInit(): void { }
 
     addPlayerToList(player: TeamPlayer) {
@@ -169,6 +173,8 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
         this.currentPlayerSelection.splice(playerToRemove, 1);
         this.toggleSearch();
+        
+        this.currentPlayerSelection = this.currentPlayerSelection.slice();
 
         this.currentScore = this.currentScore - player.fantasyScore >= 0 ? this.currentScore - player.fantasyScore : 0
 

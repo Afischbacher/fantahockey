@@ -17,6 +17,7 @@ import { FantasyTradeToolComponent } from '@app/components/fantasy-trade-tool/fa
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
+import { NgxLoadingModule } from 'ngx-loading';
 @NgModule({
   imports: [
     CommonModule,
@@ -35,7 +36,8 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
     FormsModule,
     SharedModule,
     MatProgressBarModule,
-    TourMatMenuModule
+    TourMatMenuModule,
+    NgxLoadingModule
   ],
   declarations: [
     TradeDashboardComponent,

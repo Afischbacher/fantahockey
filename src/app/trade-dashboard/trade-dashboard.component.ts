@@ -7,6 +7,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { TourService } from 'ngx-tour-md-menu';
 import { Constants } from '@app/core/constants/constants';
 import { Person } from '@app/core/interfaces/person';
+import { Team } from '@app/core/interfaces/team';
 
 @Component({
   selector: 'trade-dashboard',
@@ -31,9 +32,10 @@ import { Person } from '@app/core/interfaces/person';
 export class TradeDashboardComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit(): void {
-    this.stopLoading();
+
   }
 
+  loading = false;
   playerSet: TeamPlayer[] = [];
   isLoading = false;
   value = 0;
@@ -43,14 +45,21 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
 
   }
 
-  ngOnInit(): void {
+  startLoading(): void {
+    this.loading = true;
+  }
 
-    this.getPlayerData();
-    //this.initializeTour();
+  endLoading(): void {
+    this.loading = false;
+  }
+
+  ngOnInit(): void {
+    this.startLoading();
+    this.getTeams();
   }
 
   showScore($event: number): void {
-    console.log("event");
+    
     console.log($event);
   }
 
@@ -85,37 +94,52 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
 
   }
 
-  async getPlayerData() {
+  getTeams() {
 
-    const teams = await this.nhlDataService.getCurrentTeams().pipe(switchMap(val => val.teams));
+    let teams: Team[];
+    this.nhlDataService.getCurrentTeams().subscribe(res => {
+
+      teams = res.teams
+      this.getSeasonPlayerData(teams);
+
+    });
+
+  }
+
+
+  async getSeasonPlayerData(teams: Team[]) {
+
+    let playerSet: TeamPlayer[] = [];
 
     teams.forEach(async (team) => {
 
       await this.nhlDataService.getCurrentRoster(team.id).pipe((switchMap((res: TeamRoster) => res.roster))).subscribe(async (teamPlayer: TeamPlayer) => {
-        
-        await this.nhlDataService.getCurrentSeasonPlayerStats(teamPlayer.person.link).subscribe(async (stat) =>{ 
 
-          await this.nhlDataService.getPlayerInfo(teamPlayer.person.link).subscribe((playerInfo: any) => { teamPlayer.playerInfo = playerInfo; });
-          
-          teamPlayer.overallStats = await stat;
-          
+      await  this.nhlDataService.getCurrentSeasonPlayerStats(teamPlayer.person.link).subscribe(async (stat) => {
+
+          teamPlayer.overallStats = stat;
+          teamPlayer.image = `https://nhl.bamcontent.com/images/headshots/current/168x168/${teamPlayer.person.id}.png`;
+          this.getPlayerInfo(teamPlayer);
         });
-
-        teamPlayer.image = `https://nhl.bamcontent.com/images/headshots/current/168x168/${teamPlayer.person.id}.png`
-        await this.playerSet.push(teamPlayer);
-
       });
     });
 
 
+
   }
 
-  startLoading() {
-    this.isLoading = false;
+  getPlayerInfo(teamPlayer: TeamPlayer) {
+
+    this.nhlDataService.getPlayerInfo(teamPlayer.person.link).subscribe((playerInfo: any) => {
+
+      teamPlayer.playerInfo = playerInfo.people[0];
+      this.playerSet.push(teamPlayer);
+      teamPlayer.teamLogo = `https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${teamPlayer.playerInfo.currentTeam.id}.svg`
+    });
+  
+    this.endLoading();
+
   }
 
-  stopLoading() {
-    this.isLoading = true;
-  }
 }
 

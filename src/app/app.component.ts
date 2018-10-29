@@ -16,17 +16,20 @@ const log = new Logger('App');
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
+  public loading = false;
+  
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private titleService: Title,
               private translateService: TranslateService) { }
 
   ngOnInit() {
+
     // Setup logger
     if (environment.production) {
       Logger.enableProductionMode();
     }
+
     log.debug('init');
 
     const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));

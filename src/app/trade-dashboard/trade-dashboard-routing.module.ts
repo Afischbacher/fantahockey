@@ -7,10 +7,8 @@ import { Shell } from '@app/shell/shell.service';
 
 const routes: Routes = [
   Shell.childRoutes([
-    { path: '**', redirectTo: '/dashboard', pathMatch: 'full' },
-    { path: 'dashboard', 
-    component: TradeDashboardComponent, 
-    data: { title: extract('NHL Fantasy Trade Tool') } }
+    { path: 'dashboard',  component: TradeDashboardComponent, data: { title: extract('Trade Dashboard - NHL Fantasy Trade Tool') } },
+    { path: "", redirectTo: '/dashboard', pathMatch: 'full'}
   ])
 ];
 
@@ -19,4 +17,5 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
+
 export class TradeDashboardRoutingModule { }

@@ -2,10 +2,10 @@ import { TestBed, inject, async } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { CoreModule, HttpCacheService } from '@app/core';
-import { QuoteService } from '@app/trade-dashboard/trade-dashboard.service';
+import { NhlDataService } from '@app/core/services/nhl-data.service';
 
-describe('QuoteService', () => {
-  let quoteService: QuoteService;
+describe('NhlDataService', () => {
+  let nhlService: NhlDataService;
   let httpMock: HttpTestingController;
 
   beforeEach(async(() => {
@@ -16,20 +16,20 @@ describe('QuoteService', () => {
       ],
       providers: [
         HttpCacheService,
-        QuoteService
+        NhlDataService
       ]
     });
   }));
 
   beforeEach(inject([
     HttpCacheService,
-    QuoteService,
+    NhlDataService,
     HttpTestingController
   ], (htttpCacheService: HttpCacheService,
-      _quoteService: QuoteService,
+      _quoteService: NhlDataService,
       _httpMock: HttpTestingController) => {
 
-    quoteService = _quoteService;
+    nhlService = _quoteService;
     httpMock = _httpMock;
 
     htttpCacheService.cleanCache();
@@ -39,34 +39,17 @@ describe('QuoteService', () => {
     httpMock.verify();
   });
 
-  describe('getRandomQuote', () => {
-    it('should return a random Chuck Norris quote', () => {
+  describe('getCurrentTeams', () => {
+    it('should return a list of teams', () => {
       // Arrange
-      const mockQuote = { value: 'a random quote' };
-
       // Act
-      const randomQuoteSubscription = quoteService.getRandomQuote({ category: 'toto' });
+      const getCurrentTeams = nhlService.getCurrentTeams();
 
       // Assert
-      randomQuoteSubscription.subscribe((quote: string) => {
-        expect(quote).toEqual(mockQuote.value);
+      getCurrentTeams.subscribe(val => {
+        expect(val).toBe(val.teams !== null);
       });
-      httpMock.expectOne({}).flush(mockQuote);
-    });
-
-    it('should return a string in case of error', () => {
-      // Act
-      const randomQuoteSubscription = quoteService.getRandomQuote({ category: 'toto' });
-
-      // Assert
-      randomQuoteSubscription.subscribe((quote: string) => {
-        expect(typeof quote).toEqual('string');
-        expect(quote).toContain('Error');
-      });
-      httpMock.expectOne({}).flush(null, {
-        status: 500,
-        statusText: 'error'
-      });
+      httpMock.expectOne({}).flush(getCurrentTeams);
     });
   });
 });
