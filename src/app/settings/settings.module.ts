@@ -15,6 +15,7 @@ import { SettingsComponent } from '@app/settings/settings.component';
 import { SettingsRoutingModule } from '@app/settings/settings-routing.module';
 import { MatInputModule } from '@angular/material';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { SettingsService } from '@app/core/services/settings.service';
 
 
 @NgModule({
@@ -41,7 +42,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     SettingsComponent,
   ],
   providers: [
-    
+    SettingsService
   ]
 })
 export class SettingsModule { }

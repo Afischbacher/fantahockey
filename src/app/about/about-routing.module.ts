@@ -8,6 +8,11 @@ import { AboutComponent } from './about.component';
 const routes: Routes = [
   Shell.childRoutes([
     { path: 'about', component: AboutComponent, data: { title: extract('About - NHL Fantasy Trade Tool') } },
+    {
+      path: "",
+      redirectTo: "/dashboard",
+      pathMatch: "full"
+    }
   ])
 ];
 

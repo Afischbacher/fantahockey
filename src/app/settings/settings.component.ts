@@ -8,7 +8,8 @@ import { TourService } from 'ngx-tour-md-menu';
 import { Constants } from '@app/core/constants/constants';
 import { Person } from '@app/core/interfaces/person';
 import { Team } from '@app/core/interfaces/team';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, NgForm } from '@angular/forms';
+import { SettingsService } from '@app/core/services/settings.service';
 
 @Component({
   selector: 'settings',
@@ -32,35 +33,42 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class SettingsComponent implements OnInit, AfterContentInit {
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
-  ngAfterContentInit(): void {
-
-  }
+  ngAfterContentInit(): void { }
 
   loading = false;
-  settings = Constants.settings;
+ 
+  fantasyPlayerSettings =  localStorage.getItem(Constants.fantasyLeagueSettings) !== null ? JSON.parse(localStorage.getItem(Constants.fantasyLeagueSettings)) : Constants.fantasyPlayerSettings;
+  fantasyGoalieSettings = Constants.fantasyGoalieSettings;
+  
   settingsControl: FormControl;
 
-  constructor(private nhlDataService: NhlDataService, private tourService: TourService) {
+  constructor(private settingsService: SettingsService) {
 
-      this.settingsControl = new FormControl(null,{
-        validators: Validators.required,
-        updateOn: 'blur'
-      });
+    this.settingsControl = new FormControl(null, {
+      validators: Validators.required,
+      updateOn: 'blur'
+    });
   }
 
-  submitSettings(form: any){
-    console.log(form);
+  submitPlayerSettings($form: NgForm) {
+
+    const settings: {} = $form.value;
+    const newSettings = [];
+    let currentSettings = Constants.fantasyPlayerSettings;
+
+    for (var key in settings) {
+      let setting = currentSettings.filter(x => x.value === key)[0];
+      setting.settingValue = settings[key];
+      newSettings.push(setting);
+    }
+
+    this.settingsService.saveFantasyLeagueSettings(newSettings);
   }
 
-  startLoading(): void {
-    this.loading = true;
-  }
+  submitGoalieSettings($form: NgForm){
 
-  endLoading(): void {
-    this.loading = false;
   }
 
 }

@@ -73,9 +73,9 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
             this.currentPlayerSelection.push(player);
             this.toggleSearch();
-            
+
             let fantasyPlayer = this.calculateFantasyScore(player);
-            fantasyPlayer = this.calculateLastYearFantasyScore(fantasyPlayer);  
+            fantasyPlayer = this.calculateLastYearFantasyScore(fantasyPlayer);
             this.scoreValueChange.emit(this.currentScore);
 
         }
@@ -84,9 +84,9 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
     }
 
-     calculateLastYearFantasyScore(player: TeamPlayer): TeamPlayer {
+    calculateLastYearFantasyScore(player: TeamPlayer): TeamPlayer {
 
-         this.nhlDataService.getLastSeasonPlayerStats(player.person.link).subscribe((lastYearPlayer: OverallStats) => {
+        this.nhlDataService.getLastSeasonPlayerStats(player.person.link).subscribe((lastYearPlayer: OverallStats) => {
 
             if (player.position.abbreviation !== "G") {
 
@@ -111,7 +111,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
                         + lastYearPlayer.stats[0].splits[0].stat.shutouts * 5
                     );
             }
-            
+
         });
 
         return player;
@@ -154,6 +154,10 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
         }
 
+        else {
+            throw Error("Team player does not have the proper position");
+        }
+
         return player;
     }
 
@@ -173,7 +177,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
         this.currentPlayerSelection.splice(playerToRemove, 1);
         this.toggleSearch();
-        
+
         this.currentPlayerSelection = this.currentPlayerSelection.slice();
 
         this.currentScore = this.currentScore - player.fantasyScore >= 0 ? this.currentScore - player.fantasyScore : 0
