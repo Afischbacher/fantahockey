@@ -81,11 +81,17 @@ export class SettingsComponent implements OnInit, AfterContentInit {
 
      this.settingsService.savePlayerFantasyLeagueSettings(newPlayerSettings)
      .then(() => {
-       this.matSnackbar.openFromComponent(UpdateSnackbarComponent, {
-         data: 'Successfully updated player settings',
-         duration: 3000
-       })
-     });
+      this.matSnackbar.openFromComponent(UpdateSnackbarComponent, {
+        data: {message:'Successfully updated player settings', icon: "check"},
+        duration: 3000
+      });
+    })
+    .catch(() => {
+      this.matSnackbar.openFromComponent(UpdateSnackbarComponent, {
+        data: {message:'An error has occurred while updating player settings', icon: "error_outline"},
+        duration: 3000
+      });
+    });
   }
 
   submitGoalieSettings($form: NgForm) {
@@ -106,9 +112,15 @@ export class SettingsComponent implements OnInit, AfterContentInit {
     this.settingsService.saveGoalieFantasyLeaugeSettings(newGoalieSettings)
     .then(() => {
       this.matSnackbar.openFromComponent(UpdateSnackbarComponent, {
-        data: 'Successfully updated goalie settings',
+        data: {message:'Successfully updated goalie settings', icon: "check"},
         duration: 3000
-      })
+      });
+    })
+    .catch(() => {
+      this.matSnackbar.openFromComponent(UpdateSnackbarComponent, {
+        data: {message:'An error has occurred while updating goalie settings', icon: "error_outline"},
+        duration: 3000
+      });
     });
 
   }
