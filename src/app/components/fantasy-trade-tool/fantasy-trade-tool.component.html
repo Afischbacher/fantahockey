@@ -20,10 +20,14 @@
                             | <small>No player data available</small>
                         </span>
                         <span *ngFor="let stat of player?.overallStats?.stats[0]?.splits">
-                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">GP: {{stat.stat.games}}</small>
-                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">G: {{stat.stat.goals}}</small>
-                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">A: {{stat.stat.assists}}</small>
-                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">SOG: {{stat.stat.shots}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">GP:
+                                {{stat.stat.games}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">G:
+                                {{stat.stat.goals}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">A:
+                                {{stat.stat.assists}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">SOG:
+                                {{stat.stat.shots}}</small>
                             <span class="desktop-only bar-info">|</span> <small class="desktop-only">+/-:
                                 {{stat.stat.plusMinus}}</small>
                         </span>
@@ -39,12 +43,14 @@
                             | <small>No player data available</small>
                         </span>
                         <span *ngFor="let stat of player?.overallStats?.stats[0].splits">
-                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">W: {{stat.stat.wins}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">W:
+                                {{stat.stat.wins}}</small>
                             <span class="desktop-only bar-info">|</span> <small class="desktop-only">SV%:
                                 {{stat.stat.savePercentage}}</small>
                             <span class="desktop-only bar-info">|</span> <small class="desktop-only">GAA:
                                 {{stat.stat.goalAgainstAverage}}</small>
-                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">SO: {{stat.stat.shutouts}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">SO:
+                                {{stat.stat.shutouts}}</small>
                         </span>
                         <img class="logo-image" [src]="player.teamLogo" height="55" />
                     </div>
@@ -55,6 +61,7 @@
 </form>
 
 <mat-card class="smooth-player-selection" *ngFor="let player of currentPlayerSelection; trackBy: trackPlayerBy" @fadeIn>
+
     <div class="smooth-player-selection" *ngIf="player.position.code !== 'G'">
         <img [src]="player.image" class="player-image" />
 

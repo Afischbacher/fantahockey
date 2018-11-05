@@ -4,6 +4,8 @@ import { TourService } from 'ngx-tour-md-menu';
 import { Constants } from '@app/core/constants/constants';
 import { FormControl, Validators, NgForm } from '@angular/forms';
 import { SettingsService } from '@app/core/services/settings.service';
+import { MatSnackBar } from '@angular/material';
+import { UpdateSnackbarComponent } from '@app/components/update-snackbar/update-snackbar.component';
 
 @Component({
   selector: 'settings',
@@ -49,7 +51,7 @@ export class SettingsComponent implements OnInit, AfterContentInit {
   playerSettingsControl: FormControl;
   goalieSettingsControl: FormControl;
 
-  constructor(private settingsService: SettingsService, private tourService: TourService) {
+  constructor(private settingsService: SettingsService, private tourService: TourService, private matSnackbar: MatSnackBar) {
 
     this.playerSettingsControl = new FormControl(null, {
       validators: Validators.required,
@@ -77,7 +79,13 @@ export class SettingsComponent implements OnInit, AfterContentInit {
 
     }
 
-     this.settingsService.savePlayerFantasyLeagueSettings(newPlayerSettings);
+     this.settingsService.savePlayerFantasyLeagueSettings(newPlayerSettings)
+     .then(() => {
+       this.matSnackbar.openFromComponent(UpdateSnackbarComponent, {
+         data: 'Successfully updated player settings',
+         duration: 3000
+       })
+     });
   }
 
   submitGoalieSettings($form: NgForm) {
@@ -95,7 +103,13 @@ export class SettingsComponent implements OnInit, AfterContentInit {
 
     }
 
-    this.settingsService.saveGoalieFantasyLeaugeSettings(newGoalieSettings);
+    this.settingsService.saveGoalieFantasyLeaugeSettings(newGoalieSettings)
+    .then(() => {
+      this.matSnackbar.openFromComponent(UpdateSnackbarComponent, {
+        data: 'Successfully updated goalie settings',
+        duration: 3000
+      })
+    });
 
   }
 

@@ -1,49 +1,63 @@
 #background-dashboard {
-  position: fixed; 
-  top: 60px; 
-  left: 0;
-  min-width: 100%;
-  min-height: 100%;
-  background: url('../../assets/nhl-fantasy-trade-tool-dashboard-background.jpg') no-repeat center fixed;  
-  background-size: cover;
-  z-index: -9999;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    background: url('../../assets/nhl-fantasy-trade-tool-dashboard-background.jpg') no-repeat center fixed;
+    background-size: cover;
+    z-index: -9999;
 }
 
-@media all and (max-width: 660px){
-  
-#background-dashboard {
-  top: 55px;
-  }
+@media all and (max-width: 767px) {
+    #background-dashboard {
+        top: 55px;
+    }
+}
 
+@media all and (min-width: 1201px) {
+    .trade-icon {
+        display: none;
+    }
 }
 
 .search-input {
-  width: 100%;
+    width: 100%;
 }
 
-.full-width-search{
-  width: 100%;
+.full-width-search {
+    width: 100%;
 }
 
-.player-item-padding-right{
-  padding-right: 5px;
+.player-item-padding-right {
+    padding-right: 5px;
 }
 
-#background{
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%; 
-  min-height: 100%;
-  z-index: -9999;
-  filter: grayscale(75%) blur(25px);
-
+#background {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -9999;
+    filter: grayscale(75%) blur(25px);
 }
 
-.icon-remove{
-  margin-right: 5px;
+.icon-remove {
+    margin-right: 5px;
+}
+
+.center {
+    text-align: center;
 }
 
 .transparent-bg {
-  opacity: 0.9;
+    opacity: 0.9;
+}
+
+@media all and (max-width: 1200px) {
+    .trade-icon {
+        font-size: 42px;
+        text-align: center;
+    }
 }

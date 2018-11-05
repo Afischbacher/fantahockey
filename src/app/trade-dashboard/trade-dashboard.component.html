@@ -5,13 +5,17 @@
 </div>
 
 <video autoplay [muted]="true" loop id="background">
-  <!-- <source src="../../assets/video-background.mp4" type="video/mp4">-->
+ <!-- <source src="../../assets/video-background.mp4" type="video/mp4"> -->
 </video>
+
 <div class="container-fluid transparent-bg">
     <div class="row">
-        <div *ngFor="let ids of fantasyTradeComponentIds" class="col-md-12 col-sm-12 col-lg-6 col-xl-6">
+        <div *ngFor="let ids of fantasyTradeComponentIds; let i = index;" class="col-md-12 col-sm-12 col-lg-12 col-xl-6">
             <fantasy-trade-tool [tourIds]="ids" [playerSet]="playerSet" (scoreValueChange)="showScore($event)">
             </fantasy-trade-tool>
+            <div *ngIf="i === 0" class="center">
+                <mat-icon class="trade-icon">swap_vert</mat-icon>
+            </div>
         </div>
     </div>
 </div>

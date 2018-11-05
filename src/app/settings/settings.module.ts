@@ -16,6 +16,8 @@ import { SettingsRoutingModule } from '@app/settings/settings-routing.module';
 import { MatInputModule, MatSelectModule } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SettingsService } from '@app/core/services/settings.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { UpdateSnackbarComponent } from '@app/components/update-snackbar/update-snackbar.component';
 
 @NgModule({
   imports: [
@@ -36,9 +38,13 @@ import { SettingsService } from '@app/core/services/settings.service';
     MatInputModule,
     MatExpansionModule,
     MatSelectModule,  
-    TourMatMenuModule
+    TourMatMenuModule,
+    MatSnackBarModule
   ],
+  entryComponents: [UpdateSnackbarComponent],
+
   declarations: [
+    UpdateSnackbarComponent,
     SettingsComponent,
   ],
   providers: [
