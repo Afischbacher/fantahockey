@@ -6,7 +6,8 @@ import { merge } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
-import { Logger, I18nService } from '@app/core';
+import { Logger } from '@app/core';
+import { Constants } from './core/constants/constants';
 
 const log = new Logger('App');
 
@@ -24,13 +25,14 @@ export class AppComponent implements OnInit {
               private translateService: TranslateService) { }
 
   ngOnInit() {
-
     // Setup logger
     if (environment.production) {
       Logger.enableProductionMode();
     }
 
     log.debug('init');
+
+    localStorage.setItem(Constants.version, environment.version);
 
     const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
 

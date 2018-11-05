@@ -1,50 +1,69 @@
   .search-input {
-    width: 100%;
-  }
-  
-  .full-width-search{
-    width: 100%;
-  }
-  
-  .player-item-padding-right{
-    padding-right: 5px;
-  }
-  
-  .icon-remove{
-    margin-right: 5px;
-  }
-  
-
-  .smooth-player-selection{
-    transition: all .3s;
+      width: 100%;
   }
 
-  mat-option{
-    height: 90px;
+  .full-width-search {
+      width: 100%;
   }
 
- .player-image {
-    
-    border-radius: 50%;
-    height: 60px;
-    animation: fadeIn 1s ease-in;
-  
+  .player-item-padding-right {
+      padding-right: 5px;
+  }
+
+  .icon-remove {
+      margin-right: 5px;
+  }
+
+  .smooth-player-selection {
+      transition: all .3s;
+  }
+
+  mat-option {
+      height: 90px;
+  }
+
+  .player-image {
+      border-radius: 50%;
+      height: 60px;
+      animation: fadeIn 1s ease-in;
+  }
+
+  .team-logo-image {
+      border-radius: 50%;
+      height: 60px;
+      animation: fadeIn 1s ease-in;
   }
   
+  .desktop-only {
+      opacity: 0;
+  }
+
   .logo-image {
     animation: fadeIn 1s ease-in;
     float: right;
     height: 55px;
-  }
-
-  .team-logo-image {
-        
-    border-radius: 50%;
-    height: 60px;
-    animation: fadeIn 1s ease-in;
-  }
+}
 
   @keyframes fadeIn {
-    from {opacity : 0;}
-    to {opacity: 1;}
+      from {
+          opacity: 0;
+      }
+      to {
+          opacity: 1;
+      }
+  }
+
+  @media all and (min-width: 768px) {
+      .desktop-only {
+          opacity: 1;
+      }
+      .logo-image {
+          animation: fadeIn 1s ease-in;
+          float: right;
+          height: 55px;
+      }
+  }
+
+  .bar-info {
+      padding-right: 5px;
   }

@@ -7,6 +7,8 @@ import { Team } from '@app/core/interfaces/team';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { TourService } from 'ngx-tour-md-menu';
 import { BehaviorSubject } from 'rxjs';
+import { Constants } from '@app/core/constants/constants';
+import { parse } from 'babylon';
 
 @Component({
     selector: 'fantasy-trade-tool',
@@ -42,6 +44,15 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
     currentPlayerSelection: TeamPlayer[] = [];
     disableSearch: boolean = false;
     scoreSubject = new BehaviorSubject<number>(this.currentScore);
+
+    fantasyPlayerSettings: any[] = localStorage.getItem(Constants.playerFantasyLeagueSettings) !== null
+        ? JSON.parse(localStorage.getItem(Constants.playerFantasyLeagueSettings))
+        : Constants.fantasyPlayerSettings;
+
+    fantasyGoalieSettings: any[] = localStorage.getItem(Constants.goalieFantasyLeaugeSettings) !== null
+        ? JSON.parse(localStorage.getItem(Constants.goalieFantasyLeaugeSettings))
+        : Constants.fantasyGoalieSettings;
+
 
     constructor(private nhlDataService: NhlDataService, private tourService: TourService) {
 
@@ -86,75 +97,82 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
     calculateLastYearFantasyScore(player: TeamPlayer): TeamPlayer {
 
+        player.lastYearFantasyScore = 0;
+
         this.nhlDataService.getLastSeasonPlayerStats(player.person.link).subscribe((lastYearPlayer: OverallStats) => {
 
-            if (player.position.abbreviation !== "G") {
+            if (player.position.abbreviation !== Constants.goaliePosition) {
 
                 if (lastYearPlayer.stats[0].splits[0] !== undefined) {
 
-                    player.lastYearFantasyScore =
-                        (lastYearPlayer.stats[0].splits[0].stat.assists * 4
-                            + lastYearPlayer.stats[0].splits[0].stat.goals * 6
-                            + lastYearPlayer.stats[0].splits[0].stat.plusMinus * 2
-                            + lastYearPlayer.stats[0].splits[0].stat.powerPlayPoints * 2
-                            + lastYearPlayer.stats[0].splits[0].stat.shots * 0.9
-                            + lastYearPlayer.stats[0].splits[0].stat.blocked * 1)
+                    const playerStats = lastYearPlayer.stats[0].splits[0].stat;
+
+                    for (var key in playerStats) {
+                        let setting = this.fantasyPlayerSettings.filter(x => x.value === key)[0];
+
+                        player.lastYearFantasyScore += parseInt(playerStats[key]) * setting.settingValue;
+
+                    }
                 }
             }
+
             else {
 
-                player.lastYearFantasyScore =
-                    (
-                        lastYearPlayer.stats[0].splits[0].stat.wins * 5
-                        + lastYearPlayer.stats[0].splits[0].stat.goalAgainstAverage * -3
-                        + lastYearPlayer.stats[0].splits[0].stat.saves * 0.6
-                        + lastYearPlayer.stats[0].splits[0].stat.shutouts * 5
-                    );
+                if (lastYearPlayer.stats[0].splits[0] !== undefined) {
+
+                    const playerStats = lastYearPlayer.stats[0].splits[0].stat;
+
+                    for (var key in playerStats) {
+                        let setting = this.fantasyGoalieSettings.filter(x => x.value === key)[0];
+
+                        player.lastYearFantasyScore += parseInt(playerStats[key]) * setting.settingValue;
+
+                    }
+                }
             }
 
         });
 
+        console.log(player);
         return player;
+
     }
 
     calculateFantasyScore(player: TeamPlayer): TeamPlayer {
 
-        if (player !== null && player.position.abbreviation !== "G") {
+        player.fantasyScore = 0;
 
-            this.currentScore +=
-                player.overallStats.stats[0].splits[0].stat.assists * 4
-                + player.overallStats.stats[0].splits[0].stat.goals * 6
-                + player.overallStats.stats[0].splits[0].stat.plusMinus * 2
-                + player.overallStats.stats[0].splits[0].stat.powerPlayPoints * 2
-                + player.overallStats.stats[0].splits[0].stat.shots * 0.9
-                + player.overallStats.stats[0].splits[0].stat.blocked * 1;
+        if (player !== null && player.position.abbreviation !== Constants.goaliePosition) {
 
-            player.fantasyScore = player.overallStats.stats[0].splits[0].stat.assists * 4
-                + player.overallStats.stats[0].splits[0].stat.goals * 6
-                + player.overallStats.stats[0].splits[0].stat.plusMinus * 2
-                + player.overallStats.stats[0].splits[0].stat.powerPlayPoints * 2
-                + player.overallStats.stats[0].splits[0].stat.shots * 0.9
-                + player.overallStats.stats[0].splits[0].stat.blocked * 1;
+            const playerStats = player.overallStats.stats[0].splits[0].stat;
+
+            for (var key in playerStats) {
+
+                let setting = this.fantasyPlayerSettings.filter(x => x.value === key)[0];
+
+                this.currentScore += parseInt(playerStats[key]) * setting.settingValue;
+                player.fantasyScore += parseInt(playerStats[key]) * setting.settingValue;
+
+            }
+
         }
 
-        else if (player !== null && player.position.abbreviation === "G") {
+        else if (player !== null && player.position.abbreviation === Constants.goaliePosition) {
 
-            this.currentScore +=
-                player.overallStats.stats[0].splits[0].stat.wins * 5
-                + player.overallStats.stats[0].splits[0].stat.goalAgainstAverage * -3
-                + player.overallStats.stats[0].splits[0].stat.saves * 0.6
-                + player.overallStats.stats[0].splits[0].stat.shutouts * 5;
+            const goalieStats = player.overallStats.stats[0].splits[0].stat;
 
+            for (var key in goalieStats) {
 
-            player.fantasyScore =
-                player.overallStats.stats[0].splits[0].stat.wins * 5
-                + player.overallStats.stats[0].splits[0].stat.goalAgainstAverage * -3
-                + player.overallStats.stats[0].splits[0].stat.saves * 0.6
-                + player.overallStats.stats[0].splits[0].stat.shutouts * 5;
+                let settings = this.fantasyGoalieSettings.filter(x => x.value === key)[0];
 
+                this.currentScore += parseInt(goalieStats[key]) * settings.settingValue;
+                player.fantasyScore += parseInt(goalieStats[key]) * settings.settingValue;
+
+            }
         }
 
         else {
+
             throw Error("Team player does not have the proper position");
         }
 
@@ -176,13 +194,14 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
         const playerToRemove = this.currentPlayerSelection.indexOf(player, 0);
 
         this.currentPlayerSelection.splice(playerToRemove, 1);
+
         this.toggleSearch();
 
-        this.currentPlayerSelection = this.currentPlayerSelection.slice();
-
-        this.currentScore = this.currentScore - player.fantasyScore >= 0 ? this.currentScore - player.fantasyScore : 0
-
+        this.currentScore = this.currentScore - player.fantasyScore >= 0 ? this.currentScore - player.fantasyScore : 0;
     }
 
+    trackPlayerBy(index: number, item: any) {
+        return index;
+    }
 }
 

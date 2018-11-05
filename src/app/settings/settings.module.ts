@@ -13,10 +13,9 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
 import { NgxLoadingModule } from 'ngx-loading';
 import { SettingsComponent } from '@app/settings/settings.component';
 import { SettingsRoutingModule } from '@app/settings/settings-routing.module';
-import { MatInputModule } from '@angular/material';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatInputModule, MatSelectModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { SettingsService } from '@app/core/services/settings.service';
-
 
 @NgModule({
   imports: [
@@ -33,10 +32,11 @@ import { SettingsService } from '@app/core/services/settings.service';
     FormsModule,
     SharedModule,
     MatProgressBarModule,
-    TourMatMenuModule,
     NgxLoadingModule,
     MatInputModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSelectModule,  
+    TourMatMenuModule
   ],
   declarations: [
     SettingsComponent,

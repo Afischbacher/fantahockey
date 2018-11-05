@@ -35,11 +35,11 @@ export class Constants {
     static readonly fantasyGoalieSettings: any[] = [
         { value: "timeOnIce", name: "Time on Ice", settingValue: 0 },
         { value: "ot", name: "Over Time", settingValue: 0 },
-        { value: "shutouts", name: "Shutouts", settingValue: 0 },
+        { value: "shutouts", name: "Shutouts", settingValue: 5 },
         { value: "ties", name: "Ties", settingValue: 0 },
-        { value: "wins", name: "Wins", settingValue: 0 },
+        { value: "wins", name: "Wins", settingValue: 5 },
         { value: "losses", name: "Losses", settingValue: 0 },
-        { value: "saves", name: "Saves", settingValue: 0 },
+        { value: "saves", name: "Saves", settingValue: 0.6 },
         { value: "powerPlaySaves", name: "Power Play Saves", settingValue: 0 },
         { value: "shortHandedSaves", name: "Short Handed Saves", settingValue: 0 },
         { value: "evenSaves", name: "Even Saves", settingValue: 0 },
@@ -51,11 +51,18 @@ export class Constants {
         { value: "games", name: "Games", settingValue: 0 },
         { value: "gamesStarted", name: "Games Started", settingValue: 0 },
         { value: "shotsAgainst", name: "Shots Against", settingValue: 0 },
-        { value: "goalsAgainst", name: "Goals Against", settingValue: 0 },
+        { value: "goalsAgainst", name: "Goals Against", settingValue: -3 },
         { value: "timeOnIcePerGame", name: "Time on Ice Per Game", settingValue: 0 },
         { value: "powerPlaySavePercentage", name: "Power Play Save Percentage", settingValue: 0 },
         { value: "shortHandedSavePercentage", name: "Short Handed Save Percentage", settingValue: 0 },
         { value: "evenStrengthSavePercentage", name: "Even Strength Save Percentage", settingValue: 0 },
     ];
-    static readonly fantasyLeagueSettings: string = "fantasyLeagueSettings";
+
+    static readonly playerFantasyLeagueSettings: string = "playerFantasyLeagueSettings";
+    static readonly goalieFantasyLeaugeSettings: string = "goalieFantasyLeagueSettings";
+
+    static readonly goaliePosition = "G";
+
+    static readonly version = "version";
+    
 }

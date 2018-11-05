@@ -3,9 +3,9 @@
         <h1>
             <span translate>Settings</span>
         </h1>
-        <mat-accordion>
+        <mat-accordion tourAnchor="tour7">
             <mat-expansion-panel>
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header >
                     <mat-panel-title>
                         <mat-icon>settings</mat-icon>
                     </mat-panel-title>
@@ -13,16 +13,19 @@
                         Fantasy Player Settings
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <form #f="ngForm" (ngSubmit)="submitPlayerSettings(f)" [ngFormOptions]="{updateOn: 'blur'}" validate>
+                <form #playerForm="ngForm" (ngSubmit)="submitPlayerSettings(playerForm)" [ngFormOptions]="{updateOn: 'blur'}"
+                    validate>
                     <div class="form-field-settings">
-                        <div class="row" *ngFor="let setting of fantasyPlayerSettings">
+                        <div class="row" *ngFor="let setting of fantasyPlayerSettings; let i = index;">
                             <div class="col-md-12 col-lg-12 col-sm-12">
-                                <mat-form-field class="form-field-settings" [formControl]="settingsControl"
+                                <mat-form-field class="form-field-settings" [formControl]="playerSettingsControl"
                                     ngDefaultControl>
                                     <div>
-                                        <input (blur)="submitPlayerSettings(f)" matInput type="number" [ngModel]=setting.settingValue [placeholder]="setting.name"
-                                            [ngModel]="setting.value" [name]="setting.value" required [ngModelOptions]="{updateOn: 'blur'}">
-                                    
+
+                                        <input type="number" matInput required (blur)="submitPlayerSettings(playerForm)"
+                                            [ngModel]="setting.settingValue" [placeholder]="setting.name"
+                                            [ngModelOptions]="{updateOn: 'blur'}" name="{{setting.value}}" />
+
                                     </div>
                                 </mat-form-field>
                             </div>
@@ -31,31 +34,33 @@
                 </form>
             </mat-expansion-panel>
             <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <mat-icon>settings</mat-icon>
-                        </mat-panel-title>
-                        <mat-panel-description>
-                            Fantasy Goalie Settings
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <form #f="ngForm" (ngSubmit)="submitGoalieSettings(f)" [ngFormOptions]="{updateOn: 'blur'}" validate>
-                        <div class="form-field-settings">
-                            <div class="row" *ngFor="let setting of fantasyGoalieSettings">
-                                <div class="col-md-12 col-lg-12 col-sm-12">
-                                    <mat-form-field class="form-field-settings" [formControl]="settingsControl"
-                                        ngDefaultControl>
-                                        <div>
-                                            <input (blur)="submitGoalieSettings(f)" matInput type="number" [ngModel]=setting.settingValue [placeholder]="setting.name"
-                                                [ngModel]="setting.value" [name]="setting.value" required [ngModelOptions]="{updateOn: 'blur'}">
-                                        
-                                        </div>
-                                    </mat-form-field>
-                                </div>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon>settings</mat-icon>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Fantasy Goalie Settings
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <form #goalieForm="ngForm" (ngSubmit)="submitGoalieSettings(goalieForm)" [ngFormOptions]="{updateOn: 'blur'}"
+                    validate>
+                    <div class="form-field-settings">
+                        <div class="row" *ngFor="let setting of fantasyGoalieSettings; let i = index">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <mat-form-field class="form-field-settings" [formControl]="goalieSettingsControl"
+                                    ngDefaultControl>
+                                    <div>
+                                        <input type="number" (blur)="submitGoalieSettings(goalieForm)" matInput
+                                            [ngModel]="setting.settingValue" [ngModelOptions]="{updateOn: 'blur'}"
+                                            [placeholder]="setting.name" name="{{setting.value}}" />
+
+                                    </div>
+                                </mat-form-field>
                             </div>
                         </div>
-                    </form>
-                </mat-expansion-panel>
+                    </div>
+                </form>
+            </mat-expansion-panel>
         </mat-accordion>
     </div>
 </div>

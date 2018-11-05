@@ -1,8 +1,9 @@
 <form class="smooth-player-selection">
     <mat-card>
         <mat-form-field class="full-width-search">
-            <div [tourAnchor]="tourIds[0]"> <input class="search-input" matInput placeholder="Search Players" aria-label="Player"
-                    [matAutocomplete]="auto" [formControl]="playerControl" type="search" [(ngModel)]="playerControl.value" /></div>
+            <div [tourAnchor]="tourIds[0]"> <input class="search-input" matInput placeholder="Search Players"
+                    aria-label="Player" [matAutocomplete]="auto" [formControl]="playerControl" type="search"
+                    [(ngModel)]="playerControl.value" /></div>
             <button mat-button *ngIf="playerControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="playerControl.value = ''">
                 <mat-icon>close</mat-icon>
             </button>
@@ -11,7 +12,7 @@
 
                 <mat-option *ngFor="let player of filteredPlayerSet" [value]="player">
                     <div *ngIf="player.position.code !== 'G'">
-                        <img class="player-image" [src]="player.image" height="60"/>
+                        <img class="player-image" [src]="player.image" height="60" />
                         <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
                         <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
                         <span>{{player.person.fullName}}</span>
@@ -19,13 +20,14 @@
                             | <small>No player data available</small>
                         </span>
                         <span *ngFor="let stat of player?.overallStats?.stats[0]?.splits">
-                            | <small>GP: {{stat.stat.games}}</small>
-                            | <small>G: {{stat.stat.goals}}</small>
-                            | <small>A: {{stat.stat.assists}}</small>
-                            | <small>SOG: {{stat.stat.shots}}</small>
-                            | <small>+/-: {{stat.stat.plusMinus}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">GP: {{stat.stat.games}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">G: {{stat.stat.goals}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">A: {{stat.stat.assists}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">SOG: {{stat.stat.shots}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">+/-:
+                                {{stat.stat.plusMinus}}</small>
                         </span>
-                        <img class="logo-image" [src]="player.teamLogo" height="55"/>
+                        <img class="logo-image" [src]="player.teamLogo" height="55" />
                     </div>
                     <div *ngIf="player.position.code === 'G'">
                         <img class="player-image" [src]="player.image" height="60" />
@@ -37,12 +39,14 @@
                             | <small>No player data available</small>
                         </span>
                         <span *ngFor="let stat of player?.overallStats?.stats[0].splits">
-                            | <small>W: {{stat.stat.wins}}</small>
-                            | <small>%: {{stat.stat.savePercentage}}</small>
-                            | <small>GAA: {{stat.stat.goalAgainstAverage}}</small>
-                            | <small>SO: {{stat.stat.shutouts}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">W: {{stat.stat.wins}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">SV%:
+                                {{stat.stat.savePercentage}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">GAA:
+                                {{stat.stat.goalAgainstAverage}}</small>
+                            <span class="desktop-only bar-info">|</span> <small class="desktop-only">SO: {{stat.stat.shutouts}}</small>
                         </span>
-                        <img class="logo-image" [src]="player.teamLogo" height="55"/>
+                        <img class="logo-image" [src]="player.teamLogo" height="55" />
                     </div>
                 </mat-option>
             </mat-autocomplete>
@@ -50,9 +54,9 @@
     </mat-card>
 </form>
 
-<mat-card class="smooth-player-selection" *ngFor="let player of currentPlayerSelection" @fadeIn @fadeOut>
+<mat-card class="smooth-player-selection" *ngFor="let player of currentPlayerSelection; trackBy: trackPlayerBy" @fadeIn>
     <div class="smooth-player-selection" *ngIf="player.position.code !== 'G'">
-            <img [src]="player.image" class="player-image"/>
+        <img [src]="player.image" class="player-image" />
 
         <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
         <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
@@ -68,12 +72,12 @@
             | <small>+/-: {{stat.stat.plusMinus}}</small>
             | <small>SOG: {{stat.stat.shots}}</small>
             | <small>Fantasy Score Last Year: {{ player?.lastYearFantasyScore | number:'1.1-3' }}</small>
-          </span>
-          <img class="logo-image" [src]="player.teamLogo" height="55"/>
+        </span>
+        <img class="logo-image" [src]="player.teamLogo" height="55" />
 
     </div>
     <div class="smooth-player-selection" *ngIf="player.position.code === 'G'">
-            <img [src]="player.image" class="player-image" />
+        <img [src]="player.image" class="player-image" />
 
         <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
         <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
@@ -89,7 +93,7 @@
             | <small>SO: {{stat.stat.shutouts}}</small>
             | <small>Fantasy Score Last Year: {{player.lastYearFantasyScore | number:'1.1-3'}}</small>
         </span>
-        <img class="logo-image" [src]="player.teamLogo" height="55"/>
+        <img class="logo-image" [src]="player.teamLogo" height="55" />
 
     </div>
     <mat-card-actions>
