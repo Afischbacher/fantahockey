@@ -173,7 +173,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
         else {
 
-            throw Error("Team player does not have the proper position");
+            throw Error("Team player does not have a proper position");
         }
 
         return player;
