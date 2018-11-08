@@ -7,6 +7,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { TourService } from 'ngx-tour-md-menu';
 
 import { Team } from '@app/core/interfaces/team';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'trade-dashboard',
@@ -52,61 +53,38 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
     this.loading = false;
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {;
     this.startLoading();
-    this.getTeams();
-  
+    this.getNhlPlayers();
   }
 
   showScore($event: number): void {
-    
+
     console.log($event);
 
   }
 
-  getTeams() {
+  getNhlPlayers(): void {
 
-    let teams: Team[];
-    this.nhlDataService.getCurrentTeams().subscribe(res => {
+    this.nhlDataService.getCurrentTeams().pipe(switchMap(team => team.teams)).forEach((team : Team) => {
+      this.nhlDataService.getCurrentRoster(team.id).pipe(switchMap(player => player.roster)).forEach((teamPlayer: TeamPlayer) => {
 
-      teams = res.teams
-      this.getSeasonPlayerData(teams);
+        forkJoin([
+          this.nhlDataService.getPlayerInfo(teamPlayer.person.link),
+          this.nhlDataService.getCurrentSeasonPlayerStats(teamPlayer.person.link)
+        ]).subscribe((data : any[]) => {
 
-    });
+          teamPlayer.overallStats = data[1];
+          teamPlayer.playerInfo = data[0].people[0].currentTeam.id;      
+          teamPlayer.teamLogo = `https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${data[0].people[0].currentTeam.id}.svg`;
+          teamPlayer.image = `https://nhl.bamcontent.com/images/headshots/current/168x168/${data[0].people[0].id}.png`;
+         
+          this.playerSet.push(teamPlayer);
 
-  }
-
-
-  async getSeasonPlayerData(teams: Team[]) {
-
-    let playerSet: TeamPlayer[] = [];
-
-    teams.forEach(async (team) => {
-
-      await this.nhlDataService.getCurrentRoster(team.id).pipe((switchMap((res: TeamRoster) => res.roster))).subscribe(async (teamPlayer: TeamPlayer) => {
-
-      await  this.nhlDataService.getCurrentSeasonPlayerStats(teamPlayer.person.link).subscribe(async (stat) => {
-
-          teamPlayer.overallStats = stat;
-          teamPlayer.image = `https://nhl.bamcontent.com/images/headshots/current/168x168/${teamPlayer.person.id}.png`;
-          this.getPlayerInfo(teamPlayer);
-        });
+        }, error => console.error(error));
       });
     });
 
-
-
-  }
-
-  getPlayerInfo(teamPlayer: TeamPlayer) {
-
-    this.nhlDataService.getPlayerInfo(teamPlayer.person.link).subscribe((playerInfo: any) => {
-
-      teamPlayer.playerInfo = playerInfo.people[0];
-      this.playerSet.push(teamPlayer);
-      teamPlayer.teamLogo = `https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${teamPlayer.playerInfo.currentTeam.id}.svg`
-    });
-  
     this.endLoading();
 
   }
