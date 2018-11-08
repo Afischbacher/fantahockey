@@ -59,9 +59,7 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
   }
 
   showScore($event: number): void {
-
     console.log($event);
-
   }
 
   getNhlPlayers(): void {

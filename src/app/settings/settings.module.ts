@@ -18,6 +18,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { SettingsService } from '@app/core/services/settings.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UpdateSnackbarComponent } from '@app/components/update-snackbar/update-snackbar.component';
+import { UpdateSnackbarModule } from '@app/components/update-snackbar/update-snackbar.module';
 
 @NgModule({
   imports: [
@@ -39,12 +40,11 @@ import { UpdateSnackbarComponent } from '@app/components/update-snackbar/update-
     MatExpansionModule,
     MatSelectModule,  
     TourMatMenuModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    UpdateSnackbarModule
   ],
   entryComponents: [UpdateSnackbarComponent],
-
   declarations: [
-    UpdateSnackbarComponent,
     SettingsComponent,
   ],
   providers: [
