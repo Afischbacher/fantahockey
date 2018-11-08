@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-import { extract } from '@app/core';
 import { TradeDashboardComponent } from '@app/trade-dashboard/trade-dashboard.component';
 import { Shell } from '@app/shell/shell.service';
 
 const routes: Routes = [
   Shell.childRoutes([
-    { path: 'dashboard',  component: TradeDashboardComponent, data: { title: extract('Trade Dashboard - NHL Fantasy Trade Tool') } },
+    { path: 'dashboard',  component: TradeDashboardComponent, data: { title: 'Trade Dashboard - NHL Fantasy Trade Tool' } },
     { path: "", redirectTo: '/dashboard', pathMatch: 'full'}
   ])
 ];
