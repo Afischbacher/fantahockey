@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { UpdateSnackbarComponent } from './update-snackbar.component';
-import { MatTooltipModule } from '@angular/material';
+import { MatTooltipModule, MatSnackBarModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -25,6 +25,7 @@ import { MatTooltipModule } from '@angular/material';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatSnackBarModule
   ],
   declarations: [UpdateSnackbarComponent],
   exports: [UpdateSnackbarComponent]
