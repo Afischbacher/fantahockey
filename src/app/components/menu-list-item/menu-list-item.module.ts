@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
+import { MenuListItemComponent } from './menu-list-item.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatListModule,
     MatButtonModule,
     MatIconModule
-  ]
+  ],  
+  declarations: [MenuListItemComponent],
+  exports: [MenuListItemComponent]
 })
 export class MenuListItemModule {
 }

@@ -68,7 +68,7 @@ export class ShellComponent implements OnInit {
   navItems: NavItem[] = [
     {
       displayName: 'Dashboard',
-      iconName: 'trending_up',
+      iconName: 'swap_vert',
       children: [],
       route: "/dashboard"
     },

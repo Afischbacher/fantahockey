@@ -2,7 +2,6 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { NavService } from '@app/core/services/nav.service';
 import { TourService } from 'ngx-tour-md-menu';
-import { Constants } from '@app/core/constants/constants';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

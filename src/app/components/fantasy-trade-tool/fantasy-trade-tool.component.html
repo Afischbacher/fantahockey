@@ -1,3 +1,4 @@
+
 <form class="smooth-player-selection">
     <mat-card>
         <mat-form-field class="full-width-search">
@@ -40,7 +41,7 @@
                         <span>{{player.person.fullName}}</span>
 
                         <span *ngIf="player?.overallStats?.stats[0]?.splits?.length === 0 ">
-                            | <small>No player data available</small>
+                            | <small class="desktop-only">No player data available</small>
                         </span>
                         <span *ngFor="let stat of player?.overallStats?.stats[0].splits">
                             <span class="desktop-only bar-info">|</span> <small class="desktop-only">W:
@@ -60,7 +61,11 @@
     </mat-card>
 </form>
 
-<mat-card class="smooth-player-selection" *ngFor="let player of currentPlayerSelection; trackBy: trackPlayerBy" @fadeIn>
+<mat-card class="smooth-player-selection"
+ *ngFor="let player of currentPlayerSelection; let i = index; trackBy: trackPlayerBy" 
+ @fadeIn
+ [@anim]="player.state"
+ >
 
     <div class="smooth-player-selection" *ngIf="player.position.code !== 'G'">
         <img [src]="player.image" class="player-image" />
@@ -76,9 +81,8 @@
             | <small>GP: {{stat.stat.games}}</small>
             | <small>G: {{stat.stat.goals}}</small>
             | <small>A: {{stat.stat.assists}}</small>
-            | <small>+/-: {{stat.stat.plusMinus}}</small>
-            | <small>SOG: {{stat.stat.shots}}</small>
-            | <small>Fantasy Score Last Year: {{ player?.lastYearFantasyScore | number:'1.1-3' }}</small>
+            | <small>Score: {{player.fantasyScore | number:'1.1-3'}}</small>
+            | <small>Last Year's Score: {{ player?.lastYearFantasyScore | number:'1.1-3' }}</small>
         </span>
         <img class="logo-image" [src]="player.teamLogo" height="55" />
 
@@ -97,8 +101,8 @@
             | <small>W: {{stat.stat.wins}}</small>
             | <small>%: {{stat.stat.savePercentage}}</small>
             | <small>GAA: {{stat.stat.goalAgainstAverage}}</small>
-            | <small>SO: {{stat.stat.shutouts}}</small>
-            | <small>Fantasy Score Last Year: {{player.lastYearFantasyScore | number:'1.1-3'}}</small>
+            | <small>Score: {{player.fantasyScore | number:'1.1-3'}}</small>
+            | <small>Last Year's Score: {{player.lastYearFantasyScore | number:'1.1-3'}}</small>
         </span>
         <img class="logo-image" [src]="player.teamLogo" height="55" />
 
@@ -109,7 +113,7 @@
         </button>
     </mat-card-actions>
 </mat-card>
-<div [tourAnchor]="tourIds[1]">
+<div id="score" [tourAnchor]="tourIds[1]">
     <mat-card>
         Fantasy Point Score <h3>{{currentScore | number:'1.1-3'}}</h3>
     </mat-card>

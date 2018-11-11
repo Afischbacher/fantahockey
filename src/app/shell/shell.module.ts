@@ -8,11 +8,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MenuListItemComponent } from '@app/shell/menu-list-item/menu-list-item.component';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-import { MenuListItemModule } from '@app/shell/menu-list-item/menu-list-item.module';
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
+import { MenuListItemModule } from '@app/components/menu-list-item/menu-list-item.module';
+import { MenuListItemComponent } from '@app/components/menu-list-item/menu-list-item.component';
 
 @NgModule({
   imports: [
@@ -31,8 +31,7 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
   declarations: [
     HeaderComponent,
     ShellComponent,
-    HeaderComponent,
-    MenuListItemComponent
+    HeaderComponent
   ]
 })
 export class ShellModule {

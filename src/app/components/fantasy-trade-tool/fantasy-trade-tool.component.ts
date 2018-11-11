@@ -1,15 +1,12 @@
 import { Component, OnInit, AfterViewChecked, Input, Output, EventEmitter } from '@angular/core';
-import { startWith, distinctUntilChanged, first } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { NhlDataService } from '@app/core/services/nhl-data.service';
 import { TeamPlayer, OverallStats } from '@app/core/interfaces/roster';
 import { Team } from '@app/core/interfaces/team';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { trigger, transition, keyframes, style, animate, sequence } from '@angular/animations';
 import { TourService } from 'ngx-tour-md-menu';
-import { BehaviorSubject } from 'rxjs';
 import { Constants } from '@app/core/constants/constants';
-import { parse } from 'babylon';
-
 @Component({
     selector: 'fantasy-trade-tool',
     templateUrl: './fantasy-trade-tool.component.html',
@@ -21,15 +18,26 @@ import { parse } from 'babylon';
                 animate('.3s ease-in', style({ opacity: "1", transition: "all .3s" })),
             ]),
         ]),
-        trigger('fadeOut', [
-            transition(":leave", [
-                style({ opacity: "1" }),
-                animate('.3s ease-out', style({ opacity: "0", transition: "all .3s" })),
-            ]),
-        ]),
 
-    ],
-})
+        trigger('anim', [
+            transition('* => void', [
+              style({ height: '*', opacity: '1', transform: 'translateX(0)', 'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)'}),
+              sequence([
+                animate(".25s ease", style({ height: '*', opacity: '.2', transform: 'translateX(20px)', 'box-shadow': 'none'  })),
+                animate(".1s ease", style({ height: '0', opacity: 0, transform: 'translateX(20px)', 'box-shadow': 'none'  }))
+              ])
+            ]),
+            
+            transition('void => active', [
+              style({ height: '0', opacity: '0', transform: 'translateX(20px)', 'box-shadow': 'none' }),
+              sequence([
+                animate(".1s ease", style({ height: '*', opacity: '.2', transform: 'translateX(20px)', 'box-shadow': 'none'  })),
+                animate(".35s ease", style({ height: '*', opacity: 1, transform: 'translateX(0)', 'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)'  }))
+              ])
+            ])
+    ])
+]})
+
 export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
     ngAfterViewChecked(): void { }
@@ -43,8 +51,8 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
     currentScore: number = 0.00;
     currentPlayerSelection: TeamPlayer[] = [];
     disableSearch: boolean = false;
-    scoreSubject = new BehaviorSubject<number>(this.currentScore);
-
+    animationState: string;
+    
     fantasyPlayerSettings: any[] = localStorage.getItem(Constants.playerFantasyLeagueSettings) !== null
         ? JSON.parse(localStorage.getItem(Constants.playerFantasyLeagueSettings))
         : Constants.fantasyPlayerSettings;
@@ -88,6 +96,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
             let fantasyPlayer = this.calculateFantasyScore(player);
             fantasyPlayer = this.calculateLastYearFantasyScore(fantasyPlayer);
             this.scoreValueChange.emit(this.currentScore);
+            this.playerControl.setValue('');
 
         }
 
@@ -202,6 +211,16 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
     trackPlayerBy(index: number, item: any) {
         return index;
+    }
+
+    startAnimation(state: string, index: number): void {
+        if(!this.animationState){
+            this.animationState = state;
+        }
+    }
+
+    resetAnimation(){
+        this.animationState = '';
     }
 }
 
