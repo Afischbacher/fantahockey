@@ -63,8 +63,8 @@
 
 <mat-card class="smooth-player-selection"
  *ngFor="let player of currentPlayerSelection; let i = index; trackBy: trackPlayerBy" 
- @fadeIn
- [@anim]="player.state"
+ @fadeInLeft
+ [@remove]="player.state"
  >
 
     <div class="smooth-player-selection" *ngIf="player.position.code !== 'G'">
