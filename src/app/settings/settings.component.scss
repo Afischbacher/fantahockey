@@ -1,3 +1,12 @@
-.form-field-settings{
-  width: 100%;
+.form-field-settings {
+    width: 100%;
+}
+
+.container-fluid {
+    background-image: url('./../../assets/nhl-fantasy-trade-tool-dashboard-background.jpg');
+    background-size: cover;
+}
+
+.mat-form-field-infix, .mat-form-field {
+    font-size: 18px !important;
 }

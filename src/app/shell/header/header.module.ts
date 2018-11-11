@@ -8,8 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-import { MenuListItemModule } from '@app/shell/menu-list-item/menu-list-item.module';
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
+import { MenuListItemModule } from '@app/components/menu-list-item/menu-list-item.module';
 
 @NgModule({
   imports: [
