@@ -6,7 +6,6 @@ import { SettingsComponent } from '@app/settings/settings.component';
 
 const routes: Routes = [
   // Fallback when no prior route is matched as dashboard is known as the home  
- 
   { path: 'dashboard', component: TradeDashboardComponent, pathMatch: 'full' },
   { path: 'settings', component: SettingsComponent, pathMatch: 'full' },
   { path: 'about', component: AboutComponent, pathMatch: 'full' },
