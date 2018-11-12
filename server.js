@@ -1,9 +1,8 @@
-const server  = require("express");
+const express = require("express");
 const path = require("path");
-
 const app = express();
 
-app.use(server.static(__dirname,'/dist/nhl-fantasy-trade-tool'));
+app.use(express.static(__dirname,'/dist/nhl-fantasy-trade-tool'));
 
 app.get('/*', (req, res) => {
 
