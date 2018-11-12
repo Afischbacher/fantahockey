@@ -15,7 +15,12 @@
     "docs": "hads ./docs -o",
     "env": "ngx-scripts env npm_package_version",
     "generate": "ng generate",
+    "preinstall": "npm install -g @angular/cli @angular/compiler-cli typescript",
     "postinstall": "ng build --aot --prod"
+  },
+  "engines": {
+    "node": "10.11.0",
+    "npm": "6.4.1"
   },
   "dependencies": {
     "@angular/animations": "^6.1.7",
@@ -46,6 +51,7 @@
     "ngx-tour-core": "^3.0.0",
     "ngx-tour-md-menu": "^3.1.1",
     "ngx-web-worker": "0.0.4",
+    "path": "^0.12.7",
     "rxjs": "^6.3.1",
     "rxjs-compat": "^6.3.3",
     "web-animations-js": "^2.3.1",
