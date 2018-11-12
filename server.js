@@ -1,4 +1,4 @@
-const express  = require("express");
+const server  = require("express");
 const path = require("path");
 
 const app = express();
@@ -10,4 +10,4 @@ app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname,'/dist/nhl-fantasy-trade-tool/index.html'))
 });
 
-app.listen(process.env.PORT || 8000);
+app.listen(process.env.PORT || 5000);
