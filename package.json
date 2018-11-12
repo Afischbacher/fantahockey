@@ -1,5 +1,5 @@
 {
-  "name": "ng-x-rocket",
+  "name": "nhl-fantasy-trade-tool",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -16,7 +16,7 @@
     "env": "ngx-scripts env npm_package_version",
     "generate": "ng generate",
     "preinstall": "npm install -g @angular/cli @angular/compiler-cli typescript",
-    "postinstall": "ng build --aot --prod"
+    "postinstall": "ng build --prod"
   },
   "engines": {
     "node": "10.11.0",
