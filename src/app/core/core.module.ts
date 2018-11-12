@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { I18nService } from './i18n.service';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
-import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { CacheInterceptor } from './http/cache.interceptor';
 import { RouteReusableStrategy } from './route-reusable-strategy';
@@ -21,7 +20,6 @@ import { RouteReusableStrategy } from './route-reusable-strategy';
   providers: [
     I18nService,
     HttpCacheService,
-    ApiPrefixInterceptor,
     ErrorHandlerInterceptor,
     CacheInterceptor,
     {
