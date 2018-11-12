@@ -36,18 +36,4 @@ describe('NhlDataService', () => {
   afterEach(() => {
     httpMock.verify();
   });
-
-  describe('getCurrentTeams', () => {
-    it('should return a list of teams', () => {
-      // Arrange
-      // Act
-      const getCurrentTeams = nhlService.getCurrentTeams();
-
-      // Assert
-      getCurrentTeams.subscribe(val => {
-        expect(val).toBe(val.teams !== null);
-      });
-      httpMock.expectOne({}).flush(getCurrentTeams);
-    });
-  });
 });
