@@ -8,6 +8,7 @@ import { browser, element, by } from 'protractor';
 export class AppPage {
 
   constructor() {
+    
     // Forces default language
     browser.executeScript(() => localStorage.setItem('language', 'en-US'));
   }

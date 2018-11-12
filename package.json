@@ -48,6 +48,7 @@
     "ngx-web-worker": "0.0.4",
     "rxjs": "^6.3.1",
     "rxjs-compat": "^6.3.3",
+    "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

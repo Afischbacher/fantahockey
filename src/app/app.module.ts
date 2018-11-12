@@ -42,8 +42,6 @@ import { SettingsModule } from '@app/settings/settings.module';
     })
   ],
   declarations: [AppComponent],
-  providers: [
-  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

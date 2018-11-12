@@ -64,5 +64,48 @@ export class Constants {
     static readonly goaliePosition = "G";
 
     static readonly version = "version";
+
+    static readonly appTour = [{
+        anchorId: 'tour1',
+        content: 'Welcome to the NHL fantasy trade tool!',
+        title: 'Welcome!',
+        route: '/dashboard',
+        enableBackdrop: true
+    }, {
+        anchorId: 'tour2',
+        content: "Use the menu to check out more features of the tool (it's a work in progress..)",
+        title: 'The Menu',
+        route: '/dashboard',
+        enableBackdrop: true
+    }, {
+        anchorId: 'tour3',
+        content: 'Search for any active NHL player to see the latest stats for the current season',
+        title: 'Search Players',
+        route: '/dashboard',
+        enableBackdrop: true
+    },
+    {
+        anchorId: 'tour4',
+        content: "Craft trades and watch the fantasy score points to help you make the best trade possible",
+        title: 'Fantasy Scores',
+        route: '/dashboard',
+        enableBackdrop: true
+    },
+    {
+        anchorId: 'tour7',
+        content: "Configure your fantasy leauge settings here for both players and goalies based on your fantasy leauge",
+        title: 'Fantasy Configuration',
+        route: '/settings',
+        enableBackdrop: true
+
+    },
+    {
+        anchorId: 'tour8',
+        content: "Start configuring and crafting the trades you want, any way you like",
+        title: 'Start Trading!',
+        route: '/dashboard',
+        enableBackdrop: true
+
+    }];
     
 }

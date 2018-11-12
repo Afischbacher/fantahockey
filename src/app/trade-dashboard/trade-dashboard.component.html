@@ -9,9 +9,8 @@
 </video>
 
 <div class="container-fluid transparent-bg">
-    <div class="row">
-        <div *ngFor="let ids of fantasyTradeComponentIds; let i = index;" class="col-md-12 col-sm-12 col-lg-12 col-xl-6">
-            
+    <div class="row" tourAnchor="tour8">
+        <div *ngFor="let ids of fantasyTradeComponentIds; let i = index;" class="col-md-12 col-sm-12 col-lg-12 col-xl-6">    
             <fantasy-trade-tool [tourIds]="ids" [playerSet]="playerSet" (scoreValueChange)="showScore($event)">
             </fantasy-trade-tool>
             <div *ngIf="i === 0" class="center">

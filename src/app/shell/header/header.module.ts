@@ -10,6 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
 import { MenuListItemModule } from '@app/components/menu-list-item/menu-list-item.module';
+import { AppTourService } from '@app/core/services/app-tour.service';
 
 @NgModule({
   imports: [
@@ -24,7 +25,9 @@ import { MenuListItemModule } from '@app/components/menu-list-item/menu-list-ite
     MatIconModule,
     MenuListItemModule,
     TourMatMenuModule
-  ]
+  ],
+  providers: [AppTourService]
+  
 })
 export class HeaderModule {
 }

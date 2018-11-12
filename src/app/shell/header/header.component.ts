@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { NavService } from '@app/core/services/nav.service';
-import { TourService } from 'ngx-tour-md-menu';
+import { AppTourService } from '@app/core/services/app-tour.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -12,8 +12,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   // icons for menu
   faBars = faBars;
-
-  constructor(public navService: NavService, private tourService: TourService) { }
+  faQuestionCircle = faQuestionCircle;
+  
+  constructor(public navService: NavService, public appTourService: AppTourService) { }
 
   ngOnInit() {
 
