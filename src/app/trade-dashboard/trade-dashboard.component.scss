@@ -41,6 +41,7 @@
     min-height: 100%;
     z-index: -9999;
     filter: grayscale(75%) blur(25px);
+    -ms-filter: grayscale(75%) blur(25px);
 }
 
 .icon-remove {
