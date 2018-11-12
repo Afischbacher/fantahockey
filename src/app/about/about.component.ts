@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '@env/environment';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { Version } from '@app/core/models/version';
 
 @Component({
   selector: 'app-about',
@@ -19,6 +20,13 @@ export class AboutComponent implements OnInit {
 
   version: string = environment.version;
 
+  versions: Version[] = [
+    {
+      version: "1.0.0",
+      description: "Initial release of application",
+      icon: "code"
+    }
+  ]
   constructor() { }
   ngOnInit() { }
 
