@@ -11,11 +11,8 @@ import "hammerjs";
 import { environment } from '@env/environment';
 
 if(environment.production){
-  console.log('prod');
   enableProdMode();
 }
-else{
-  console.log('dev');
-}
+
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
