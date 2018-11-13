@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ng-x-rocket": {
+    "nhl-fantasy-trade-tool": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
