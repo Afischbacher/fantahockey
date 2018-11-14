@@ -9,6 +9,17 @@
     z-index: 1000;
 }
 
+@media all and (max-width: 767px){
+    .menu-toolbar {
+        margin-bottom: 30px;
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    
+}
+
 .spacer {
     flex: 1 1 auto;
 }

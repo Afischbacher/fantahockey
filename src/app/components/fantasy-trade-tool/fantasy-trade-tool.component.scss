@@ -69,12 +69,14 @@
       .logo-image {
           display: none;
       }
+
   }
 
   @media all and (min-width: 768px) {
       .desktop-only {
           opacity: 1;
       }
+
       .logo-image {
           animation: fadeIn 1s ease-in;
           float: right;
@@ -96,6 +98,3 @@
       }
   }
 
-  .fantasy-trade-tool {
-    padding: 60px 0px 80px 0px;
-}
