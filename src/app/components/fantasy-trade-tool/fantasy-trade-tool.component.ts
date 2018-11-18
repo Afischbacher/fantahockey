@@ -145,7 +145,6 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
         });
 
-        console.log(player);
         return player;
 
     }
