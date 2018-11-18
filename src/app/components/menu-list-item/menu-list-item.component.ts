@@ -38,8 +38,6 @@ export class MenuListItemComponent{
     onItemSelected(item: NavItem){
         if(!item.children || !item.children.length){
             this.router.navigate([item.route]);
-            console.log(item.route);
-            console.log("hit");
             this.navService.closeNav();
         }
 
