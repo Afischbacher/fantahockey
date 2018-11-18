@@ -7,6 +7,7 @@ import { Team } from '@app/core/interfaces/team';
 import { trigger, transition, keyframes, style, animate, sequence } from '@angular/animations';
 import { TourService } from 'ngx-tour-md-menu';
 import { Constants } from '@app/core/constants/constants';
+import { NhlSearchService } from '@app/core/services/nhl-search-service';
 @Component({
     selector: 'fantasy-trade-tool',
     templateUrl: './fantasy-trade-tool.component.html',
@@ -62,7 +63,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
         : Constants.fantasyGoalieSettings;
 
 
-    constructor(private nhlDataService: NhlDataService, private tourService: TourService) {
+    constructor(private nhlDataService: NhlDataService, private tourService: TourService, private nhlSearchService: NhlSearchService) {
 
         this.playerControl.valueChanges.pipe(startWith('')).subscribe((query: string) => {
 
@@ -70,7 +71,8 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
                 this.filteredPlayerSet = [];
 
             if (query.length >= 3)
-                this.filteredPlayerSet = this.playerSet.filter(x => x.person.fullName.toLowerCase().includes(query.toLowerCase()));
+    
+                this.filteredPlayerSet = this.nhlSearchService.searchNhlPlayers(query);
 
         }, error => {
             console.log(error);
@@ -85,9 +87,10 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
     ngOnInit(): void { }
 
     addPlayerToList(player: TeamPlayer) {
-        const newPlayer = this.currentPlayerSelection
-            .findIndex(x => x.person == player.person && x.position == player.position && x.jerseyNumber == player.jerseyNumber)
 
+        const newPlayer = this.currentPlayerSelection
+            .findIndex(x => x.person.id == player.person.id)
+    
         if (this.currentPlayerSelection.length < 6 && newPlayer < 0) {
 
             this.currentPlayerSelection.push(player);
@@ -213,14 +216,5 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
         return index;
     }
 
-    startAnimation(state: string, index: number): void {
-        if(!this.animationState){
-            this.animationState = state;
-        }
-    }
-
-    resetAnimation(){
-        this.animationState = '';
-    }
 }
 
