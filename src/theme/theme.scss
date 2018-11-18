@@ -22,8 +22,7 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn); // Include th
 * {
     font-family: 'Open Sans', sans-serif;
 }
-
 .container-fluid {
-    height: 91vh;
+    height: 100vh;
     overflow-x: hidden;    
 }
