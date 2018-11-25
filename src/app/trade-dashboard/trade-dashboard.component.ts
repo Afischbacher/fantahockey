@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, ViewChild, ElementRef } from '@angular/core';
 import { TeamPlayer } from '@app/core/interfaces/roster';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { DashboardService } from '@app/core/services/dashboard.service';
-import { switchMap, first, distinct, distinctUntilChanged } from 'rxjs/operators';
-import { pipe } from 'rxjs';
+import { first, switchMap } from 'rxjs/operators';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'trade-dashboard',
@@ -34,8 +34,10 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
   value = 0;
   playerName = "";
   fantasyTradeComponentIds: Array<string[]> = [["tour3", "tour4"], ["tour5", "tour6"]];
-  currentSelectedPlayerNumber: any[] = [{id: 0, numberOfPlayers: 0},{id: 1, numberOfPlayers: 0}];
+  currentSelectedPlayerNumber: any[] = [{ id: 0, numberOfPlayers: 0 }, { id: 1, numberOfPlayers: 0 }];
   numberOfPlayers = 0;
+  @ViewChild('radarChart') chartRef : ElementRef;
+  chart: any;
 
   ngAfterContentInit(): void {
     this.endLoading();
@@ -52,29 +54,54 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
     this.startLoading();
   }
 
-  showPlayers(players: any) {
+  getNumberOfPlayers(players: any) {
 
-      let playerSelection = this.currentSelectedPlayerNumber.filter(x => x.id === players.id);
-      
-      let totalPlayers = 0;
+    let playerSelection = this.currentSelectedPlayerNumber.filter(x => x.id === players.id);
 
-      playerSelection[0].numberOfPlayers = players.numberOfPlayers;
+    let totalPlayers = 0;
 
-      this.currentSelectedPlayerNumber.filter(x => x.id === players.id)[0] = playerSelection;
+    playerSelection[0].numberOfPlayers = players.numberOfPlayers;
 
-      this.currentSelectedPlayerNumber.forEach(x => {
-        
-        totalPlayers += x.numberOfPlayers 
+    this.currentSelectedPlayerNumber.filter(x => x.id === players.id)[0] = playerSelection;
 
-      });
+    this.currentSelectedPlayerNumber.forEach(x => {
 
-      this.dashboardService.updatePlayerCount(totalPlayers);
-      this.getTotalPlayers();
-    }
+      totalPlayers += x.numberOfPlayers
 
-    getTotalPlayers(): void {
-      this.dashboardService.playersAdded.pipe(first()).subscribe(players => this.numberOfPlayers = players);
-    }
+    });
 
+    this.dashboardService.updatePlayerCount(totalPlayers);
+    this.dashboardService.getTotalPlayers().subscribe(res => this.numberOfPlayers = res);
+
+    if (this.numberOfPlayers > 1)
+      this.buildRadarChart();
+
+  }
+
+  buildRadarChart(): void {
+
+    this.chart = new Chart(this.chartRef.nativeElement, {
+      type: 'radar',
+      data: {
+        labels: ['Goals', 'Assists', 'Points'],
+        datasets: [{
+          label: 'Player 1',
+          pointBackgroundColor: 'red',
+          pointStyle: 'circle',
+          data: [1, 4, 5]
+        },
+        {
+          label: 'Player 2',
+          pointBackgroundColor: 'red',
+          pointStyle: 'circle',
+          data: [2, 2, 3]
+        }
+        ]
+      },
+      options: {
+      }
+    });
+
+  };
 }
 

@@ -1,13 +1,13 @@
-import { Component, OnInit, AfterViewChecked, Input, Output, EventEmitter } from '@angular/core';
-import { startWith } from 'rxjs/operators';
+import { Component, OnInit, AfterViewChecked, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { startWith, debounceTime } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { NhlDataService } from '@app/core/services/nhl-data.service';
 import { TeamPlayer, OverallStats } from '@app/core/interfaces/roster';
 import { Team } from '@app/core/interfaces/team';
 import { trigger, transition, keyframes, style, animate, sequence } from '@angular/animations';
-import { TourService } from 'ngx-tour-md-menu';
 import { Constants } from '@app/core/constants/constants';
 import { NhlSearchService } from '@app/core/services/nhl-search-service';
+
 @Component({
     selector: 'fantasy-trade-tool',
     templateUrl: './fantasy-trade-tool.component.html',
@@ -50,6 +50,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
     @Input() tourIds: string[] = [];
     @Input() componentId: number;
     @Output() getCurrentPlayers = new EventEmitter<{}>();
+
     currentScore: number = 0.00;
     currentPlayerSelection: TeamPlayer[] = [];
     disableSearch: boolean = false;
@@ -64,9 +65,9 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
         : Constants.fantasyGoalieSettings;
 
 
-    constructor(private nhlDataService: NhlDataService, private tourService: TourService, private nhlSearchService: NhlSearchService) {
+    constructor(private nhlDataService: NhlDataService, private nhlSearchService: NhlSearchService) {
 
-        this.playerControl.valueChanges.pipe(startWith('')).subscribe((query: string) => {
+        this.playerControl.valueChanges.pipe(startWith(''), debounceTime(250)).subscribe((query: string) => {
 
             if (query.length < 2)
                 this.filteredPlayerSet = [];
