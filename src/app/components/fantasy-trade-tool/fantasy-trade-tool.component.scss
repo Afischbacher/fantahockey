@@ -70,6 +70,17 @@
           display: none;
       }
 
+      .flex-box-stats-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .flex-box-stats-container > div > div { 
+        margin: 10px;
+        line-height: 25px;
+    }
+
   }
 
   @media all and (min-width: 768px) {

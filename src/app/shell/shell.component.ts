@@ -3,7 +3,6 @@ import { NavService } from '@app/core/services/nav.service';
 import { NavItem } from '@app/core/interfaces/nav-item';
 import { TourService } from 'ngx-tour-md-menu';
 import { Constants } from '@app/core/constants/constants';
-import * as Hammer from 'hammerjs';
 import { MatSidenav } from '@angular/material';
 
 @Component({
@@ -13,16 +12,7 @@ import { MatSidenav } from '@angular/material';
 })
 export class ShellComponent implements OnInit {
 
-  constructor(public navService: NavService, private tourService: TourService, elementRef: ElementRef) {
-
-    // const hammertime = new Hammer(elementRef.nativeElement, {});
-    // hammertime.on('panright', (event : any) => {
-    //   this.navService.openNav();
-    // });
-
-    // hammertime.on('panleft', (event : any) => {
-    //   this.navService.closeNav();
-    // });
+  constructor(public navService: NavService, private tourService: TourService) {
   }
 
   ngOnInit(): void {

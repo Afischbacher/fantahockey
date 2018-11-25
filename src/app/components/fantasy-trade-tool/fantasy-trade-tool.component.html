@@ -81,6 +81,21 @@
             | <small>Score: {{player.fantasyScore | number:'1.1-3'}}</small>
             | <small>Last Year's Score: {{ player?.lastYearFantasyScore | number:'1.1-3' }}</small>
         </span>
+        <!-- <div class="flex-box-stats-container">
+        <div *ngFor="let stat of player?.overallStats?.stats[0]?.splits; trackBy: trackByPlayers;">
+            <div>GP: {{stat.stat.games}}</div>
+            <div>GP: {{stat.stat.games}}</div>
+            <div>GP: {{stat.stat.games}}</div>
+            <div>GP: {{stat.stat.games}}</div>
+            <div>GP: {{stat.stat.games}}</div>
+            <div>GP: {{stat.stat.games}}</div>
+            <div>GP: {{stat.stat.games}}</div>
+            <div>GP: {{stat.stat.games}}</div>
+            <div>GP: {{stat.stat.games}}</div>
+            <div>GP: {{stat.stat.games}}</div>
+        </div>
+    </div> -->
+
         <img class="logo-image" [src]="player.teamLogo" height="55" />
 
     </div>
