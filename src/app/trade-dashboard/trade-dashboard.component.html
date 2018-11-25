@@ -9,9 +9,9 @@
 </video>
 
 <div class="container-fluid transparent-bg">
-    <div class="row trade-view" tourAnchor="tour8">
+    <div class="row" [ngClass]="{'no-trade-view': numberOfPlayers === 0, 'trade-view': numberOfPlayers >= 1}" tourAnchor="tour8">
         <div *ngFor="let ids of fantasyTradeComponentIds; let i = index;" class="col-md-12 col-sm-12 col-lg-12 col-xl-6">    
-            <fantasy-trade-tool [tourIds]="ids" [playerSet]="playerSet" (playerSearchEvent)="getNhlPlayers($event)">
+            <fantasy-trade-tool [tourIds]="ids" [componentId]="i" [playerSet]="playerSet" (playerSearchEvent)="getNhlPlayers($event)" (getCurrentPlayers)="showPlayers($event)">
             </fantasy-trade-tool>
             <div *ngIf="i === 0" class="center">
                 <mat-icon class="trade-icon">swap_vert</mat-icon>

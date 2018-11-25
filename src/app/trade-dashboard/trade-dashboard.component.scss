@@ -1,6 +1,6 @@
 .container-fluid {
     height: 95vh;
-    overflow-x: hidden;    
+    overflow-x: hidden;
 }
 
 #background-dashboard {
@@ -13,7 +13,6 @@
     background-size: cover;
     z-index: -9999;
 }
-
 
 .search-input {
     width: 100%;
@@ -54,13 +53,21 @@
     #background-dashboard {
         top: 55px;
     }
+    
+    .no-trade-view {
+        margin-top: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
+    
     .trade-view {
         margin-top: 15px;
         padding-top: 40px;
-        padding-bottom: 55px;
-        margin-bottom: 15px;
+        padding-bottom: 50px;
+        margin-bottom: 25px;
     }
-    
+
     .trade-icon {
         font-size: 42px;
         text-align: center;
@@ -75,19 +82,22 @@
         padding-top: 45px;
         margin-bottom: 45px;
     }
-    
     .trade-icon {
         font-size: 42px;
         text-align: center;
     }
 }
 
-
 @media all and (min-width: 1201px) {
     .trade-icon {
         display: none;
     }
     .trade-view {
+        padding-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .no-trade-view {
         padding-top: 20px;
         margin-bottom: 20px;
     }

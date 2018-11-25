@@ -18,6 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
 import { NgxLoadingModule } from 'ngx-loading';
 import { FantasyTradeToolModule } from '@app/components/fantasy-trade-tool/fantasy-trade-tool.module';
+import { DashboardService } from '@app/core/services/dashboard.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -44,7 +45,8 @@ import { FantasyTradeToolModule } from '@app/components/fantasy-trade-tool/fanta
     TradeDashboardComponent,
   ],
   providers: [
-    NhlDataService
+    NhlDataService,
+    DashboardService
   ]
 })
 export class TradeDashboardModule { }

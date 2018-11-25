@@ -15,14 +15,14 @@ export class ShellComponent implements OnInit {
 
   constructor(public navService: NavService, private tourService: TourService, elementRef: ElementRef) {
 
-    const hammertime = new Hammer(elementRef.nativeElement, {});
-    hammertime.on('panright', (event : any) => {
-      this.navService.openNav();
-    });
+    // const hammertime = new Hammer(elementRef.nativeElement, {});
+    // hammertime.on('panright', (event : any) => {
+    //   this.navService.openNav();
+    // });
 
-    hammertime.on('panleft', (event : any) => {
-      this.navService.closeNav();
-    });
+    // hammertime.on('panleft', (event : any) => {
+    //   this.navService.closeNav();
+    // });
   }
 
   ngOnInit(): void {

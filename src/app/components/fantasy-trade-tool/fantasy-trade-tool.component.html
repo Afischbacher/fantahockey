@@ -18,7 +18,7 @@
                         <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
                         <span>{{player.person.fullName}}</span>
                         <span *ngIf="player?.overallStats?.stats[0].splits?.length === 0 ">
-                            | <small class="desktop-only ">No player data available</small>
+                            <small class="desktop-only ">| No player data available</small>
                         </span>
                         <span *ngFor="let stat of player?.overallStats?.stats[0]?.splits">
                             <span class="desktop-only bar-info">|</span> <small class="desktop-only">GP:

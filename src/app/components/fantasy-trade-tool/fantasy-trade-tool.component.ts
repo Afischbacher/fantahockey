@@ -48,7 +48,8 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
     filteredPlayerSet: TeamPlayer[] = [];
     @Input() playerSet: TeamPlayer[] = [];
     @Input() tourIds: string[] = [];
-    @Output() scoreValueChange = new EventEmitter<number>();
+    @Input() componentId: number;
+    @Output() getCurrentPlayers = new EventEmitter<{}>();
     currentScore: number = 0.00;
     currentPlayerSelection: TeamPlayer[] = [];
     disableSearch: boolean = false;
@@ -77,7 +78,6 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
         }, error => {
             console.log(error);
         });
-
     }
 
     trackByPlayers(i: number) {
@@ -97,8 +97,13 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
             this.toggleSearch();
 
             let fantasyPlayer = this.calculateFantasyScore(player);
-            fantasyPlayer = this.calculateLastYearFantasyScore(fantasyPlayer);
-            this.scoreValueChange.emit(this.currentScore);
+            fantasyPlayer = this.calculateLastYearFantasyScore(fantasyPlayer); 
+            
+            this.getCurrentPlayers.emit({
+                id: this.componentId,
+                numberOfPlayers: this.currentPlayerSelection.length
+            });
+            
             this.playerControl.setValue('');
 
         }
@@ -205,6 +210,11 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
         const playerToRemove = this.currentPlayerSelection.indexOf(player, 0);
 
         this.currentPlayerSelection.splice(playerToRemove, 1);
+    
+        this.getCurrentPlayers.emit({
+            id: this.componentId,
+            numberOfPlayers: this.currentPlayerSelection.length
+        });
 
         this.toggleSearch();
 
