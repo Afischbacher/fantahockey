@@ -102,6 +102,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
             
             this.getCurrentPlayers.emit({
                 id: this.componentId,
+                players: this.currentPlayerSelection,
                 numberOfPlayers: this.currentPlayerSelection.length
             });
             
@@ -214,6 +215,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
     
         this.getCurrentPlayers.emit({
             id: this.componentId,
+            players: this.currentPlayerSelection,
             numberOfPlayers: this.currentPlayerSelection.length
         });
 

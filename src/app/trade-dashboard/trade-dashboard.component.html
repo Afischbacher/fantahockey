@@ -5,21 +5,30 @@
 </div>
 
 <video autoplay [muted]="true" loop id="background">
- <source src="../../assets/video-background.mp4" type="video/mp4"> 
+    <source src="../../assets/video-background.mp4" type="video/mp4">
 </video>
 
 <div class="container-fluid transparent-bg">
     <div class="jumbotron">
         <h1 class="text-center">Dashboard</h1>
-    <div class="row" [ngClass]="{'no-trade-view': numberOfPlayers === 0, 'trade-view': numberOfPlayers >= 1}" tourAnchor="tour8">
-        <div *ngFor="let ids of fantasyTradeComponentIds; let i = index;" class="col-md-12 col-sm-12 col-lg-12 col-xl-6">    
-            <fantasy-trade-tool [tourIds]="ids" [componentId]="i" [playerSet]="playerSet" (playerSearchEvent)="getNhlPlayers($event)" 
-            (getCurrentPlayers)="getNumberOfPlayers($event)">
-            </fantasy-trade-tool>
-            <div *ngIf="i === 0" class="center">
-                <mat-icon class="trade-icon">swap_vert</mat-icon>
+        <div class="row" [ngClass]="{'no-trade-view': numberOfPlayers === 0, 'trade-view': numberOfPlayers >= 1}"
+            tourAnchor="tour8">
+            <div *ngFor="let ids of fantasyTradeComponentIds; let i = index;" class="col-md-12 col-sm-12 col-lg-12 col-xl-6">
+                <fantasy-trade-tool [tourIds]="ids" [componentId]="i" [playerSet]="playerSet" (playerSearchEvent)="getNhlPlayers($event)"
+                    (getCurrentPlayers)="getCurrentPlayers($event)">
+                </fantasy-trade-tool>
+                <div *ngIf="i === 0" class="center">
+                    <mat-icon class="trade-icon">swap_vert</mat-icon>
+                </div>
+            </div>
+        </div>
+
+        <div    class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <canvas #radarChart> 
+                    {{chart}} 
+                </canvas>
             </div>
         </div>
     </div>
-</div>
 </div>
