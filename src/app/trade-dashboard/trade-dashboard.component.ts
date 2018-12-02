@@ -3,6 +3,7 @@ import { TeamPlayer } from '@app/core/interfaces/roster';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { DashboardService } from '@app/core/services/dashboard.service';
 import { Chart, ChartData } from 'chart.js';
+import { Constants } from '@app/core/constants/constants';
 
 @Component({
   selector: 'trade-dashboard',
@@ -36,8 +37,14 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
   currentSelectedPlayers: any[] = [{ id: 0, players: [], numberOfPlayers: 0 }, { id: 1, players: [], numberOfPlayers: 0 }];
   numberOfPlayers = 0;
   allSelectedPlayers: TeamPlayer[] = []
-  @ViewChild('radarChart') chartRef: ElementRef;
-  chart: any;
+  @ViewChild('playerRadarChart') playerChartRef: ElementRef;
+  @ViewChild('goalieRadarChart') goalieChartRef: ElementRef;
+
+  allPlayers: TeamPlayer[] = [];
+  allGoalies: TeamPlayer[] = [];
+
+  playerChart: any;
+  goalieChart: any;
 
   ngAfterContentInit(): void {
     this.endLoading();
@@ -56,12 +63,10 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
 
   getCurrentPlayers(players: any) {
 
-    console.log(players);
-
     let playerSelection = this.currentSelectedPlayers.filter(x => x.id === players.id);
 
     let totalPlayers = 0;
-    let allPlayers: TeamPlayer[] = [];
+    let allEntities: TeamPlayer[] = [];
 
     playerSelection[0].numberOfPlayers = players.numberOfPlayers;
     playerSelection[0].players = players.players;
@@ -70,60 +75,106 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
 
     this.currentSelectedPlayers.forEach(x => {
 
-      (<any[]>x.players).forEach(player => allPlayers.push(player));
+      (<any[]>x.players).forEach(player => allEntities.push(player));
 
       totalPlayers += x.numberOfPlayers
     });
 
-    console.log(allPlayers);
-
     this.dashboardService.updatePlayerCount(totalPlayers);
-    this.dashboardService.updatePlayerSelection(allPlayers);
+    this.dashboardService.updatePlayerSelection(allEntities);
     this.dashboardService.getTotalPlayers().subscribe(res => this.numberOfPlayers = res);
     this.dashboardService.getAllSelectedPlayers().subscribe(res => this.allSelectedPlayers = res);
 
-    if (this.numberOfPlayers > 1) {
-      let playerData = this.getRadarChartData(this.allSelectedPlayers);
+    this.allPlayers = this.allSelectedPlayers.filter(x => x.position.abbreviation === "LW"
+      || x.position.abbreviation === "RW"
+      || x.position.abbreviation === "C"
+      || x.position.abbreviation === "D");
+
+    this.allGoalies = this.allSelectedPlayers.filter(x => x.position.abbreviation === "G");
+
+    if (this.allPlayers.length > 0) {
+      let playerData = this.getPlayerRadarChartData(this.allPlayers);
       this.buildPlayerRadarChart(playerData);
     }
+    else {
+      this.buildPlayerRadarChart([]);
+    }
 
+    if (this.allGoalies.length > 0) {
+      let goalieData = this.getGoalieRadarChartData(this.allGoalies);
+      this.buildGoalieRadarChart(goalieData);
+    }
+    else {
+      this.buildGoalieRadarChart([]);
+    }
   }
 
-  buildPlayerRadarChart(playerData: Chart.ChartDataSets[]): void {
+  buildGoalieRadarChart(goalieData: Chart.ChartDataSets[]): void {
 
-    this.chart = new Chart(this.chartRef.nativeElement, {
-      type: 'radar',
+    if (this.goalieChart !== undefined)
+      this.goalieChart.data.datasets = goalieData;
+
+    this.goalieChart = new Chart(this.goalieChartRef.nativeElement, {
+      type: 'line',
       data: {
         labels:
-          ['Goals',
-            'Assists',
-            'Points',
-            'SOG',
-            'PPG',
-            'Shots Blocked',
-            'Even Shots',
-            'Face Off Percentage',
-            'Games',
-            'GWG',
-            'Hits',
-            'Overtime Goals',
-            'Power Play Points',
-            'Shot Percentage',
-            'SSH',
-            ],
-        datasets: playerData
+          ["Save Percentage",
+            "Saves",
+            "GAA",
+            "Goals Against",
+            "Even Saves",
+            "Short Handed Saves",
+            "Shutouts",
+            "Wins"
+          ],
+        datasets: goalieData
       },
       options: {
+        scales: {
+          display: false
+        }
       }
     });
 
   }
 
-  getRadarChartData(allSelectedPlayers: TeamPlayer[]): Chart.ChartDataSets[] {
+  buildPlayerRadarChart(playerData: Chart.ChartDataSets[]): void {
+
+    if (this.playerChart !== undefined)
+      this.playerChart.data.datasets = playerData;
+
+    this.playerChart = new Chart(this.playerChartRef.nativeElement, {
+      type: 'line',
+      data: {
+        labels:
+          ['Goals',
+            'Assists',
+            'Points',
+            'Shots',
+            'PPG',
+            'Shots Blocked',
+            'Even Shots',
+            'Face Off Percentage',
+            'Hits',
+            'Overtime Goals',
+            'Power Play Points',
+            'Shot Percentage',
+            'SSH',
+          ],
+        datasets: playerData
+      },
+      options: {
+        scales: {
+          display: false
+        }
+      }
+    });
+
+  }
+
+  getPlayerRadarChartData(allSelectedPlayers: TeamPlayer[]): Chart.ChartDataSets[] {
 
     let data: Chart.ChartDataSets[] = [];
-
-    console.log(allSelectedPlayers);
 
     allSelectedPlayers.forEach(player => {
 
@@ -151,8 +202,44 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
       ]
 
       dataSet.label = player.person.fullName;
+
       // each player color is based on their main team color
-      // dataSet.backgroundColor
+    //  dataSet.backgroundColor = Constants.teamColours[player.playerInfo.currentTeam.id];
+
+      data.push(dataSet);
+
+    });
+
+    return data;
+
+  }
+
+  getGoalieRadarChartData(allSelectedGoalies: TeamPlayer[]): Chart.ChartDataSets[] {
+
+    let data: Chart.ChartDataSets[] = [];
+
+    allSelectedGoalies.forEach(goalie => {
+
+      let dataSet: Chart.ChartDataSets = {
+        data: [],
+        label: ""
+      };
+
+      dataSet.data = [goalie.overallStats.stats[0].splits[0].stat.savePercentage,
+      goalie.overallStats.stats[0].splits[0].stat.saves,
+      goalie.overallStats.stats[0].splits[0].stat.goalAgainstAverage,
+      goalie.overallStats.stats[0].splits[0].stat.goalsAgainst,
+      goalie.overallStats.stats[0].splits[0].stat.evenSaves,
+      goalie.overallStats.stats[0].splits[0].stat.shortHandedSaves,
+      goalie.overallStats.stats[0].splits[0].stat.shutouts,
+      goalie.overallStats.stats[0].splits[0].stat.wins
+      ];
+
+      dataSet.label = goalie.person.fullName;
+
+      // each player color is based on their main team color
+      dataSet.backgroundColor = Constants.teamColours[goalie.playerInfo.currentTeam.id];
+
       data.push(dataSet);
 
     });

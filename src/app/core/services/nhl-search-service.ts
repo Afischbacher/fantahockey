@@ -28,7 +28,7 @@ export class NhlSearchService {
           ]).subscribe((data : any[]) => {
   
             teamPlayer.overallStats = data[1];
-            teamPlayer.playerInfo = data[0].people[0].currentTeam.id;      
+            teamPlayer.playerInfo = data[0].people[0];      
             teamPlayer.teamLogo = `https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${data[0].people[0].currentTeam.id}.svg`;
             teamPlayer.image = `https://nhl.bamcontent.com/images/headshots/current/168x168/${data[0].people[0].id}.png`;
            
