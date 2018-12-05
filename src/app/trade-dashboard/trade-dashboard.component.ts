@@ -59,6 +59,8 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
 
   ngOnInit(): void {
     this.startLoading();
+    this.buildGoalieRadarChart([]);
+    this.buildPlayerRadarChart([]);
   }
 
   getCurrentPlayers(players: any) {
@@ -115,16 +117,13 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
       this.goalieChart.data.datasets = goalieData;
 
     this.goalieChart = new Chart(this.goalieChartRef.nativeElement, {
-      type: 'line',
+      type: 'radar',
       data: {
         labels:
           ["Save Percentage",
-            "Saves",
             "GAA",
-            "Goals Against",
-            "Even Saves",
-            "Short Handed Saves",
-            "Shutouts",
+             "Shutouts",
+             "Losses",  
             "Wins"
           ],
         datasets: goalieData
@@ -144,13 +143,12 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
       this.playerChart.data.datasets = playerData;
 
     this.playerChart = new Chart(this.playerChartRef.nativeElement, {
-      type: 'line',
+      type: 'radar',
       data: {
         labels:
           ['Goals',
             'Assists',
             'Points',
-            'Shots',
             'PPG',
             'Shots Blocked',
             'Even Shots',
@@ -186,7 +184,6 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
       dataSet.data = [player.overallStats.stats[0].splits[0].stat.goals,
       player.overallStats.stats[0].splits[0].stat.assists,
       player.overallStats.stats[0].splits[0].stat.points,
-      player.overallStats.stats[0].splits[0].stat.shots,
       player.overallStats.stats[0].splits[0].stat.powerPlayGoals,
       player.overallStats.stats[0].splits[0].stat.blocked,
       player.overallStats.stats[0].splits[0].stat.evenShots,
@@ -204,7 +201,7 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
       dataSet.label = player.person.fullName;
 
       // each player color is based on their main team color
-    //  dataSet.backgroundColor = Constants.teamColours[player.playerInfo.currentTeam.id];
+      dataSet.backgroundColor = Constants.teamColours[player.playerInfo.currentTeam.id];
 
       data.push(dataSet);
 
@@ -226,12 +223,9 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
       };
 
       dataSet.data = [goalie.overallStats.stats[0].splits[0].stat.savePercentage,
-      goalie.overallStats.stats[0].splits[0].stat.saves,
       goalie.overallStats.stats[0].splits[0].stat.goalAgainstAverage,
-      goalie.overallStats.stats[0].splits[0].stat.goalsAgainst,
-      goalie.overallStats.stats[0].splits[0].stat.evenSaves,
-      goalie.overallStats.stats[0].splits[0].stat.shortHandedSaves,
       goalie.overallStats.stats[0].splits[0].stat.shutouts,
+      goalie.overallStats.stats[0].splits[0].stat.losses,
       goalie.overallStats.stats[0].splits[0].stat.wins
       ];
 

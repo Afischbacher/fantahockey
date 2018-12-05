@@ -22,16 +22,20 @@
                 </div>
             </div>
         </div>
-
+        <div class="row text-center">
+            <div class="col-sm-12 col-md-12">
+                <mat-icon class="desktop-trade-icon">swap_horizontal</mat-icon>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-6">
-                <h3 *ngIf="allPlayers.length > 0" style="text-align: center">Player Analytics</h3>
+                <!-- <h3 *ngIf="allPlayers.length > 0" style="text-align: center">Player Analytics</h3> -->
                 <canvas #playerRadarChart> 
                     {{playerChart}} 
                 </canvas>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6">
-                    <h3 *ngIf="allGoalies.length > 0" style="text-align: center">Goalie Analytics</h3>
+                    <!-- <h3 *ngIf="allGoalies.length > 0" style="text-align: center">Goalie Analytics</h3> -->
                 <canvas #goalieRadarChart> 
                     {{goalieChart}} 
                 </canvas>
