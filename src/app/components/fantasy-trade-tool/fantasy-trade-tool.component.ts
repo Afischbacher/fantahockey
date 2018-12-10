@@ -7,6 +7,7 @@ import { Team } from '@app/core/interfaces/team';
 import { trigger, transition, keyframes, style, animate, sequence } from '@angular/animations';
 import { Constants } from '@app/core/constants/constants';
 import { NhlSearchService } from '@app/core/services/nhl-search-service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'fantasy-trade-tool',
@@ -65,7 +66,7 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
         : Constants.fantasyGoalieSettings;
 
 
-    constructor(private nhlDataService: NhlDataService, private nhlSearchService: NhlSearchService) {
+    constructor(private nhlDataService: NhlDataService, private nhlSearchService: NhlSearchService, private router : Router) {
 
         this.playerControl.valueChanges.pipe(startWith(''), debounceTime(250)).subscribe((query: string) => {
 
@@ -228,5 +229,8 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
         return index;
     }
 
+    getPlayerProfile(player: TeamPlayer) : void{
+        this.router.navigate([`/playerprofile/${player.person.id}`])
+    }
 }
 

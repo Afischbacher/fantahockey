@@ -3,14 +3,15 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NhlPlayerProfile } from '@app/core/interfaces/nhl-player-profile';
 import { CurrentLeauge } from '@app/core/interfaces/current-leauge';
-
+import { Constants } from '../constants/constants';
 @Injectable()
 export class NhlDataService {
 
-    constructor(private http: HttpClient) { }
+    currentSeason: string;
+    lastSeason: string;
+    constructor(private http: HttpClient) {}
 
     searchPlayers(searchString: string): Observable<any> {
-
         return this.http.get<any>(`https://statsapi.web.nhl.com/api/v1/people/${searchString}`)
     }
 
@@ -37,23 +38,40 @@ export class NhlDataService {
 
     getPlayerInfo(link: string) {
         return this.http.get(`https://statsapi.web.nhl.com/${link}`)
-  
     }
-    getLastSeason(): string {
 
-        if(new Date(`2019-01-01`) < new Date())
-            return `${new Date().getFullYear() - 2}${new Date().getFullYear() - 1}`;
-        else
-            return `${new Date().getFullYear() - 1}${new Date().getFullYear()}`;    
+    getPlayerProfile(id: number) : Observable<any> {
+        return this.http.get(`https://statsapi.web.nhl.com/api/v1/people/${id}`);
+    }
+
+    private getLastSeason(): string {
         
+        let seasons = Constants.nhlSeasons;
+        let currentTime = Math.round(new Date().getTime() / 1000)
+        seasons.forEach(season => {
+            
+            if (currentTime > season.unixCode[0]  &&  currentTime <= season.unixCode[1]) {
+                return season.seasonCode[0];
+            }
+
+        });
+
+        return "";
     }
 
-    getCurrentSeason(): string {
-   
-        if(new Date(`2019-01-01`) < new Date())
-            return `${new Date().getFullYear() - 1}${new Date().getFullYear()}`;
-        else
-            return `${new Date().getFullYear()}${new Date().getFullYear() + 1}`;
+    private getCurrentSeason(): string {
 
+        let seasons = Constants.nhlSeasons;
+        let currentTime = Math.round(new Date().getTime() / 1000)
+        seasons.forEach(season => {
+            
+            if (currentTime > season.unixCode[0]  &&  currentTime <= season.unixCode[1]) {
+                return season.seasonCode[1];
+            }
+
+        });
+
+        return "";
     }
+
 }

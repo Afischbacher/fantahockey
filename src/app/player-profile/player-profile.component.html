@@ -1,0 +1,22 @@
+
+<div @fadeIn [ngStyle]=" {'background-color' : 'black', 'background-image': 'url(' + playerTeamLogo + ')' , 'height': '100vh', 'background-position' : 'center', 'background-repeat' : 'no-repeat', 'background-size' : 'auto' } ">
+<button mat-icon-button class="back-button">
+        <mat-icon class="back-button" (click)="backToDashboard()" aria-label="Back to the dashboard">keyboard_backspace</mat-icon>
+</button>
+
+<div class="container">
+    <mat-card>
+    <div class="row">
+        <div class="col-sm-12 col-md-3 col-lg-3 center">
+            <img [src]="playerImage" [ngStyle]=" { 'border-radius' : '50%', 'height': '90%'}" alt="player-image"/>
+        </div>
+        <div class="col-sm-12 col-md-9 col-lg-9">
+            <h2> {{playerProfile?.primaryPosition?.abbreviation}} #{{playerProfile.primaryNumber}} {{playerProfile.fullName}} | {{playerProfile?.currentTeam?.name }} </h2> <br/>
+            <h3>Age: {{playerProfile.currentAge}} ({{playerProfile.birthDate}}) | Height: {{playerProfile.height}} | Shoots/Catches: {{playerProfile.shootsCatches}} </h3> <br/>
+            <h3>Birth Place: {{playerProfile.birthCity}}<span *ngIf="playerProfile.birthStateProvince">, {{playerProfile.birthStateProvince}}</span>, {{playerProfile.birthCountry}} </h3><br/>
+        </div>
+    </div>
+</mat-card>
+</div>
+
+</div>

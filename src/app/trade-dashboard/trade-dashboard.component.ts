@@ -61,6 +61,8 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
     this.startLoading();
     this.buildGoalieRadarChart([]);
     this.buildPlayerRadarChart([]);
+
+    
   }
 
   getCurrentPlayers(players: any) {

@@ -106,8 +106,11 @@
 
     </div>
     <mat-card-actions>
+        <button mat-button (click)="getPlayerProfile(player)">
+            <mat-icon class="profile-icon">person</mat-icon> View Profile
+        </button>
         <button mat-button (click)="removePlayer(player)">
-            <mat-icon class="icon-remove">delete</mat-icon>Remove Player
+            <mat-icon class="profile-icon">delete</mat-icon>Remove Player
         </button>
     </mat-card-actions>
 </mat-card>

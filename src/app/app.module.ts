@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { SettingsModule } from '@app/settings/settings.module';
+import { PlayerProfileModule } from './player-profile/player-profile.module';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { SettingsModule } from '@app/settings/settings.module';
     ShellModule,
     TradeDashboardModule,
     AboutModule,
+    PlayerProfileModule,
     SettingsModule,
     TourMatMenuModule.forRoot(),
     AppRoutingModule,
