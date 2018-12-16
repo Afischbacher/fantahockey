@@ -8,6 +8,7 @@ import { trigger, transition, keyframes, style, animate, sequence } from '@angul
 import { Constants } from '@app/core/constants/constants';
 import { NhlSearchService } from '@app/core/services/nhl-search-service';
 import { Router } from '@angular/router';
+import { DashboardService } from '@app/core/services/dashboard.service';
 
 @Component({
     selector: 'fantasy-trade-tool',
@@ -66,7 +67,8 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
         : Constants.fantasyGoalieSettings;
 
 
-    constructor(private nhlDataService: NhlDataService, private nhlSearchService: NhlSearchService, private router : Router) {
+    constructor(private nhlDataService: NhlDataService, private nhlSearchService: NhlSearchService, private router : Router, 
+        private dashBoardService : DashboardService) {
 
         this.playerControl.valueChanges.pipe(startWith(''), debounceTime(250)).subscribe((query: string) => {
 
@@ -86,7 +88,47 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
         return i;
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void { 
+        console.log('init');
+        this.getCurrentlySelectedPlayers();
+    }
+
+    getCurrentlySelectedPlayers() : void {
+        
+        if(this.componentId === 1){
+            this.dashBoardService.getPlayersToObservable().subscribe(players => {
+                if(players.length > 0) {
+                    this.currentPlayerSelection = players;
+                    this.currentPlayerSelection.forEach(player => {
+                        let newPlayer = player;
+                        newPlayer = this.calculateFantasyScore(player);
+                        newPlayer = this.calculateLastYearFantasyScore(player);
+                        player = newPlayer;
+                    });
+                }
+                else {
+                    this.currentPlayerSelection = [];
+                }
+            });
+        }
+        
+        if(this.componentId === 0){
+            this.dashBoardService.getPlayersFromObservable().subscribe(players => {
+                if(players.length > 0) {
+                    this.currentPlayerSelection = players;
+                    this.currentPlayerSelection.forEach(player => {
+                        let newPlayer = player;
+                        newPlayer = this.calculateFantasyScore(player);
+                        newPlayer = this.calculateLastYearFantasyScore(player);
+                        player = newPlayer;
+                    });
+                }
+                else {
+                    this.currentPlayerSelection = [];
+                }
+            });
+        }
+    }
 
     addPlayerToList(player: TeamPlayer) {
 
@@ -227,6 +269,10 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
 
     trackPlayerBy(index: number, item: any) {
         return index;
+    }
+
+    getComponentId(){
+        console.log(this.componentId);
     }
 
     getPlayerProfile(player: TeamPlayer) : void{

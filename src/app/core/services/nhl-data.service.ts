@@ -9,7 +9,7 @@ export class NhlDataService {
 
     currentSeason: string;
     lastSeason: string;
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
     searchPlayers(searchString: string): Observable<any> {
         return this.http.get<any>(`https://statsapi.web.nhl.com/api/v1/people/${searchString}`)
@@ -29,7 +29,6 @@ export class NhlDataService {
 
     getPlayerStatsBasedOnYear(link: string, year: string) {
         return this.http.get(`https://statsapi.web.nhl.com${link}/stats/?stats=statsSingleSeason&season=${year}`)
-
     }
 
     getLastSeasonPlayerStats(link: string): Observable<any> {
@@ -40,38 +39,40 @@ export class NhlDataService {
         return this.http.get(`https://statsapi.web.nhl.com/${link}`)
     }
 
-    getPlayerProfile(id: number) : Observable<any> {
+    getPlayerProfile(id: number): Observable<any> {
         return this.http.get(`https://statsapi.web.nhl.com/api/v1/people/${id}`);
     }
 
+    getCurrentSeasonPlayerGameLogStats(link: string): Observable<any> {
+        return this.http.get(`https://statsapi.web.nhl.com${link}/stats/?stats=gameLog&season=${this.getCurrentSeason()}`)
+    }
+    
     private getLastSeason(): string {
-        
+
+        let selectedSeason = null;
         let seasons = Constants.nhlSeasons;
         let currentTime = Math.round(new Date().getTime() / 1000)
         seasons.forEach(season => {
-            
-            if (currentTime > season.unixCode[0]  &&  currentTime <= season.unixCode[1]) {
-                return season.seasonCode[0];
-            }
+            if (currentTime > season.unixCode[0] && currentTime <= season.unixCode[1])
+                selectedSeason = season.seasonCode[0];
 
         });
 
-        return "";
+        return selectedSeason;
     }
 
     private getCurrentSeason(): string {
 
+        let selectedSeason = null;
         let seasons = Constants.nhlSeasons;
         let currentTime = Math.round(new Date().getTime() / 1000)
         seasons.forEach(season => {
-            
-            if (currentTime > season.unixCode[0]  &&  currentTime <= season.unixCode[1]) {
-                return season.seasonCode[1];
-            }
+            if (currentTime > season.unixCode[0] && currentTime <= season.unixCode[1])
+                selectedSeason = season.seasonCode[1];
 
         });
 
-        return "";
+        return selectedSeason;
     }
 
 }

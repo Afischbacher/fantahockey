@@ -149,15 +149,15 @@ export class Constants {
     static nhlSeasons = [
         
       { unixCode : [1538352000,1569283200], // 2018 - 2019
-        seasonCode : ['201718','201819']
+        seasonCode : ['20172018','20182019']
       }, 
       {
           unixCode: [1569888000, 1600905600], // 2019 - 2020
-          seasonCode:  ['201819', '201920']
+          seasonCode:  ['20182019', '20192020']
       },
       {
          unixCode: [1601510400, 1632441600], // 2020 - 2021
-         seasonCode: ['201920', '202021']
+         seasonCode: ['20192020', '20202021']
       }
        
     ];  

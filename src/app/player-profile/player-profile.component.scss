@@ -1,12 +1,26 @@
 .back-button {
-    color: white;
+    color: black;
     font-size: 36px;
 }
 
-mat-card{
+mat-card {
     opacity: 0.9;
+}
+
+.tab-icon {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-size: 30px;
 }
 
 .center {
     text-align: center;
+}
+
+.player-background {
+    min-height: 100vh;
+    background-size: cover;
+    z-index: -1000;
+    background-image: url("./../../assets/player-profile-background-min.jpg");
+    background-repeat: no-repeat;
 }

@@ -10,7 +10,7 @@
 
 <div class="container-fluid transparent-bg">
     <div class="jumbotron">
-        <h1 class="text-center">Dashboard</h1>
+        <h1 class="text-center">Trade Dashboard</h1>
         <div class="row" [ngClass]="{'no-trade-view': numberOfPlayers === 0, 'trade-view': numberOfPlayers >= 1}"
             tourAnchor="tour8">
             <div *ngFor="let ids of fantasyTradeComponentIds; let i = index;" class="col-md-12 col-sm-12 col-lg-12 col-xl-6">
@@ -29,13 +29,11 @@
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-6">
-                <!-- <h3 *ngIf="allPlayers.length > 0" style="text-align: center">Player Analytics</h3> -->
                 <canvas #playerRadarChart> 
                     {{playerChart}} 
                 </canvas>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6">
-                    <!-- <h3 *ngIf="allGoalies.length > 0" style="text-align: center">Goalie Analytics</h3> -->
                 <canvas #goalieRadarChart> 
                     {{goalieChart}} 
                 </canvas>

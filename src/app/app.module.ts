@@ -16,6 +16,8 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { SettingsModule } from '@app/settings/settings.module';
 import { PlayerProfileModule } from './player-profile/player-profile.module';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -41,7 +43,7 @@ import { PlayerProfileModule } from './player-profile/player-profile.module';
       primaryColour: '#ffffff',
       secondaryColour: 'gray',
       tertiaryColour: '#ffffff'
-    })
+    }),
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent]

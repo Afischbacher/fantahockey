@@ -1,0 +1,114 @@
+<div *ngIf="playerPosition !== 'G' ">
+<mat-form-field>
+  <input matInput (keyup)="filterGameLogData($event.target.value)" placeholder="Search Statistics...">
+</mat-form-field>
+
+<table mat-table [dataSource]="gameLogTableData" matSort>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <strong>Game Date</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.date}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="opponent.name">
+    <th mat-header-cell *matHeaderCellDef> <strong>VS</strong> </th>
+    <td mat-cell *matCellDef="let data"> <img src="https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/{{data.opponent.id}}.svg" height="30" /></td>
+  </ng-container>
+
+   <ng-container matColumnDef="stat.goals">
+    <th mat-header-cell *matHeaderCellDef > <strong>G</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.goals}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="stat.assists">
+    <th mat-header-cell *matHeaderCellDef > <strong>A</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.assists}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="stat.points">
+    <th mat-header-cell *matHeaderCellDef> <strong>P</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.points}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="stat.timeOnIce">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> <strong>TOI</strong></th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.timeOnIce}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="stat.blocked">
+    <th mat-header-cell *matHeaderCellDef> <strong>BLK</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.blocked}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="stat.shotPct">
+    <th mat-header-cell *matHeaderCellDef> <strong>SH%</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.shotPct}} </td>
+  </ng-container>
+  
+  
+  <ng-container matColumnDef="stat.shots">
+    <th mat-header-cell *matHeaderCellDef> <strong>Shots</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.shots}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="stat.plusMinus">
+    <th mat-header-cell *matHeaderCellDef > <strong>+/-</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.plusMinus}} </td>
+  </ng-container>
+
+<ng-container matColumnDef="stat.pim">
+    <th mat-header-cell *matHeaderCellDef > <strong>PIM</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.pim}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="stat.shortHandedGoals">
+    <th mat-header-cell *matHeaderCellDef > <strong>SHG</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.shortHandedGoals}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="stat.shortHandedPoints">
+    <th mat-header-cell *matHeaderCellDef > <strong>SHP</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.shortHandedPoints}} </td>
+  </ng-container>
+
+ <ng-container matColumnDef="stat.shifts">
+    <th mat-header-cell *matHeaderCellDef > <strong>Shifts</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.shifts}} </td>
+  </ng-container>
+
+  
+  <ng-container matColumnDef="stat.overTimeGoals">
+    <th mat-header-cell *matHeaderCellDef > <strong> OTG</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.overTimeGoals}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="stat.faceOffPct">
+    <th mat-header-cell *matHeaderCellDef> <strong>Faceoff %</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.faceOffPct}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="stat.powerPlayGoals">
+    <th mat-header-cell *matHeaderCellDef > <strong>PPG</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.powerPlayGoals}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="stat.powerPlayPoints">
+    <th mat-header-cell *matHeaderCellDef > <strong>PPP</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.powerPlayPoints}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="stat.powerPlayTimeOnIce">
+    <th mat-header-cell *matHeaderCellDef > <strong>PP TOI</strong> </th>
+    <td mat-cell *matCellDef="let data"> {{data.stat.powerPlayTimeOnIce}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>  
+<mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+</div>
+
+<div *ngIf="playerPostion === 'G' ">
+  
+</div>

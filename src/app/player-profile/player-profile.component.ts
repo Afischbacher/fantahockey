@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '@env/environment';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { Version } from '@app/core/models/version';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NhlDataService } from '@app/core/services/nhl-data.service';
-import { TeamPlayer } from '@app/core/interfaces/roster';
-import { switchMap } from 'rxjs/operators';
 import { Constants } from '@app/core/constants/constants';
+import { GameLogStats, Split } from '@app/core/interfaces/player-season-game-log';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'player-profile',
@@ -27,23 +25,48 @@ export class PlayerProfileComponent implements OnInit {
   playerImage: string;
   playerTeamLogo: string;
   playerTeamColour: string;
-  constructor(private route: ActivatedRoute, private nhlDataService : NhlDataService, private router: Router) { 
-    
-    this.route.params.subscribe(params => this.playerId = params  ['playerid']);
-    this.nhlDataService.getPlayerProfile(this.playerId).subscribe(playerInfo => {
-      this.playerProfile = playerInfo.people[0];
-      this.playerImage = `https://nhl.bamcontent.com/images/headshots/current/168x168/${this.playerId}.png`;
-      this.playerTeamLogo = `https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${playerInfo.people[0].currentTeam.id}.svg`;
-      this.playerTeamColour = Constants.teamColours[playerInfo.people[0].currentTeam.id];
+  seasonGameByGameStatistics: Split[] = [];
+  seasonGameByGameStatisticsSubject = new Subject<Split[]>();
+  playerDataSubject = new Subject<any>();
 
-      console.log(this.playerProfile);
-      
+  constructor(private route: ActivatedRoute, private nhlDataService: NhlDataService, private router: Router) {
+
+    this.route.params.subscribe(params => this.playerId = params['playerid']);
+
+  }
+  ngOnInit(): void {
+
+    this.nhlDataService.getPlayerProfile(this.playerId).subscribe(playerInfo => {
+      this.getPlayerData(playerInfo);
+      this.getCurrentSeasonGameLogData(playerInfo.people[0].link);
     });
 
   }
-  ngOnInit() { }
 
-  backToDashboard(){
+  backToDashboard(): void {
     this.router.navigate(['/dashboard']);
+  }
+
+  getPlayerData(playerInfo: any): void {
+
+    this.playerProfile = playerInfo.people[0];
+    this.getPlayerPosition(this.playerProfile.primaryPosition.code);
+    this.playerImage = `https://nhl.bamcontent.com/images/headshots/current/168x168/${this.playerId}.png`;
+    this.playerTeamLogo = `https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${playerInfo.people[0].currentTeam.id}.svg`;
+    this.playerTeamColour = Constants.teamColours[playerInfo.people[0].currentTeam.id];
+
+  }
+
+  async getCurrentSeasonGameLogData(link: string): Promise<void> {
+
+    await this.nhlDataService.getCurrentSeasonPlayerGameLogStats(link).subscribe((gameLog: GameLogStats) => {
+      this.seasonGameByGameStatistics = gameLog.stats[0].splits;
+      this.seasonGameByGameStatisticsSubject.next(this.seasonGameByGameStatistics);
+    });
+
+  }
+
+  async getPlayerPosition(playerPosition: string) : Promise<void> {
+    await this.playerDataSubject.next(playerPosition);
   }
 }

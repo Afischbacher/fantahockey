@@ -1,22 +1,51 @@
+<div class="player-background">
+    <div @fadeIn [ngStyle]=" {'background-image': 'url(' + playerTeamLogo + ')', 'height': '90vh', 'background-position' : 'center', 'background-repeat' : 'no-repeat', 'background-size' : 'auto' } ">
+        <button mat-icon-button class="back-button">
+            <mat-icon class="back-button" (click)="backToDashboard()" aria-label="Back to the dashboard">keyboard_backspace</mat-icon>
+        </button>
 
-<div @fadeIn [ngStyle]=" {'background-color' : 'black', 'background-image': 'url(' + playerTeamLogo + ')' , 'height': '100vh', 'background-position' : 'center', 'background-repeat' : 'no-repeat', 'background-size' : 'auto' } ">
-<button mat-icon-button class="back-button">
-        <mat-icon class="back-button" (click)="backToDashboard()" aria-label="Back to the dashboard">keyboard_backspace</mat-icon>
-</button>
+        <div class="container">
+            <mat-card>
+                <div class="row">
+                    <div class="col-sm-12 col-md-3 col-lg-3 center">
+                        <img [src]="playerImage" [ngStyle]=" { 'border-radius' : '50%'}" alt="player-image" />
+                    </div>
+                    <div class="col-sm-12 col-md-9 col-lg-9">
+                        <h2> {{playerProfile?.primaryPosition?.abbreviation}} #{{playerProfile.primaryNumber}}
+                            {{playerProfile.fullName}} | {{playerProfile?.currentTeam?.name }} </h2> <br />
+                        <h3>Age: {{playerProfile.currentAge}} ({{playerProfile.birthDate}}) | Height:
+                            {{playerProfile.height}} | Shoots/Catches: {{playerProfile.shootsCatches}} </h3> <br />
+                        <h3>Birth Place: {{playerProfile.birthCity}}<span *ngIf="playerProfile.birthStateProvince">,
+                                {{playerProfile.birthStateProvince}}</span>, {{playerProfile.birthCountry}} </h3><br />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <mat-tab-group mat-stretch-tabs>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="tab-icon">bar_chart</mat-icon>
+                                   <h5> Season Statistics</h5>
+                                </ng-template>
 
-<div class="container">
-    <mat-card>
-    <div class="row">
-        <div class="col-sm-12 col-md-3 col-lg-3 center">
-            <img [src]="playerImage" [ngStyle]=" { 'border-radius' : '50%', 'height': '90%'}" alt="player-image"/>
-        </div>
-        <div class="col-sm-12 col-md-9 col-lg-9">
-            <h2> {{playerProfile?.primaryPosition?.abbreviation}} #{{playerProfile.primaryNumber}} {{playerProfile.fullName}} | {{playerProfile?.currentTeam?.name }} </h2> <br/>
-            <h3>Age: {{playerProfile.currentAge}} ({{playerProfile.birthDate}}) | Height: {{playerProfile.height}} | Shoots/Catches: {{playerProfile.shootsCatches}} </h3> <br/>
-            <h3>Birth Place: {{playerProfile.birthCity}}<span *ngIf="playerProfile.birthStateProvince">, {{playerProfile.birthStateProvince}}</span>, {{playerProfile.birthCountry}} </h3><br/>
+                                <season-stats-mat-table [gameLogDataSubject]="seasonGameByGameStatisticsSubject"
+                                [playerPositionSubject]="playerDataSubject">
+                                </season-stats-mat-table>
+                          
+                            </mat-tab>
+
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="tab-icon">new_releases </mat-icon>
+                                   <h5> News</h5>
+                                </ng-template>
+                                Content 2
+                            </mat-tab>
+
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </mat-card>
         </div>
     </div>
-</mat-card>
-</div>
-
 </div>

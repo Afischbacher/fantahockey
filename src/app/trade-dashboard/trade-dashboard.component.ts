@@ -4,6 +4,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { DashboardService } from '@app/core/services/dashboard.service';
 import { Chart, ChartData } from 'chart.js';
 import { Constants } from '@app/core/constants/constants';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'trade-dashboard',
@@ -26,6 +27,7 @@ import { Constants } from '@app/core/constants/constants';
   ],
 })
 export class TradeDashboardComponent implements OnInit, AfterContentInit {
+
   constructor(private dashboardService: DashboardService) { }
 
   loading = false;
@@ -37,6 +39,9 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
   currentSelectedPlayers: any[] = [{ id: 0, players: [], numberOfPlayers: 0 }, { id: 1, players: [], numberOfPlayers: 0 }];
   numberOfPlayers = 0;
   allSelectedPlayers: TeamPlayer[] = []
+  playersFrom: TeamPlayer[];
+  playersTo: TeamPlayer[];
+
   @ViewChild('playerRadarChart') playerChartRef: ElementRef;
   @ViewChild('goalieRadarChart') goalieChartRef: ElementRef;
 
@@ -62,10 +67,12 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
     this.buildGoalieRadarChart([]);
     this.buildPlayerRadarChart([]);
 
-    
   }
 
   getCurrentPlayers(players: any) {
+
+    if (players.id === 0) this.dashboardService.updatePlayersFrom(players.players);
+    if (players.id === 1) this.dashboardService.updatePlayersTo(players.players);
 
     let playerSelection = this.currentSelectedPlayers.filter(x => x.id === players.id);
 
@@ -124,8 +131,8 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
         labels:
           ["Save Percentage",
             "GAA",
-             "Shutouts",
-             "Losses",  
+            "Shutouts",
+            "Losses",
             "Wins"
           ],
         datasets: goalieData
