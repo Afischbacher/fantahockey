@@ -1,22 +1,29 @@
-<div class="player-background">
-    <div @fadeIn [ngStyle]=" {'background-image': 'url(' + playerTeamLogo + ')', 'height': '90vh', 'background-position' : 'center', 'background-repeat' : 'no-repeat', 'background-size' : 'auto' } ">
+<div class="player-background container-fluid">
+    <div @fadeIn [ngStyle]=" {'background-image': 'url(' + playerTeamLogo + ')', 'height':'90vh', 'background-position' : 'center 40px', 'background-repeat' : 'no-repeat', 'background-size' : '75% 75%' } ">
         <button mat-icon-button class="back-button">
-            <mat-icon class="back-button" (click)="backToDashboard()" aria-label="Back to the dashboard">keyboard_backspace</mat-icon>
+            <mat-icon class="back-button" matTooltip="Back" (click)="backToDashboard()" aria-label="Back to the dashboard">keyboard_backspace</mat-icon>
         </button>
 
         <div class="container">
-            <mat-card>
+            <mat-card class="mb">
                 <div class="row">
                     <div class="col-sm-12 col-md-3 col-lg-3 center">
-                        <img [src]="playerImage" [ngStyle]=" { 'border-radius' : '50%'}" alt="player-image" />
+                        <img [src]="playerImage ? playerImage : '' " [ngStyle]=" { 'border-radius' : '50%'}" alt="player-image"
+                            (error)="getDefaultImage()" />
                     </div>
-                    <div class="col-sm-12 col-md-9 col-lg-9">
-                        <h2> {{playerProfile?.primaryPosition?.abbreviation}} #{{playerProfile.primaryNumber}}
-                            {{playerProfile.fullName}} | {{playerProfile?.currentTeam?.name }} </h2> <br />
-                        <h3>Age: {{playerProfile.currentAge}} ({{playerProfile.birthDate}}) | Height:
-                            {{playerProfile.height}} | Shoots/Catches: {{playerProfile.shootsCatches}} </h3> <br />
-                        <h3>Birth Place: {{playerProfile.birthCity}}<span *ngIf="playerProfile.birthStateProvince">,
-                                {{playerProfile.birthStateProvince}}</span>, {{playerProfile.birthCountry}} </h3><br />
+                    <div class="col-sm-12 col-md-9 col-lg-9" *ngIf="playerProfile">
+                        <span id="player-profile-1"> {{playerProfile?.primaryPosition?.abbreviation}}
+                            #{{playerProfile?.primaryNumber}}
+                            {{playerProfile?.fullName}} | {{playerProfile?.currentTeam?.name }} </span> <br />
+                        <span id="player-profile-2">Age: {{playerProfile?.currentAge}} ({{playerProfile?.birthDate}}) |
+                            Height:
+                            {{playerProfile?.height}} | Shoots/Catches: {{playerProfile?.shootsCatches}} </span> <br />
+                        <span id="player-profile-3">Birth Place: {{playerProfile?.birthCity}}<span *ngIf="playerProfile.birthStateProvince">,
+                                {{playerProfile?.birthStateProvince}}</span>, {{playerProfile?.birthCountry}} </span>
+                        <br />
+                    </div>
+                    <div *ngIf="!playerProfile">
+                        <h3>No Player Found</h3>
                     </div>
                 </div>
                 <div class="row">
@@ -25,24 +32,33 @@
                             <mat-tab>
                                 <ng-template mat-tab-label>
                                     <mat-icon class="tab-icon">bar_chart</mat-icon>
-                                   <h5> Season Statistics</h5>
+                                    <h5> {{seasonGameByGameStatistics[0] !== undefined && seasonGameByGameStatistics[0]
+                                        !== null ? formatSeason(seasonGameByGameStatistics[0].season) : ''}} Statistics</h5>
                                 </ng-template>
 
                                 <season-stats-mat-table [gameLogDataSubject]="seasonGameByGameStatisticsSubject"
-                                [playerPositionSubject]="playerDataSubject">
+                                    [playerDataSubject]="playerDataSubject">
                                 </season-stats-mat-table>
-                          
+
                             </mat-tab>
 
+                            <!-- 
                             <mat-tab>
                                 <ng-template mat-tab-label>
                                     <mat-icon class="tab-icon">new_releases </mat-icon>
                                    <h5> News</h5>
                                 </ng-template>
-                                Content 2
-                            </mat-tab>
+                                <h4 class="text-center margin-2-em">Coming Soon!</h4> 
+                            </mat-tab> -->
 
                         </mat-tab-group>
+                    </div>
+                </div>
+            </mat-card>
+            <mat-card class="mb">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <h3 class="text-center">Player Analytics</h3>
                     </div>
                 </div>
             </mat-card>

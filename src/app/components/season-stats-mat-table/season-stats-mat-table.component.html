@@ -1,114 +1,250 @@
 <div *ngIf="playerPosition !== 'G' ">
-<mat-form-field>
-  <input matInput (keyup)="filterGameLogData($event.target.value)" placeholder="Search Statistics...">
-</mat-form-field>
+  <mat-form-field id="search-stats">
+    <input  matInput (keyup)="filterGameLogData($event.target.value)" placeholder="Search Statistics...">
+  </mat-form-field>
 
-<table mat-table [dataSource]="gameLogTableData" matSort>
+  <table mat-table [dataSource]="gameLogTableData" matSort>
 
-  <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> <strong>Game Date</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.date}} </td>
-  </ng-container>
-  
-  <ng-container matColumnDef="opponent.name">
-    <th mat-header-cell *matHeaderCellDef> <strong>VS</strong> </th>
-    <td mat-cell *matCellDef="let data"> <img src="https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/{{data.opponent.id}}.svg" height="30" /></td>
-  </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <strong>Game Date</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.date}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>Season Stats </strong></td>
+    </ng-container>
 
-   <ng-container matColumnDef="stat.goals">
-    <th mat-header-cell *matHeaderCellDef > <strong>G</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.goals}} </td>
-  </ng-container>
+    <ng-container matColumnDef="opponent.name">
+      <th mat-header-cell *matHeaderCellDef> <strong>VS</strong> </th>
+      <td mat-cell *matCellDef="let data"> <img src="https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/{{data.opponent.id}}.svg"
+          height="30" /></td>
+          <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{ gameLogTableData !== undefined ? gameLogTableData.data.length : 0}}</strong></td>
+      </ng-container>
 
-  <ng-container matColumnDef="stat.assists">
-    <th mat-header-cell *matHeaderCellDef > <strong>A</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.assists}} </td>
-  </ng-container>
+    <ng-container matColumnDef="stat.goals">
+      <th mat-header-cell *matHeaderCellDef> <strong>G</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.goals ? data.stat.goals : 0}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalGoals() : 0 }}</strong></td>
+    </ng-container>
 
-  <ng-container matColumnDef="stat.points">
-    <th mat-header-cell *matHeaderCellDef> <strong>P</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.points}} </td>
-  </ng-container>
+    <ng-container matColumnDef="stat.assists">
+      <th mat-header-cell *matHeaderCellDef> <strong>A</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.assists ? data.stat.assists : 0}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalAssists() : 0 }}</strong></td>
+    </ng-container>
 
-  <ng-container matColumnDef="stat.timeOnIce">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> <strong>TOI</strong></th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.timeOnIce}} </td>
-  </ng-container>
+    <ng-container matColumnDef="stat.points">
+      <th mat-header-cell *matHeaderCellDef> <strong>P</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.points ? data.stat.points : 0}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalPoints() : 0 }}</strong></td>
+    </ng-container>
 
-  <ng-container matColumnDef="stat.blocked">
-    <th mat-header-cell *matHeaderCellDef> <strong>BLK</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.blocked}} </td>
-  </ng-container>
-  
-  <ng-container matColumnDef="stat.shotPct">
-    <th mat-header-cell *matHeaderCellDef> <strong>SH%</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.shotPct}} </td>
-  </ng-container>
-  
-  
-  <ng-container matColumnDef="stat.shots">
-    <th mat-header-cell *matHeaderCellDef> <strong>Shots</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.shots}} </td>
-  </ng-container>
+    <ng-container matColumnDef="stat.timeOnIce">
+      <th mat-header-cell *matHeaderCellDef> <strong>TOI</strong></th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.timeOnIce ? data.stat.timeOnIce : 'N/A'}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalToi() : 0 }}</strong></td>
+    </ng-container>
 
-  <ng-container matColumnDef="stat.plusMinus">
-    <th mat-header-cell *matHeaderCellDef > <strong>+/-</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.plusMinus}} </td>
-  </ng-container>
+    <ng-container matColumnDef="stat.blocked">
+      <th mat-header-cell *matHeaderCellDef> <strong>Shots Blocked</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.blocked}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalShotsBlocked() : 0 }}</strong></td>
+    </ng-container>
 
-<ng-container matColumnDef="stat.pim">
-    <th mat-header-cell *matHeaderCellDef > <strong>PIM</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.pim}} </td>
-  </ng-container>
-  
-  <ng-container matColumnDef="stat.shortHandedGoals">
-    <th mat-header-cell *matHeaderCellDef > <strong>SHG</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.shortHandedGoals}} </td>
-  </ng-container>
+    <ng-container matColumnDef="stat.shotPct">
+      <th mat-header-cell *matHeaderCellDef> <strong>S%</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.shotPct ? data.stat.shotPct+'%' : '0%'}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getAvgShotPct()+'%' : 0+'%' }}</strong></td>
+    </ng-container>
 
-  <ng-container matColumnDef="stat.shortHandedPoints">
-    <th mat-header-cell *matHeaderCellDef > <strong>SHP</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.shortHandedPoints}} </td>
-  </ng-container>
+    <ng-container matColumnDef="stat.shots">
+      <th mat-header-cell *matHeaderCellDef> <strong>Shots</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.shots}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalShots() : 0 }}</strong></td>
+    </ng-container>
 
- <ng-container matColumnDef="stat.shifts">
-    <th mat-header-cell *matHeaderCellDef > <strong>Shifts</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.shifts}} </td>
-  </ng-container>
+    <ng-container matColumnDef="stat.plusMinus">
+      <th mat-header-cell *matHeaderCellDef> <strong>+/-</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.plusMinus}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{ gameLogTableData !== undefined ? getTotalPlusMinus() : 0 }}</strong></td>
+    </ng-container>
 
-  
-  <ng-container matColumnDef="stat.overTimeGoals">
-    <th mat-header-cell *matHeaderCellDef > <strong> OTG</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.overTimeGoals}} </td>
-  </ng-container>
+    <ng-container matColumnDef="stat.pim">
+      <th mat-header-cell *matHeaderCellDef> <strong>PIM</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.pim}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalPim() : 0 }}</strong></td>
+    </ng-container>
 
-  <ng-container matColumnDef="stat.faceOffPct">
-    <th mat-header-cell *matHeaderCellDef> <strong>Faceoff %</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.faceOffPct}} </td>
-  </ng-container>
+    <ng-container matColumnDef="stat.shortHandedGoals">
+      <th mat-header-cell *matHeaderCellDef> <strong>SHG</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.shortHandedGoals}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalShg() : 0 }}</strong></td>
+    </ng-container>
 
-  <ng-container matColumnDef="stat.powerPlayGoals">
-    <th mat-header-cell *matHeaderCellDef > <strong>PPG</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.powerPlayGoals}} </td>
-  </ng-container>
-  
-  <ng-container matColumnDef="stat.powerPlayPoints">
-    <th mat-header-cell *matHeaderCellDef > <strong>PPP</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.powerPlayPoints}} </td>
-  </ng-container>
-  
-  <ng-container matColumnDef="stat.powerPlayTimeOnIce">
-    <th mat-header-cell *matHeaderCellDef > <strong>PP TOI</strong> </th>
-    <td mat-cell *matCellDef="let data"> {{data.stat.powerPlayTimeOnIce}} </td>
-  </ng-container>
+    <ng-container matColumnDef="stat.shortHandedPoints">
+      <th mat-header-cell *matHeaderCellDef> <strong>SHP</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.shortHandedPoints}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalGoals() : 0 }}</strong></td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <ng-container matColumnDef="stat.shifts">
+      <th mat-header-cell *matHeaderCellDef> <strong>Shifts</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.shifts}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalShifts() : 0 }}</strong></td>
+    </ng-container>
 
-</table>  
-<mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+    <ng-container matColumnDef="stat.overTimeGoals">
+      <th mat-header-cell *matHeaderCellDef> <strong> OTG</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.overTimeGoals}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalOvertimeGoals() : 0 }}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.faceOffPct">
+      <th mat-header-cell *matHeaderCellDef> <strong>Faceoff %</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.faceOffPct ? data.stat.faceOffPct : 0.00 }} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getAvgFaceOffPct()+'%' : 0+'%' }}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.powerPlayGoals">
+      <th mat-header-cell *matHeaderCellDef> <strong>PPG</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.powerPlayGoals}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalPpg() : 0 }}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.powerPlayPoints">
+      <th mat-header-cell *matHeaderCellDef> <strong>PPP</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.powerPlayPoints}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalPpp() : 0 }}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.powerPlayTimeOnIce">
+      <th mat-header-cell *matHeaderCellDef> <strong>PP TOI</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.powerPlayTimeOnIce}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalPpToi() : 0 }}</strong></td>
+    </ng-container> 
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsPlayer;sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsPlayer;"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumnsPlayer;sticky: true"></tr>
+  </table>
+
+  <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
 </div>
 
-<div *ngIf="playerPostion === 'G' ">
-  
+<div *ngIf="playerPosition === 'G' ">
+
+  <mat-form-field id="search-stats">
+    <input matInput  (keyup)="filterGameLogData($event.target.value)" placeholder="Search Statistics...">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="gameLogTableData" matSort>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> <strong>Game Date</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.date}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>Season Stats </strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="opponent.name">
+      <th mat-header-cell *matHeaderCellDef> <strong>VS</strong> </th>
+      <td mat-cell *matCellDef="let data"> <img src="https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/{{data.opponent.id}}.svg"
+          height="30" /></td>
+          <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData ? gameLogTableData.data.length : 0}} </strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.decision">
+      <th mat-header-cell *matHeaderCellDef> <strong>W/L/O</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.decision ? data.stat.decision : 'N/A'}}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData ? getWinsLossesOtTotals() : 'N/A'}} </strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.evenSaves">
+      <th mat-header-cell *matHeaderCellDef> <strong>Even Saves</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.evenSaves}}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalEvenSaves() : 0 }}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.evenShots">
+      <th mat-header-cell *matHeaderCellDef> <strong>Even Shots</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.evenSaves}}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalEvenShots() : 0}}</strong></td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="stat.evenStrengthSavePercentage">
+      <th mat-header-cell *matHeaderCellDef> <strong>Even SV%</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.evenStrengthSavePercentage | number:'2.0-2'}}%</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getAvgEvenSavePct()+'%' : 0+'%'}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.gamesStarted">
+      <th mat-header-cell *matHeaderCellDef> <strong>GS</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.gamesStarted ? data.stat.gamesStarted : 0 }}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalGs() : 'N/A'}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.powerPlaySavePercentage">
+      <th mat-header-cell *matHeaderCellDef> <strong>PP SV%</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.powerPlaySavePercentage !== undefined ? (data.stat.powerPlaySavePercentage  | number:'1.0-2')+ '%': 'N/A'}} </td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getAvgPowerplaySv() + '%' : 0+'%'}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.powerPlaySaves">
+      <th mat-header-cell *matHeaderCellDef> <strong>PP Saves</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.powerPlaySaves}}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalPowerPlaySaves() : 0}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.powerPlayShots">
+      <th mat-header-cell *matHeaderCellDef> <strong>PPS</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.powerPlayShots}}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalPowerPlayShots() : 0}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.savePercentage">
+      <th mat-header-cell *matHeaderCellDef> <strong>SV%</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.savePercentage  | number:'0.0-3'}}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getAvgSv() : 0}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.saves">
+      <th mat-header-cell *matHeaderCellDef> <strong>Saves</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.saves}}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalSaves() : 0}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.shortHandedSaves">
+      <th mat-header-cell *matHeaderCellDef> <strong>SH Saves</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.shortHandedSaves}}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalShSv() : 0}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.shortHandedShots">
+      <th mat-header-cell *matHeaderCellDef> <strong>SH Shots</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.shortHandedShots}}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalShs() : 0}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.shutouts">
+      <th mat-header-cell *matHeaderCellDef> <strong>SA</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.shutouts}}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalShutouts() : 0}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.shotsAgainst">
+      <th mat-header-cell *matHeaderCellDef> <strong>Shots Against</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.shotsAgainst}}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalSa() : 0}}</strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="stat.timeOnIce">
+      <th mat-header-cell *matHeaderCellDef> <strong>TOI</strong> </th>
+      <td mat-cell *matCellDef="let data"> {{data.stat.timeOnIce}}</td>
+      <td mat-footer-cell *matFooterCellDef class="text-center"><strong>{{gameLogTableData !== undefined ? getTotalToi() : 0}}</strong></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsGoalie"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsGoalie;"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumnsGoalie"></tr>
+
+  </table>
+
+  <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
 </div>

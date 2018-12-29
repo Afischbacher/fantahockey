@@ -64,8 +64,8 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
 
   ngOnInit(): void {
     this.startLoading();
-    this.buildGoalieRadarChart([]);
-    this.buildPlayerRadarChart([]);
+    // this.buildGoalieRadarChart([]);
+    // this.buildPlayerRadarChart([]);
 
   }
 
@@ -103,21 +103,21 @@ export class TradeDashboardComponent implements OnInit, AfterContentInit {
 
     this.allGoalies = this.allSelectedPlayers.filter(x => x.position.abbreviation === "G");
 
-    if (this.allPlayers.length > 0) {
-      let playerData = this.getPlayerRadarChartData(this.allPlayers);
-      this.buildPlayerRadarChart(playerData);
-    }
-    else {
-      this.buildPlayerRadarChart([]);
-    }
+    // if (this.allPlayers.length > 0) {
+    //   let playerData = this.getPlayerRadarChartData(this.allPlayers);
+    //   this.buildPlayerRadarChart(playerData);
+    // }
+    // else {
+    //   this.buildPlayerRadarChart([]);
+    // }
 
-    if (this.allGoalies.length > 0) {
-      let goalieData = this.getGoalieRadarChartData(this.allGoalies);
-      this.buildGoalieRadarChart(goalieData);
-    }
-    else {
-      this.buildGoalieRadarChart([]);
-    }
+    // if (this.allGoalies.length > 0) {
+    //   let goalieData = this.getGoalieRadarChartData(this.allGoalies);
+    //   this.buildGoalieRadarChart(goalieData);
+    // }
+    // else {
+    //   this.buildGoalieRadarChart([]);
+    // }
   }
 
   buildGoalieRadarChart(goalieData: Chart.ChartDataSets[]): void {

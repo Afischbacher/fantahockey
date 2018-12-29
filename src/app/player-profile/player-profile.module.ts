@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SeasonStatsMatTableComponent } from '@app/components/season-stats-mat-table/season-stats-mat-table.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { SeasonStatsMatTableComponent } from '@app/components/season-stats-mat-t
     MatCardModule,
     MatTabsModule,
     MatTableModule,
+    MatTooltipModule,
     MatPaginatorModule
   ],
   declarations: [PlayerProfileComponent, SeasonStatsMatTableComponent]

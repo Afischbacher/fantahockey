@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { NhlPlayerProfile } from '@app/core/interfaces/nhl-player-profile';
 import { CurrentLeauge } from '@app/core/interfaces/current-leauge';
 import { Constants } from '../constants/constants';
+import { switchMap } from 'rxjs/operators';
+import { TeamPlayer } from '../interfaces/roster';
+import { Team } from '../interfaces/team';
 @Injectable()
 export class NhlDataService {
 
     currentSeason: string;
     lastSeason: string;
+
     constructor(private http: HttpClient) { }
 
     searchPlayers(searchString: string): Observable<any> {
@@ -73,6 +77,31 @@ export class NhlDataService {
         });
 
         return selectedSeason;
+    }
+
+    getAllPlayers(){
+        
+        let players : TeamPlayer[] = [];
+
+        this.getCurrentTeams().pipe(switchMap(team => team.teams)).forEach((team : Team) => {
+        this.getCurrentRoster(team.id).pipe(switchMap(player => player.roster))
+        .forEach((teamPlayer: TeamPlayer) => {
+  
+          forkJoin([
+            this.getPlayerInfo(teamPlayer.person.link),
+            this.getCurrentSeasonPlayerStats(teamPlayer.person.link)
+  
+          ]).subscribe((data : any[]) => {
+  
+            teamPlayer.overallStats = data[1];
+            teamPlayer.playerInfo = data[0].people[0];      
+      
+            players.push(teamPlayer);
+  
+          }, error => console.error(error));
+        });
+      });
+      
     }
 
 }

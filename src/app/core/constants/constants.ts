@@ -161,4 +161,13 @@ export class Constants {
       }
        
     ];  
+
+    // type of ice time
+    static typesOfTimeOnIce = 
+    {
+        'timeOnIce' : 1,
+        'powerPlayTimeOnIce' : 2
+    };
+       
+    
 } 

@@ -1,6 +1,7 @@
 table {
     width: 100%;
 }
+
 th {
     min-width: 10px;
 }
@@ -15,6 +16,24 @@ th.mat-sort-header-sorted {
     color: black;
 }
 
-th.mat-header-cell, td.mat-cell{
+th.mat-header-cell,
+td.mat-cell {
     padding: 12px;
+    text-align: center;
+}
+
+#search-stats {
+    display: none;
+}
+
+@media all and (min-width: 768px) {
+    #search-stats {
+        display: block;
+    }
+}
+
+.mat-paginator-sticky {
+    bottom: 0px;
+    position: sticky;
+    z-index: 10;
 }

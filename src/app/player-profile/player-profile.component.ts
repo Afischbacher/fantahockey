@@ -5,6 +5,8 @@ import { NhlDataService } from '@app/core/services/nhl-data.service';
 import { Constants } from '@app/core/constants/constants';
 import { GameLogStats, Split } from '@app/core/interfaces/player-season-game-log';
 import { Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'player-profile',
@@ -28,23 +30,28 @@ export class PlayerProfileComponent implements OnInit {
   seasonGameByGameStatistics: Split[] = [];
   seasonGameByGameStatisticsSubject = new Subject<Split[]>();
   playerDataSubject = new Subject<any>();
+  
+  constructor(private route: ActivatedRoute, private nhlDataService: NhlDataService, private router: Router, private http: HttpClient) {
 
-  constructor(private route: ActivatedRoute, private nhlDataService: NhlDataService, private router: Router) {
-
-    this.route.params.subscribe(params => this.playerId = params['playerid']);
+   this.playerId = +this.route.snapshot.paramMap.get('playerid');
 
   }
+  
   ngOnInit(): void {
+
 
     this.nhlDataService.getPlayerProfile(this.playerId).subscribe(playerInfo => {
       this.getPlayerData(playerInfo);
       this.getCurrentSeasonGameLogData(playerInfo.people[0].link);
+    }, error => {
+      this.playerProfile = null;
     });
 
   }
-
+ 
   backToDashboard(): void {
     this.router.navigate(['/dashboard']);
+
   }
 
   getPlayerData(playerInfo: any): void {
@@ -69,4 +76,17 @@ export class PlayerProfileComponent implements OnInit {
   async getPlayerPosition(playerPosition: string) : Promise<void> {
     await this.playerDataSubject.next(playerPosition);
   }
+
+  private formatSeason(season: string) {
+      let dash = '-';
+      var season = [season.slice(0, 4),dash,season.slice(4,season.length)].join('');
+      return season;
+  }
+
+  async getDefaultImage(){
+   var defaultImage = require('./../../assets/default-player.png');
+   this.playerImage = await defaultImage;
+
+  }
+
 }

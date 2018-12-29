@@ -89,7 +89,6 @@ export class FantasyTradeToolComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit(): void { 
-        console.log('init');
         this.getCurrentlySelectedPlayers();
     }
 

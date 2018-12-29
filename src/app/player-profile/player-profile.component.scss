@@ -19,8 +19,50 @@ mat-card {
 
 .player-background {
     min-height: 100vh;
-    background-size: cover;
     z-index: -1000;
-    background-image: url("./../../assets/player-profile-background-min.jpg");
-    background-repeat: no-repeat;
+    background-size: cover;
+    background: url("./../../assets/player-profile-background-min.jpg") no-repeat center center;
+}
+
+#player-profile-1 {
+    font-size: 1.2em;
+    margin-bottom: 32px;
+}
+
+#player-profile-2, #player-profile-3 {
+    font-size: 0.95em;
+    margin-bottom: 32px;
+}
+
+.margin-2-em{
+    margin: 2em;
+}
+
+ @media all and (min-width: 768px){
+    #player-profile-1 {
+        font-size: 2em;
+        line-height: 2;
+
+    }
+    
+    #player-profile-2 {
+        font-size: 1.6em;
+        line-height: 2;
+    }
+     #player-profile-3 {
+        font-size: 1.6em;
+        line-height: 2;
+     }
+
+     .mb {
+         margin-bottom: 3vw;
+     }
+    
+ }
+
+ @media all and (max-width: 1650px){
+
+    .mb {
+        margin-bottom: 15vw;    
+    }
 }
