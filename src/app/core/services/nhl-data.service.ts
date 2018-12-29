@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, Subject } from 'rxjs';
 import { NhlPlayerProfile } from '@app/core/interfaces/nhl-player-profile';
 import { CurrentLeauge } from '@app/core/interfaces/current-leauge';
 import { Constants } from '../constants/constants';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { TeamPlayer } from '../interfaces/roster';
 import { Team } from '../interfaces/team';
 @Injectable()
 export class NhlDataService {
-
     currentSeason: string;
     lastSeason: string;
 
@@ -50,7 +49,7 @@ export class NhlDataService {
     getCurrentSeasonPlayerGameLogStats(link: string): Observable<any> {
         return this.http.get(`https://statsapi.web.nhl.com${link}/stats/?stats=gameLog&season=${this.getCurrentSeason()}`)
     }
-    
+
     private getLastSeason(): string {
 
         let selectedSeason = null;
@@ -79,29 +78,32 @@ export class NhlDataService {
         return selectedSeason;
     }
 
-    getAllPlayers(){
-        
-        let players : TeamPlayer[] = [];
+    async getAllPlayers() {
+        var start = new Date().getTime();
+        let players: TeamPlayer[] = [];
 
-        this.getCurrentTeams().pipe(switchMap(team => team.teams)).forEach((team : Team) => {
-        this.getCurrentRoster(team.id).pipe(switchMap(player => player.roster))
-        .forEach((teamPlayer: TeamPlayer) => {
-  
-          forkJoin([
-            this.getPlayerInfo(teamPlayer.person.link),
-            this.getCurrentSeasonPlayerStats(teamPlayer.person.link)
-  
-          ]).subscribe((data : any[]) => {
-  
-            teamPlayer.overallStats = data[1];
-            teamPlayer.playerInfo = data[0].people[0];      
-      
-            players.push(teamPlayer);
-  
-          }, error => console.error(error));
+        await this.getCurrentTeams().pipe(switchMap((team) => team.teams)).forEach((team: any) => {
+            this.getCurrentRoster(team.id).pipe(switchMap((player) => player.roster))
+                .forEach((teamPlayer: TeamPlayer) => {
+
+                    forkJoin([
+                        this.getPlayerInfo(teamPlayer.person.link),
+                        this.getCurrentSeasonPlayerStats(teamPlayer.person.link)
+
+                    ]).subscribe((data: any[]) => {
+
+                        teamPlayer.overallStats = data[1];
+                        teamPlayer.playerInfo = data[0].people[0];
+
+                        players.push(teamPlayer);
+
+                    }, error => console.error(error));
+                });
         });
-      });
-      
+
+        var end = new Date().getTime();
+        console.log(end - start);
+        return await players;
     }
 
 }

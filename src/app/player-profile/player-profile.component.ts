@@ -5,7 +5,6 @@ import { NhlDataService } from '@app/core/services/nhl-data.service';
 import { Constants } from '@app/core/constants/constants';
 import { GameLogStats, Split } from '@app/core/interfaces/player-season-game-log';
 import { Subject } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -31,14 +30,16 @@ export class PlayerProfileComponent implements OnInit {
   seasonGameByGameStatisticsSubject = new Subject<Split[]>();
   playerDataSubject = new Subject<any>();
   
-  constructor(private route: ActivatedRoute, private nhlDataService: NhlDataService, private router: Router, private http: HttpClient) {
+  constructor(
+      private route: ActivatedRoute, 
+      private nhlDataService: NhlDataService, 
+      private router: Router, private http: HttpClient) {
 
    this.playerId = +this.route.snapshot.paramMap.get('playerid');
 
   }
   
   ngOnInit(): void {
-
 
     this.nhlDataService.getPlayerProfile(this.playerId).subscribe(playerInfo => {
       this.getPlayerData(playerInfo);
@@ -84,9 +85,13 @@ export class PlayerProfileComponent implements OnInit {
   }
 
   async getDefaultImage(){
-   var defaultImage = require('./../../assets/default-player.png');
+   var defaultImage = './../../assets/default-player.png';
    this.playerImage = await defaultImage;
 
+  }
+
+  async calculateLeagueAvgPlayer(){
+    await this.nhlDataService.getAllPlayers();
   }
 
 }

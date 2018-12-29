@@ -12,6 +12,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   imports: [
+    
     TranslateModule,
     MatInputModule,
     MatFormFieldModule,
