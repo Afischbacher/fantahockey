@@ -3,10 +3,6 @@
     font-size: 36px;
 }
 
-mat-card {
-    opacity: 0.9;
-}
-
 .profile-image {
     opacity: 1;
 }
@@ -58,6 +54,7 @@ mat-card {
     }
     .mb {
         margin-bottom: 3vw;
+        opacity: 0.9;
     }
 }
 
