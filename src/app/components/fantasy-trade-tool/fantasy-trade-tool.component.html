@@ -14,8 +14,8 @@
                 <mat-option *ngFor="let player of filteredPlayerSet" [value]="player">
                     <div *ngIf="player.position.code !== 'G'">
                         <img class="player-image" [src]="player.image" height="60" />
-                        <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
-                        <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
+                        <span class="player-item-padding-right hide-mobile">{{player.position.abbreviation}}</span>
+                        <span class="player-item-padding-right hide-mobile">#{{player.jerseyNumber}}</span>
                         <span>{{player.person.fullName}}</span>
                         <span *ngIf="player?.overallStats?.stats[0].splits?.length === 0 ">
                             <small class="desktop-only ">| No player data available</small>
@@ -36,8 +36,8 @@
                     </div>
                     <div *ngIf="player.position.code === 'G'">
                         <img class="player-image" [src]="player.image" height="60" />
-                        <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
-                        <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
+                        <span class="player-item-padding-right hide-mobile">{{player.position.abbreviation}}</span>
+                        <span class="player-item-padding-right hide-mobile">#{{player.jerseyNumber}}</span>
                         <span>{{player.person.fullName}}</span>
 
                         <span *ngIf="player?.overallStats?.stats[0]?.splits?.length === 0 ">
@@ -65,8 +65,9 @@
     @fadeIn [@remove]="player.state">
 
     <div class="smooth-player-selection" *ngIf="player.position.code !== 'G'">
-        <img [src]="player.image" class="player-image" />
 
+        <img [src]="player.image" class="player-image" />
+        
         <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
         <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
 
@@ -75,11 +76,19 @@
             | <small>No player data available</small>
         </span>
         <span *ngFor="let stat of player?.overallStats?.stats[0]?.splits; trackBy: trackByPlayers;">
+          <div class="hide-mobile">  
             | <small>GP: {{stat.stat.games}}</small>
             | <small>G: {{stat.stat.goals}}</small>
             | <small>A: {{stat.stat.assists}}</small>
             | <small>Score: {{player.fantasyScore | number:'1.1-3'}}</small>
             | <small>Last Year's Score: {{ player?.lastYearFantasyScore | number:'1.1-3' }}</small>
+        </div>
+        <div class="mobile-stats mobile-only">
+                <small>GP: {{stat.stat.games}}</small>
+                <small>G: {{stat.stat.goals}}</small>
+                <small>A: {{stat.stat.assists}}</small>
+                <small>Score: {{player.fantasyScore | number:'1.1-3'}}</small>
+        </div>
         </span>
 
         <img class="logo-image" [src]="player.teamLogo" height="55" />
@@ -96,11 +105,19 @@
             | <small>No player data available</small>
         </span>
         <span *ngFor="let stat of player?.overallStats?.stats[0].splits">
+            <div class="hide-mobile">
             | <small>W: {{stat.stat.wins}}</small>
-            | <small>%: {{stat.stat.savePercentage}}</small>
+            | <small>SV%: {{stat.stat.savePercentage}}</small>
             | <small>GAA: {{stat.stat.goalAgainstAverage}}</small>
             | <small>Score: {{player.fantasyScore | number:'1.1-3'}}</small>
             | <small>Last Year's Score: {{player.lastYearFantasyScore | number:'1.1-3'}}</small>
+            </div>
+            <div class="mobile-stats mobile-only">
+                <small>W: {{stat.stat.wins}}</small>
+                <small>SV%: {{stat.stat.savePercentage}}</small>
+                <small>GAA: {{stat.stat.goalAgainstAverage}}</small>
+                <small>Score: {{player.fantasyScore | number:'1.1-3'}}</small>
+            </div>
         </span>
         <img class="logo-image" [src]="player.teamLogo" height="55" />
 

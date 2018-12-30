@@ -56,10 +56,37 @@
         margin-bottom: 3vw;
         opacity: 0.9;
     }
+    .mobile-only-stats-display {
+        display: none;
+    }
+    .hide-mobile {
+        display: block;
+    }
 }
 
 @media all and (max-width: 1650px) {
     .mb {
-        margin-bottom: 25vw;
+        margin-top: 5vh;
+        margin-bottom: 20vh;
+    }
+    .hide-mobile {
+        display: block;
+    }
+    .mobile-only-stats-display {
+        display: none;
+    }
+}
+
+@media all and (max-width: 767px) {
+    .mobile-only-stats-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: 1.2rem;
+    }
+    .hide-mobile {
+        display: none;
     }
 }

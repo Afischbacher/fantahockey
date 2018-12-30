@@ -79,7 +79,7 @@ export class NhlDataService {
     }
 
     async getAllPlayers() {
-        var start = new Date().getTime();
+
         let players: TeamPlayer[] = [];
 
         await this.getCurrentTeams().pipe(switchMap((team) => team.teams)).forEach((team: any) => {
@@ -101,8 +101,6 @@ export class NhlDataService {
                 });
         });
 
-        var end = new Date().getTime();
-        console.log(end - start);
         return await players;
     }
 

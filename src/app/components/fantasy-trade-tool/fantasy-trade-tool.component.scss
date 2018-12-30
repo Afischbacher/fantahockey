@@ -1,110 +1,139 @@
  .search-input {
-      width: 100%;
-  }
+     width: 100%;
+ }
 
-  .full-width-search {
-      width: 100%;
-  }
+ .full-width-search {
+     width: 100%;
+ }
 
-  .player-item-padding-right {
-      padding-right: 5px;
-  }
+ .player-item-padding-right {
+     padding-right: 5px;
+ }
 
-  .profile-icon {
-      margin-right: 5px;
-  }
+ .profile-icon {
+     margin-right: 5px;
+ }
 
-  .smooth-player-selection {
-      transition: all .3s;
-  }
+ .smooth-player-selection {
+     transition: all .3s;
+ }
 
-  mat-option {
-      height: 90px;
-  }
+ mat-option {
+     height: 90px;
+ }
 
-  .player-image {
-      border-radius: 50%;
-      height: 60px;
-      animation: fadeIn 1s ease-in;
-  }
+ .player-image {
+     border-radius: 50%;
+     height: 60px;
+     animation: fadeIn 1s ease-in;
+ }
 
-  .team-logo-image {
-      border-radius: 50%;
-      height: 60px;
-      animation: fadeIn 1s ease-in;
-  }
+ .team-logo-image {
+     border-radius: 50%;
+     height: 60px;
+     animation: fadeIn 1s ease-in;
+ }
 
-  .center {
-      text-align: center;
-  }
+ .center {
+     text-align: center;
+ }
 
-  .desktop-only {
-      opacity: 0;
-  }
+ .desktop-only {
+     opacity: 0;
+ }
 
-  .hide {
-      display: none;
-  }
+ .hide {
+     display: none;
+ }
 
-  .logo-image {
-      animation: fadeIn 1s ease-in;
-      float: right;
-      height: 55px;
-  }
+ .logo-image {
+     animation: fadeIn 1s ease-in;
+     float: right;
+     height: 55px;
+ }
 
-  @keyframes fadeIn {
-      from {
-          opacity: 0;
-      }
-      to {
-          opacity: 1;
-      }
-  }
+ .bar-info {
+     padding-right: 5px;
+ }
 
-  .bar-info {
-      padding-right: 5px;
-  }
+ .mobile-stats {
+     display: flex;
+     flex-direction: row;
+     & > small {
+        padding-left: 8px;
+     }
+ }
 
-  @media all and (min-width: 320px) and (max-width: 767px) {
-      .logo-image {
-          display: none;
-      }
+ @keyframes fadeIn {
+     from {
+         opacity: 0;
+     }
+     to {
+         opacity: 1;
+     }
+ }
 
-      .flex-box-stats-container {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
 
-    .flex-box-stats-container > div > div { 
-        margin: 10px;
-        line-height: 25px;
-    }
+ @media all and (min-width: 320px) and (max-width: 767px) {
+     .logo-image {
+         display: none;
+     }
+     .hide-mobile {
+         display: none;
+     }
+     .mobile-only {
+         display: block;
+     }
+     .flex-box-stats-container {
+         display: flex;
+         flex-direction: row;
+         flex-wrap: wrap;
+     }
+     .flex-box-stats-container>div>div {
+         margin: 10px;
+         line-height: 25px;
+     }
+ }
 
-  }
+ @media all and (min-width: 768px) {
+     .desktop-only {
+         opacity: 1;
+     }
+     .logo-image {
+         animation: fadeIn 1s ease-in;
+         float: right;
+         height: 55px;
+     }
+     .hide-mobile {
+         display: inline-block;
+     }
+     .mobile-only {
+         display: none;
+     }
+ }
 
-  @media all and (min-width: 768px) {
-      .desktop-only {
-          opacity: 1;
-      }
+ @media all and (min-width: 768px) and (max-width: 991px) {
+     .logo-image {
+         animation: fadeIn 1s ease-in;
+         float: right;
+         height: 55px;
+     }
+     .hide-mobile {
+         display: inline-block;;
+     }
+     .mobile-only {
+         display: none;
+     }
+ }
 
-      .logo-image {
-          animation: fadeIn 1s ease-in;
-          float: right;
-          height: 55px;
-      }
-  }
-
-  @media all and (min-width: 768px) and (max-width: 991px) {
-      .logo-image {
-          animation: fadeIn 1s ease-in;
-          float: right;
-          height: 55px;
-      }
-  }
-
-  @media all and (min-width: 1200px) and (max-width: 1450px) {
-      .logo-image {
-          display: none;
-      }
-  }
+ @media all and (min-width: 1200px) and (max-width: 1450px) {
+     .logo-image {
+         display: none;
+     }
+     .hide-mobile {
+         display: inline-block;;
+     }
+     .mobile-only {
+         display: none;
+     }
+ }
