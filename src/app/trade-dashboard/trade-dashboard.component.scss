@@ -1,6 +1,4 @@
 .container-fluid {
-    height: 95vh;
-    overflow-x: hidden;
 }
 
 #background-dashboard {
@@ -56,14 +54,14 @@
     .no-trade-view {
         margin-top: 10px;
         padding-top: 0px;
-        padding-bottom: 0px;
-        margin-bottom: 0px;
+        padding-bottom: 5vh;
+        margin-bottom: 10vh;
     }
     .trade-view {
-        margin-top: 15px;
-        padding-top: 30px;
-        padding-bottom: 60px;
-        margin-bottom: 25px;
+        margin-top: 3vh;
+        padding-top: 3vh;
+        padding-bottom: 10vh;
+        margin-bottom: 25vh;
     }
     .trade-icon {
         font-size: 42px;
@@ -72,8 +70,9 @@
     .desktop-trade-icon {
         display: none;
     }
-    .mb {
-        margin-bottom: 15vw;
+    .mb-mt {
+        margin-top: 5vh;
+        margin-bottom: 15vh;
     }
 }
 

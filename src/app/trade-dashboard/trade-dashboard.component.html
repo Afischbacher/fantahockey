@@ -9,9 +9,9 @@
 </video>
 
 <div class="container-fluid transparent-bg">
-    <div class="jumbotron mb">
+    <div class="jumbotron mb-mt">
         <h1 class="text-center">Trade Dashboard</h1>
-        <div class="row" [ngClass]="{'no-trade-view': numberOfPlayers === 0, 'trade-view': numberOfPlayers >= 1}"
+         <div class="row" [ngClass]="{'no-trade-view': numberOfPlayers === 0, 'trade-view': playersFrom?.length >= 1 && playersTo?.length >= 1}"
             tourAnchor="tour8">
             <div *ngFor="let ids of fantasyTradeComponentIds; let i = index;" class="col-md-12 col-sm-12 col-lg-12 col-xl-6">
                 <fantasy-trade-tool [tourIds]="ids" [componentId]="i" [playerSet]="playerSet" (playerSearchEvent)="getNhlPlayers($event)"
