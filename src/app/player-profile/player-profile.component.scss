@@ -7,6 +7,10 @@ mat-card {
     opacity: 0.9;
 }
 
+.profile-image {
+    opacity: 1;
+}
+
 .tab-icon {
     margin-right: 10px;
     margin-bottom: 10px;
@@ -29,40 +33,36 @@ mat-card {
     margin-bottom: 32px;
 }
 
-#player-profile-2, #player-profile-3 {
+#player-profile-2,
+#player-profile-3 {
     font-size: 0.95em;
     margin-bottom: 32px;
 }
 
-.margin-2-em{
+.margin-2-em {
     margin: 2em;
 }
 
- @media all and (min-width: 768px){
+@media all and (min-width: 768px) {
     #player-profile-1 {
         font-size: 2em;
         line-height: 2;
-
     }
-    
     #player-profile-2 {
         font-size: 1.6em;
         line-height: 2;
     }
-     #player-profile-3 {
+    #player-profile-3 {
         font-size: 1.6em;
         line-height: 2;
-     }
-
-     .mb {
-         margin-bottom: 3vw;
-     }
-    
- }
-
- @media all and (max-width: 1650px){
-
+    }
     .mb {
-        margin-bottom: 15vw;    
+        margin-bottom: 3vw;
+    }
+}
+
+@media all and (max-width: 1650px) {
+    .mb {
+        margin-bottom: 25vw;
     }
 }
