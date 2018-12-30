@@ -57,7 +57,7 @@
                                 <ng-template mat-tab-label>
                                     <mat-icon class="tab-icon">bar_chart</mat-icon>
                                     <h5> {{seasonGameByGameStatistics[0] !== undefined && seasonGameByGameStatistics[0]
-                                        !== null ? formatSeason(seasonGameByGameStatistics[0].season) : ''}} Statistics</h5>
+                                        !== null ? formatSeason(seasonGameByGameStatistics[0].season) : ''}}</h5>
                                 </ng-template>
 
                                 <season-stats-mat-table [gameLogDataSubject]="seasonGameByGameStatisticsSubject"
@@ -66,14 +66,13 @@
 
                             </mat-tab>
 
-                            <!-- 
                             <mat-tab>
                                 <ng-template mat-tab-label>
                                     <mat-icon class="tab-icon">new_releases </mat-icon>
                                    <h5> News</h5>
                                 </ng-template>
                                 <h4 class="text-center margin-2-em">Coming Soon!</h4> 
-                            </mat-tab> -->
+                            </mat-tab>
 
                         </mat-tab-group>
                     </div>

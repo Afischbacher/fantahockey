@@ -48,6 +48,11 @@
 }
 
 @media all and (max-width: 767px) {
+
+    .mobile-only {
+        display: block;
+    }
+
     #background-dashboard {
         top: 55px;
     }
@@ -77,6 +82,10 @@
 }
 
 @media all and (min-width: 768px) and (max-width: 1200px) {
+    .mobile-only{
+        display: none;
+    }
+
     #background-dashboard {
         top: 55px;
     }
@@ -94,6 +103,10 @@
 }
 
 @media all and (min-width: 1201px) {
+    .mobile-only {
+        display: none;
+    }
+    
     .trade-icon {
         display: none;
     }
