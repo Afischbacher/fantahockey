@@ -16,11 +16,13 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { SettingsModule } from '@app/settings/settings.module';
 import { PlayerProfileModule } from './player-profile/player-profile.module';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material';
+import { WorkerAppModule, WORKER_APP_LOCATION_PROVIDERS } from '@angular/platform-webworker';
+import { APP_BASE_HREF } from '@angular/common'
+
 
 @NgModule({
   imports: [
+    WorkerAppModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
@@ -44,6 +46,13 @@ import { MatPaginatorModule } from '@angular/material';
       secondaryColour: 'gray',
       tertiaryColour: '#ffffff'
     }),
+  ],
+  providers: [
+    {
+      provide: APP_BASE_HREF,
+      useValue: '/'
+    },
+    WORKER_APP_LOCATION_PROVIDERS
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent]

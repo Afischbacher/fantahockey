@@ -34,6 +34,7 @@
     "@angular/platform-browser": "^6.1.6",
     "@angular/platform-browser-dynamic": "^6.1.6",
     "@angular/platform-webworker": "^7.1.4",
+    "@angular/platform-webworker-dynamic": "^7.1.4",
     "@angular/router": "^6.1.6",
     "@angular/service-worker": "^6.1.6",
     "@fortawesome/angular-fontawesome": "^0.2.0",
@@ -60,7 +61,9 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.7.5",
+    "@angular-builders/custom-webpack": "^7.1.1",
+    "@angular-builders/dev-server": "^7.1.1",
+    "@angular-devkit/build-angular": "^0.7.5",
     "@angular/cli": "~6.1.5",
     "@angular/compiler-cli": "^6.1.6",
     "@angular/language-service": "^6.1.6",

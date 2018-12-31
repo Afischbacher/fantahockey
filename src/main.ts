@@ -3,16 +3,13 @@
  * Only platform bootstrapping code should be here.
  * For app-specific initialization, use `app/app.component.ts`.
  */
-
+import { bootstrapWorkerUi, WORKER_UI_LOCATION_PROVIDERS } from '@angular/platform-webworker';
 import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from '@app/app.module';
 import "hammerjs";
 import { environment } from '@env/environment';
 
-if(environment.production){
+if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.log(err));
+bootstrapWorkerUi('webworker.bundle.js', WORKER_UI_LOCATION_PROVIDERS);
