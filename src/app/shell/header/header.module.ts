@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
 import { MenuListItemModule } from '@app/components/menu-list-item/menu-list-item.module';
 import { AppTourService } from '@app/core/services/app-tour.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   imports: [
@@ -24,7 +25,9 @@ import { AppTourService } from '@app/core/services/app-tour.service';
     MatButtonModule,
     MatIconModule,
     MenuListItemModule,
-    TourMatMenuModule
+    TourMatMenuModule,
+    MatTooltipModule
+    
   ],
   providers: [AppTourService]
   

@@ -8,7 +8,8 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SeasonStatsMatTableComponent } from '@app/components/season-stats-mat-table/season-stats-mat-table.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TourMatMenuModule } from 'ngx-tour-md-menu';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatTableModule,
     MatCardModule,
     MatTabsModule,
+    TourMatMenuModule,
     MatTableModule,
     MatTooltipModule,
     MatPaginatorModule

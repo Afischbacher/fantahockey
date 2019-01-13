@@ -101,6 +101,14 @@ export class Constants {
     },
     {
         anchorId: 'tour8',
+        content: "Review player stats and profiles as you build trades",
+        title: 'Review Players',
+        route: '/playerprofile/8478402',
+        enableBackdrop: true
+
+    },
+    {
+        anchorId: 'tour9',
         content: "Start configuring and crafting the trades you want, any way you like",
         title: 'Start Trading!',
         route: '/dashboard',

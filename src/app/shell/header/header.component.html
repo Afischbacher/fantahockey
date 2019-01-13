@@ -5,9 +5,16 @@
   <div tourAnchor="tour1"> <h1 class="logo-header">FantaHockey</h1></div>
   <span class="spacer"></span>
   
-  <button mat-icon-button (click)="appTourService.startTour()">
+
+  <button mat-icon-button (click)="appTourService.startTour()" matTooltip="Help">
     <fa-icon [icon]="faQuestionCircle" class="toolbar-icons"></fa-icon>
   </button>
+
+<a href="https://github.com/Afischbacher/fantahockey" target="_blank" matTooltip="GitHub">
+    <fa-icon [icon]="faCodeBranch" style="color: white" class="toolbar-icons"></fa-icon>
+  </a>
+
+  
 
 </mat-toolbar>
   
