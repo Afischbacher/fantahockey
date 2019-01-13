@@ -67,7 +67,7 @@ export class Constants {
 
     static readonly appTour = [{
         anchorId: 'tour1',
-        content: 'Welcome to the NHL fantasy trade tool!',
+        content: 'Welcome to the FantaHockey!',
         title: 'Welcome!',
         route: '/dashboard',
         enableBackdrop: true

@@ -5,7 +5,7 @@ import { SettingsComponent } from '@app/settings/settings.component';
 
 const routes: Routes = [
   Shell.childRoutes([
-    { path: 'settings',  component: SettingsComponent, data: { title: 'Settings - NHL Fantasy Trade Tool' } },
+    { path: 'settings',  component: SettingsComponent, data: { title: 'Settings - FantaHockey' } },
     {
       path: "",
       redirectTo: "/dashboard",

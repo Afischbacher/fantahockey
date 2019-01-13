@@ -1,3 +1,3 @@
-# NHL Fantasy Trade Tool
+# FantaHockey
 
-A handy tool to craft NHL fantasy leauge trades 
+A hockey fantasy platform for fantasy hockey leauges 

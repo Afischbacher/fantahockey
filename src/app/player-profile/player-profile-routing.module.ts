@@ -6,12 +6,12 @@ import { PlayerProfileComponent } from './player-profile.component';
 
 const routes: Routes = [
   Shell.childRoutes([
-    { path: 'playerprofile/:playerid', component: PlayerProfileComponent, data: { title: 'Player Profile - NHL Fantasy Trade Tool' } },
+    { path: 'playerprofile/:playerid', component: PlayerProfileComponent, data: { title: 'Player Profile - FantaHockey' } },
     {
       path: "",
       redirectTo: "/dashboard",
       pathMatch: "full",
-      data: {title: "Dashboard - NHL Fantasy Trade Tool"}
+      data: {title: "Dashboard - FantaHockey"}
     }
   ])
 ];

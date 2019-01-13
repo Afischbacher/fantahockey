@@ -5,7 +5,7 @@ import { Shell } from '@app/shell/shell.service';
 
 const routes: Routes = [
   Shell.childRoutes([
-    { path: 'dashboard',  component: TradeDashboardComponent, data: { title: 'Trade Dashboard - NHL Fantasy Trade Tool' } },
+    { path: 'dashboard',  component: TradeDashboardComponent, data: { title: 'Trade Dashboard - FantaHockey' } },
     { path: "", redirectTo: '/dashboard', pathMatch: 'full'}
   ])
 ];

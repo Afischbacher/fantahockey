@@ -6,12 +6,12 @@ import { AboutComponent } from './about.component';
 
 const routes: Routes = [
   Shell.childRoutes([
-    { path: 'about', component: AboutComponent, data: { title: 'About - NHL Fantasy Trade Tool' } },
+    { path: 'about', component: AboutComponent, data: { title: 'About - FantaHockey' } },
     {
       path: "",
       redirectTo: "/dashboard",
       pathMatch: "full",
-      data: {title: "Dashboard - NHL Fantasy Trade Tool"}
+      data: {title: "Dashboard - FantaHockey"}
     }
   ])
 ];
