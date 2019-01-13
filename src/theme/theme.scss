@@ -20,11 +20,6 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn); // Include th
     font-family: 'Open Sans', sans-serif;
 }
 
-@font-face {
-    font-family: 'Spantaran';
-    src: url(/src/assets/fonts/Spantaran.ttf) format('truetype');
-}
-
 .container-fluid {
     height: 100vh;
     overflow-x: hidden;

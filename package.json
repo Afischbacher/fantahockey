@@ -73,6 +73,7 @@
     "@types/lodash": "^4.14.108",
     "@types/node": "^8.10.39",
     "codelyzer": "^4.4.4",
+    "file-loader": "^3.0.1",
     "hads": "^1.7.0",
     "htmlhint": "^0.10.0",
     "https-proxy-agent": "^2.0.0",
