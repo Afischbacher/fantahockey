@@ -8,21 +8,24 @@ $md-nhl-fantasy-trade-tool: ( 50: #e2e2e2, 100: #b8b8b8, 200: #888888, 300: #585
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-
-@include mat-core(); 
-
+@include mat-core();
 $app-primary: mat-palette( $md-nhl-fantasy-trade-tool);
-$app-accent : mat-palette( $md-nhl-fantasy-trade-tool); // The warn palette is optional (defaults to red).
-$app-warn : mat-palette( $md-nhl-fantasy-trade-tool); // Create the theme object (a Sass map containing all of the palettes).
+$app-accent: mat-palette( $md-nhl-fantasy-trade-tool); // The warn palette is optional (defaults to red).
+$app-warn: mat-palette( $md-nhl-fantasy-trade-tool); // Create the theme object (a Sass map containing all of the palettes).
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn); // Include theme styles for core and each component used in your app.
-
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($app-theme); // Global Font
 * {
     font-family: 'Open Sans', sans-serif;
 }
+
+@font-face {
+    font-family: 'Spantaran';
+    src: url(/src/assets/fonts/Spantaran.ttf) format('truetype');
+}
+
 .container-fluid {
     height: 100vh;
-    overflow-x: hidden;    
+    overflow-x: hidden;
 }
