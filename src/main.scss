@@ -14,3 +14,9 @@
 
 // Theme customization
 @import "theme/theme";
+
+// title font
+@font-face {
+    font-family: 'Spantaran';
+    src: url('/src/assets/fonts/Spantaran.ttf') format('truetype');
+}
