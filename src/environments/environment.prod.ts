@@ -3,7 +3,7 @@
 export const environment = {
   production: true,
   version: '1.0.0',
-  appName: "nhl-fantasy-trade-tool",
+  appName: "fantahockey",
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',
