@@ -1,4 +1,4 @@
-<div class="player-background container-fluid">
+<div class="player-background container-fluid component-padding">
     <div @fadeIn [ngStyle]=" {'background-image': 'url(' + playerTeamLogo + ')', 'height':'90vh', 'background-position' : 'center 40px', 'background-repeat' : 'no-repeat', 'background-size' : '75% 75%' } ">
         <button mat-icon-button class="back-button">
             <mat-icon class="back-button" matTooltip="Back" (click)="backToDashboard()" aria-label="Back to the dashboard">keyboard_backspace</mat-icon>
@@ -69,7 +69,15 @@
                             <mat-tab>
                                 <ng-template mat-tab-label>
                                     <mat-icon class="tab-icon">new_releases </mat-icon>
-                                   <h5> News</h5>
+                                   <h5> News </h5>
+                                </ng-template>
+                                <player-news-tab [playerData]="currentPlayer"></player-news-tab>
+                            </mat-tab>
+
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon class="tab-icon">timeline</mat-icon>
+                                   <h5> Analytics </h5>
                                 </ng-template>
                                 <h4 class="text-center margin-2-em">Coming Soon!</h4> 
                             </mat-tab>
@@ -78,14 +86,6 @@
                     </div>
                 </div>
             </mat-card>
-
-            <!-- <mat-card class="mb">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <h3 class="text-center">Player Analytics</h3>
-                    </div>
-                </div>
-            </mat-card> -->
         </div>
     </div>
 </div>

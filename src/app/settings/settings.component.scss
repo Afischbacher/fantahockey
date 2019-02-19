@@ -3,8 +3,18 @@
 }
 
 .container-fluid {
-    background-image: url('./../../assets/nhl-fantasy-trade-tool-background.jpg');
+    min-height: 100vh;
     background-size: cover;
+    height: 100vh;
+}
+
+
+@media all and (min-width: 1365px){
+    .container-fluid {
+        background-size: cover;
+        min-height: 100vh;
+        height: 90vh;
+    }
 }
 
 .mat-form-field-infix, .mat-form-field {

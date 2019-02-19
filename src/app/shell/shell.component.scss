@@ -1,17 +1,25 @@
 .sidenav-container {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; 
 }
 
 mat-sidenav {
+    margin-top: 65px;
     width: 250px;
 }
 
-.center-text{
-  text-align: center;
+@media all and (max-width: 600px) {
+    mat-sidenav {
+        margin-top: 55px;
+        width: 250px;
+    }
+}
+
+.center-text {
+    text-align: center;
 }

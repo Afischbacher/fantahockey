@@ -1,10 +1,10 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!--Include the reference again for Material Icons-->
 
-<div class="sidenav-container">
+<div class="sidenav-container" fullscreen>
 <app-header></app-header>
-<mat-sidenav-container>
-<mat-sidenav #appDrawer [mode]="over" opened="false" > 
+<mat-sidenav-container fullscreen>
+<mat-sidenav #appDrawer [mode]="over" opened="false" fullscreen> 
           <mat-nav-list>
             <menu-list-item *ngFor="let item of navItems" [item]="item"></menu-list-item>
           </mat-nav-list>

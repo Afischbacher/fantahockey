@@ -29,22 +29,25 @@ export class PlayerProfileComponent implements OnInit {
   seasonGameByGameStatistics: Split[] = [];
   seasonGameByGameStatisticsSubject = new Subject<Split[]>();
   playerDataSubject = new Subject<any>();
-  
+  currentPlayer = new Subject<any>();
+    
   constructor(
       private route: ActivatedRoute, 
       private nhlDataService: NhlDataService, 
       private router: Router, private http: HttpClient) {
 
-   this.playerId = +this.route.snapshot.paramMap.get('playerid');
+      this.playerId =+ this.route.snapshot.paramMap.get('playerid');
 
   }
   
   ngOnInit(): void {
 
     this.nhlDataService.getPlayerProfile(this.playerId).subscribe(playerInfo => {
+      this.currentPlayer.next(playerInfo.people[0]);
       this.getPlayerData(playerInfo);
       this.getCurrentSeasonGameLogData(playerInfo.people[0].link);
-    }, error => {
+      
+    }, (error) => {
       this.playerProfile = null;
     });
 

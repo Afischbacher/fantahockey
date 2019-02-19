@@ -10,6 +10,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { SeasonStatsMatTableComponent } from '@app/components/season-stats-mat-table/season-stats-mat-table.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TourMatMenuModule } from 'ngx-tour-md-menu';
+import { PlayerNewsTabComponent } from '@app/components/player-news-tab/player-news-tab.component';
+import { PlayerNewsService } from '@app/core/services/player-news.service';
 
 @NgModule({
   imports: [
@@ -31,6 +33,7 @@ import { TourMatMenuModule } from 'ngx-tour-md-menu';
     MatTooltipModule,
     MatPaginatorModule
   ],
-  declarations: [PlayerProfileComponent, SeasonStatsMatTableComponent]
+  providers: [PlayerNewsService],
+  declarations: [PlayerProfileComponent, SeasonStatsMatTableComponent, PlayerNewsTabComponent]
 })
 export class PlayerProfileModule { }

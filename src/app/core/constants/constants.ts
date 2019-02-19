@@ -1,6 +1,9 @@
 import { environment } from "@env/environment";
 
 export class Constants {
+
+    static readonly apiPrefix : string = "https://api-fantahockey.azurewebsites.net/api/";
+    static readonly apiVersion : string = "v1/";
     static readonly initalizedTour: string = `initializedTour-${environment.appName}`;
     static readonly fantasyPlayerSettings: any[] = [
         { value: "timeOnIce", name: "Time on Ice", settingValue: 0 },

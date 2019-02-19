@@ -6,6 +6,9 @@ import { FormControl, Validators, NgForm } from '@angular/forms';
 import { SettingsService } from '@app/core/services/settings.service';
 import { MatSnackBar } from '@angular/material';
 import { UpdateSnackbarComponent } from '@app/components/update-snackbar/update-snackbar.component';
+import { NhlDataService } from '@app/core/services/nhl-data.service';
+import { flatMap } from 'rxjs/operators';
+import { Team } from '@app/core/interfaces/team';
 
 @Component({
   selector: 'settings',
@@ -31,7 +34,7 @@ import { UpdateSnackbarComponent } from '@app/components/update-snackbar/update-
 export class SettingsComponent implements OnInit, AfterContentInit {
 
   ngOnInit(): void {
-    
+      this.getTeams();
    }
 
   ngAfterContentInit(): void { }
@@ -50,8 +53,10 @@ export class SettingsComponent implements OnInit, AfterContentInit {
 
   playerSettingsControl: FormControl;
   goalieSettingsControl: FormControl;
+  nhlTeams: Team[] = [];
+  backgroundImage = "";
 
-  constructor(private settingsService: SettingsService, private tourService: TourService, private matSnackbar: MatSnackBar) {
+  constructor(private settingsService: SettingsService, private tourService: TourService, private matSnackbar: MatSnackBar, private nhlDataService : NhlDataService) {
 
     this.playerSettingsControl = new FormControl(null, {
       validators: Validators.required,
@@ -122,6 +127,24 @@ export class SettingsComponent implements OnInit, AfterContentInit {
         duration: 3000
       });
     });
+
+  }
+
+  getTeams(){
+    this.nhlDataService.getCurrentTeams().pipe(flatMap(x => x.teams)).forEach(team => {
+      this.nhlTeams.push(team);
+    }).then(() => {
+      this.getRandomTeam();
+    });
+
+  }
+
+  getRandomTeam(){
+    for (let index = 0; index < 100; index++){
+      var randomTeam = Math.floor(Math.random() * this.nhlTeams.length);  
+      this.backgroundImage = `https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${this.nhlTeams[randomTeam].id}.svg`
+
+    }
 
   }
 

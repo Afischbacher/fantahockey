@@ -1,8 +1,8 @@
 .container-fluid {
-    height: 100vh;
     background-image: url('./../../assets/nhl-fantasy-trade-tool-background.jpg');
     background-size: cover;
-
+    min-height: 100vh;
+    height: 100vh;
 }
 
 .logo-header { 

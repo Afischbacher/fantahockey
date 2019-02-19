@@ -8,10 +8,10 @@
     <source src="../../assets/video-background.mp4" type="video/mp4">
 </video>
 
-<div class="container-fluid transparent-bg">
+<div class="container-fluid transparent-bg component-padding">
     <div class="jumbotron mb-mt">
         <h1 class="text-center">Trade Dashboard</h1>
-         <div class="row" [ngClass]="{'no-trade-view': numberOfPlayers === 0, 'trade-view': playersFrom?.length >= 1 && playersTo?.length >= 1}"
+         <div class="row"
             tourAnchor="tour9">
             <div *ngFor="let ids of fantasyTradeComponentIds; let i = index;" class="col-md-12 col-sm-12 col-lg-12 col-xl-6">
                 <fantasy-trade-tool [tourIds]="ids" [componentId]="i" [playerSet]="playerSet" (playerSearchEvent)="getNhlPlayers($event)"
