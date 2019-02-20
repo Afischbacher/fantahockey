@@ -40,7 +40,7 @@ export class SettingsComponent implements OnInit, AfterContentInit {
   ngAfterContentInit(): void { }
 
   loading = false;
-
+  width = window.innerWidth;
   fantasyPlayerSettings = localStorage.getItem(Constants.playerFantasyLeagueSettings) !== null
     && localStorage.getItem(Constants.playerFantasyLeagueSettings).length > 10
     ? JSON.parse(localStorage.getItem(Constants.playerFantasyLeagueSettings))
