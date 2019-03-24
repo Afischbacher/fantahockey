@@ -82,6 +82,7 @@
 }
 
 @media all and (max-width: 767px) {
+
     .mobile-only-stats-display {
         display: flex;
         flex-direction: column;
@@ -93,4 +94,12 @@
     .hide-mobile {
         display: none;
     }
+
+    .player-background {
+        min-height: 100vh;
+        z-index: -1000;
+        background-color: #fafafa;
+        background-image:none;
+    }
+    
 }
