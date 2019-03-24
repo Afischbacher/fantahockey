@@ -1,6 +1,6 @@
 <div *ngIf="playerPosition !== 'G' ">
   <mat-form-field id="search-stats">
-    <input  matInput (keyup)="filterGameLogData($event.target.value)" placeholder="Search Statistics...">
+    <input  matInput (keyup)="filterGameLogData($event.target.value)" placeholder="Search By Date (Ex. 2019-02-25)">
   </mat-form-field>
 
   <table mat-table [dataSource]="gameLogTableData" matSort>
@@ -131,7 +131,7 @@
 <div *ngIf="playerPosition === 'G' ">
 
   <mat-form-field id="search-stats">
-    <input matInput  (keyup)="filterGameLogData($event.target.value)" placeholder="Search Statistics...">
+    <input matInput (keyup)="filterGameLogData($event.target.value)" placeholder="Search By Date (Ex. 2019-02-25)">
   </mat-form-field>
 
   <table mat-table [dataSource]="gameLogTableData" matSort>
