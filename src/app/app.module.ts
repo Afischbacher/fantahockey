@@ -18,6 +18,7 @@ import { SettingsModule } from '@app/settings/settings.module';
 import { PlayerProfileModule } from './player-profile/player-profile.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material';
+import { NhlScoreModule } from './nhl-scores/nhl-score.module';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { MatPaginatorModule } from '@angular/material';
     ShellModule,
     TradeDashboardModule,
     AboutModule,
+    NhlScoreModule,
     PlayerProfileModule,
     SettingsModule,
     TourMatMenuModule.forRoot(),

@@ -16,7 +16,7 @@ export class ShellComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+
     this.initializeTour();
   }
 
@@ -42,6 +42,12 @@ export class ShellComponent implements OnInit {
       iconName: 'swap_vert',
       children: [],
       route: "/dashboard"
+    },
+    {
+      displayName: 'NHL Scores',
+      iconName: 'score',
+      children: [],
+      route: "/scores"
     },
     {
       displayName: 'Settings',
