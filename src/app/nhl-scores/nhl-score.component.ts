@@ -1,5 +1,9 @@
 import { Component, OnInit, AfterContentInit, ViewChild, ElementRef } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { NhlDataService } from '@app/core/services/nhl-data.service';
+import { GameScores, Game } from '@app/core/interfaces/game-scores';
+import * as moment from 'moment';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'nhl-scores',
@@ -22,15 +26,30 @@ import { trigger, transition, style, animate } from '@angular/animations';
   ],
 })
 export class NhlScoreComponent implements OnInit, AfterContentInit {
-  
-  constructor() { }
-  
-    ngAfterContentInit(): void {
-  }
-  
-  ngOnInit(): void {
+
+  constructor(private nhlDataService: NhlDataService) { }
+
+
+  public gameDate: string;
+  public gameScores: Game[];
+
+  ngAfterContentInit(): void {
+
   }
 
+  ngOnInit(): void {
+    this.getGameScores();
+  }
+
+  private getGameScores() {
+
+    this.gameDate = moment().format("MMMM Do YYYY").toString();
+    this.nhlDataService.getGameSchedule().subscribe(async (gameScores) => {
+
+      this.gameScores = gameScores.dates[0].games;
+      console.log(this.gameScores);
+    });
+  }
 
 }
 

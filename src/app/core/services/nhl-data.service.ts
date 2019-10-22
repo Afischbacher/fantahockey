@@ -1,12 +1,14 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin, Subject } from 'rxjs';
-import { NhlPlayerProfile } from '@app/core/interfaces/nhl-player-profile';
 import { CurrentLeauge } from '@app/core/interfaces/current-leauge';
 import { Constants } from '../constants/constants';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { TeamPlayer } from '../interfaces/roster';
 import { Team } from '../interfaces/team';
+import { GameScores } from '../interfaces/game-scores';
+import * as moment from 'moment';
+
 @Injectable()
 export class NhlDataService {
     currentSeason: string;
@@ -48,6 +50,25 @@ export class NhlDataService {
 
     getCurrentSeasonPlayerGameLogStats(link: string): Observable<any> {
         return this.http.get(`https://statsapi.web.nhl.com${link}/stats/?stats=gameLog&season=${this.getCurrentSeason()}`)
+    }
+
+    getGameSchedule(date?: string) : Observable<GameScores> {
+        let formattedDate = null;
+
+        if(date == null){
+            const dateToday = moment().format("YYYY-MM-DD");
+            formattedDate = dateToday;
+        }
+        else {
+            formattedDate = moment(date);
+        }
+
+        return this.http.get<GameScores>(`https://statsapi.web.nhl.com/api/v1/schedule?date=${formattedDate}`);
+        
+    }
+
+    getTeamLogoByTeamId(teamId: number): Observable<string> {
+        return this.http.get<string>(`https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${teamId}.svg`);
     }
 
     private getLastSeason(): string {
@@ -101,7 +122,7 @@ export class NhlDataService {
                 });
         });
 
-        return await players;
+        return players;
     }
 
 }
