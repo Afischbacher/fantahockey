@@ -20,6 +20,8 @@ export class SeasonStatsMatTableComponent implements OnInit, OnDestroy {
     @Input() playerDataSubject: Subject<any>;
     gameLogTableData: MatTableDataSource<Split>;
     playerPosition: string;
+    saves: number;
+    totalShotsAgainst: number;
 
     displayedColumnsPlayer: string[] =
         [
@@ -200,7 +202,10 @@ export class SeasonStatsMatTableComponent implements OnInit, OnDestroy {
     }
 
     getAvgSv() {
-        return ((<any[]>this.gameLogTableData.data).map(x => x.stat.savePercentage).reduce((prev, curr) => prev + curr, 0) / this.gameLogTableData.data.length).toFixed(3);
+
+        this.saves = (<any[]>this.gameLogTableData.data).map(x => x.stat.saves).reduce((prev, curr) => prev + curr, 0);
+        this.totalShotsAgainst = (<any[]>this.gameLogTableData.data).map(x => x.stat.shotsAgainst).reduce((prev, curr) => prev + curr, 0);
+        return (this.saves / this.totalShotsAgainst).toFixed(3);
     }
 
     getTotalSaves() {
@@ -220,6 +225,7 @@ export class SeasonStatsMatTableComponent implements OnInit, OnDestroy {
     }
 
     getTotalSa() {
+
         return (<any[]>this.gameLogTableData.data).map(x => x.stat.shotsAgainst).reduce((prev, curr) => prev + curr, 0);
     }
 

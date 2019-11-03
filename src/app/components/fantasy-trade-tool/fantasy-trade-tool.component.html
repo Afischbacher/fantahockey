@@ -163,7 +163,7 @@
                 </div>
                 <span *ngFor="let stat of player?.overallStats?.stats[0].splits">
                     <div class="hide-mobile">
-                        | <small>W: {{stat.stat.wins}}</small>
+                          <small>W: {{stat.stat.wins}}</small>
                         | <small>SV%: {{stat.stat.savePercentage | number:'1.1-3' }}</small>
                         | <small>GAA: {{stat.stat.goalAgainstAverage}}</small>
                         | <small>Score: {{player.fantasyScore | number:'1.1-3'}}</small>
