@@ -14,6 +14,10 @@
      margin-right: 5px;
  }
 
+ small{
+     font-size: 90%;
+ }
+ 
  .smooth-player-selection {
      transition: all .3s;
  }
@@ -82,7 +86,7 @@
  .flex-stats-desktop {
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: space-between;
     align-items: center;
  }
 

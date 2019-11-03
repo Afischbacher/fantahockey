@@ -8,6 +8,7 @@ import { TeamPlayer } from '../interfaces/roster';
 import { Team } from '../interfaces/team';
 import { GameScores } from '../interfaces/game-scores';
 import * as moment from 'moment';
+import { LiveFeed } from '../interfaces/live-feed';
 
 @Injectable()
 export class NhlDataService {
@@ -50,6 +51,10 @@ export class NhlDataService {
 
     getCurrentSeasonPlayerGameLogStats(link: string): Observable<any> {
         return this.http.get(`https://statsapi.web.nhl.com${link}/stats/?stats=gameLog&season=${this.getCurrentSeason()}`)
+    }
+
+    getLiveFeed(gamePk: number) : Observable<LiveFeed>{
+        return this.http.get<LiveFeed>(`https://statsapi.web.nhl.com/api/v1/game/${gamePk}/feed/live`);
     }
 
     getGameSchedule(date?: string) : Observable<GameScores> {

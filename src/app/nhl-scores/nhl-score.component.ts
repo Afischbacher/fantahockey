@@ -44,12 +44,21 @@ export class NhlScoreComponent implements OnInit, AfterContentInit {
   private getGameScores() {
 
     this.gameDate = moment().format("MMMM Do YYYY").toString();
-    this.nhlDataService.getGameSchedule().subscribe(async (gameScores) => {
-
+    this.nhlDataService.getGameSchedule().subscribe((gameScores) => {
+   
       this.gameScores = gameScores.dates[0].games;
-      console.log(this.gameScores);
+
     });
   }
 
+  private getLiveFeeds(){
+    this.gameScores.forEach(gameScore => {
+         
+      this.nhlDataService.getLiveFeed(gameScore.gamePk).subscribe((liveGameFeed) => {
+  
+          gameScore.startTime = moment(liveGameFeed.gameData.datetime.dateTime).format("MMMM Do YYYY hh:mm:ss");
+      });   
+   });
+  }  
 }
 

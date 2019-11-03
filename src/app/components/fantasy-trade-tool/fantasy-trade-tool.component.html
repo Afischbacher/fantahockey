@@ -5,20 +5,25 @@
                 <div [tourAnchor]="tourIds[0]"> <input class="search-input" matInput placeholder="Search Players"
                         aria-label="Player" [matAutocomplete]="auto" [formControl]="playerControl" type="search"
                         [(ngModel)]="playerControl.value" /></div>
-                <button mat-button *ngIf="playerControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="playerControl.value = ''">
+                <button mat-button *ngIf="playerControl.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="playerControl.value = ''">
                     <mat-icon>close</mat-icon>
                 </button>
                 <mat-autocomplete autoActiveFirstOption (optionSelected)="addPlayerToList($event.option.value)"
                     [displayWith]="displayPlayerName" #auto>
 
                     <mat-option *ngFor="let player of filteredPlayerSet" [value]="player">
-                        <div *ngIf="player.position.code !== 'G'">
-                            <img class="player-image" [src]="player.image" height="60" />
-                            <span class="player-item-padding-right hide-mobile-search">{{player.position.abbreviation}}</span>
+
+
+                        <div *ngIf="player.position.code !== 'G'" >
+
+                            <img class="player-image d-none d-lg-inline-block" [src]="player.image" height="60" />
+                            <span
+                                class="player-item-padding-right hide-mobile-search">{{player.position.abbreviation}}</span>
                             <span class="player-item-padding-right hide-mobile-search">#{{player.jerseyNumber}}</span>
                             <span>{{player.person.fullName}}</span>
                             <span *ngIf="player?.overallStats?.stats[0].splits?.length === 0 ">
-                                <small class="desktop-only ">| No player data available</small>
+                                <small class="desktop-only">| No player data available</small>
                             </span>
                             <span *ngFor="let stat of player?.overallStats?.stats[0]?.splits">
                                 <span class="desktop-only bar-info">|</span> <small class="desktop-only">GP:
@@ -34,9 +39,11 @@
                             </span>
                             <img class="logo-image" [src]="player.teamLogo" height="55" />
                         </div>
+
                         <div *ngIf="player.position.code === 'G'">
-                            <img class="player-image" [src]="player.image" height="60" />
-                            <span class="player-item-padding-right hide-mobile-search">{{player.position.abbreviation}}</span>
+                            <img class="player-image d-none d-lg-inline-block" [src]="player.image" height="60" />
+                            <span
+                                class="player-item-padding-right hide-mobile-search">{{player.position.abbreviation}}</span>
                             <span class="player-item-padding-right hide-mobile-search">#{{player.jerseyNumber}}</span>
                             <span>{{player.person.fullName}}</span>
 
@@ -61,8 +68,10 @@
         </mat-card>
     </form>
 
-    <mat-card class="smooth-player-selection" *ngFor="let player of currentPlayerSelection; let i = index; trackBy: trackPlayerBy"
-        @fadeIn [@remove]="player.state">
+    <mat-card class="smooth-player-selection"
+        *ngFor="let player of currentPlayerSelection; let i = index; trackBy: trackPlayerBy" @fadeIn
+        [@remove]="player.state">
+
         <div class="smooth-player-selection" *ngIf="player.position.code !== 'G'">
 
             <div class="mobile-only">
@@ -85,27 +94,33 @@
             </div>
 
             <div class="flex-stats-desktop hide-mobile-flex">
-                <img [src]="player.image" class="player-image" />
-
                 <div>
-                    <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
+                    <img [src]="player.image" class="player-image" />
+                </div>
+                <div>                   
+                     <span class="player-item-padding-right">{{player.position.abbreviation}}</span>
                     <span class="player-item-padding-right">#{{player.jerseyNumber}}</span>
-
-                    <span class="">{{player.person.fullName}}</span>
+                </div>
+                <div>
+                    <span>{{player.person.fullName}}</span>
                 </div>
 
-                <span *ngFor="let stat of player?.overallStats?.stats[0]?.splits; trackBy: trackByPlayers;">
-                    <div class="">
-                        | <small>GP: {{stat.stat.games}}</small>
-                        | <small>G: {{stat.stat.goals}}</small>
-                        | <small>A: {{stat.stat.assists}}</small>
-                        | <small>Score: {{player.fantasyScore | number:'1.1-3'}}</small>
-                        | <small>Last Year's Score: {{ player?.lastYearFantasyScore | number:'1.1-3' }}</small>
-                    </div>
-                </span>
 
-                <img class="logo-image" [src]="player.teamLogo" height="55" />
+                <div>
+                    <span *ngFor="let stat of player?.overallStats?.stats[0]?.splits; trackBy: trackByPlayers;">
+                        <div>
+                            <small>GP: {{stat.stat.games}}</small>
+                            | <small>G: {{stat.stat.goals}}</small>
+                            | <small>A: {{stat.stat.assists}}</small>
+                            | <small>Score: {{player.fantasyScore | number:'1.1-3'}}</small>
+                            | <small>Last Year's Score: {{ player?.lastYearFantasyScore | number:'1.1-3' }}</small>
+                        </div>
+                    </span>
+                </div>
 
+                <div>
+                    <img class="logo-image" [src]="player.teamLogo" height="55" />
+                </div>
             </div>
 
             <span *ngIf="player?.overallStats?.stats[0].splits?.length === 0 ">
@@ -113,6 +128,9 @@
             </span>
 
         </div>
+
+
+
         <div class="smooth-player-selection" *ngIf="player.position.code === 'G'">
 
             <div class="mobile-only">

@@ -72,6 +72,7 @@
         teams: Teams;
         venue: Venue;
         content: Content;
+        startTime: string;
     }
 
     export interface Date {
