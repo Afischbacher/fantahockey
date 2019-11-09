@@ -44,10 +44,16 @@ export class ShellComponent implements OnInit {
       route: "/dashboard"
     },
     {
-      displayName: 'NHL Scores',
-      iconName: 'score',
+      displayName: 'Scores',
+      iconName: 'sports_hockey',
       children: [],
       route: "/scores"
+    },
+    {
+      displayName: 'News',
+      iconName: 'menu_book',
+      children: [],
+      route: "/news"
     },
     {
       displayName: 'Settings',

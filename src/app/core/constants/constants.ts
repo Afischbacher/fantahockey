@@ -76,7 +76,7 @@ export class Constants {
         enableBackdrop: true
     }, {
         anchorId: 'tour2',
-        content: "Use the menu to check out more features of the tool (it's a work in progress..)",
+        content: "Use the menu to check out more features of the platform",
         title: 'The Menu',
         route: '/dashboard',
         enableBackdrop: true
@@ -112,12 +112,20 @@ export class Constants {
     },
     {
         anchorId: 'tour9',
-        content: "Start configuring and crafting the trades you want, any way you like",
-        title: 'Start Trading!',
+        content: "You can also check the lastest game scores",
+        title: 'Game Scores!',
+        route: '/scores',
+        enableBackdrop: true
+    },
+    {
+        anchorId: 'tour10',
+        content: "Start building your fantasy dynasty!",
+        title: 'Start Building!',
         route: '/dashboard',
         enableBackdrop: true
 
-    }];
+    }
+    ];
     
    static teamColours = {
 

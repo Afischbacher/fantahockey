@@ -9,6 +9,7 @@ import { Team } from '../interfaces/team';
 import { GameScores } from '../interfaces/game-scores';
 import * as moment from 'moment';
 import { LiveFeed } from '../interfaces/live-feed';
+import { NhlNews } from '../interfaces/nhl-news';
 
 @Injectable()
 export class NhlDataService {
@@ -57,6 +58,10 @@ export class NhlDataService {
         return this.http.get<LiveFeed>(`https://statsapi.web.nhl.com/api/v1/game/${gamePk}/feed/live`);
     }
 
+    getNhlNews() : Observable<NhlNews> {
+        return this.http.get<NhlNews>("https://www.rotoworld.com/api/player_news?sort=-created&page[limit]=10&page[offset]=0&filter[league]=26&include=player,position,team,team.secondary_logo,player.image,related_players,related_teams");
+    }
+    
     getGameSchedule(date?: string) : Observable<GameScores> {
         let formattedDate = null;
 
