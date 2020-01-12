@@ -1,9 +1,8 @@
 import { Component, OnInit, AfterContentInit, ViewChild, ElementRef } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { NhlDataService } from '@app/core/services/nhl-data.service';
-import { GameScores, Game } from '@app/core/interfaces/game-scores';
+import { Game } from '@app/core/interfaces/game-scores';
 import * as moment from 'moment';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'nhl-scores',

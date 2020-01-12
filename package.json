@@ -23,6 +23,7 @@
     "npm": "6.4.1"
   },
   "dependencies": {
+    "@agm/core": "^1.1.0",
     "@angular/animations": "^6.1.7",
     "@angular/cdk": "^6.4.7",
     "@angular/common": "^6.1.6",

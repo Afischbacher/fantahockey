@@ -87,14 +87,10 @@ export class PlayerProfileComponent implements OnInit {
       return season;
   }
 
-  async getDefaultImage(){
+  private getDefaultImage(){
    var defaultImage = './../../assets/default-player.png';
-   this.playerImage = await defaultImage;
+   this.playerImage =  defaultImage;
 
-  }
-
-  async calculateLeagueAvgPlayer(){
-    await this.nhlDataService.getAllPlayers();
   }
 
 }

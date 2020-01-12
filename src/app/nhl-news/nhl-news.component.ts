@@ -2,7 +2,6 @@ import { Component, OnInit, AfterContentInit, ViewChild, ElementRef } from '@ang
 import { trigger, transition, style, animate } from '@angular/animations';
 import { NhlDataService } from '@app/core/services/nhl-data.service';
 import * as moment from 'moment';
-import { Datum } from '@app/core/interfaces/nhl-news';
 
 @Component({
   selector: 'nhl-news',
@@ -30,7 +29,6 @@ export class NhlNewsComponent implements OnInit, AfterContentInit {
 
 
   public newsDate: string;
-  public news: Datum[];
 
   ngAfterContentInit(): void {
 
@@ -42,10 +40,7 @@ export class NhlNewsComponent implements OnInit, AfterContentInit {
   }
 
   private getNhlNews(){
-    this.nhlDataService.getNhlNews().subscribe(news => {
-        this.news = news.data;
-        console.log(this.news);
-    });
+    
   }
 
 }
