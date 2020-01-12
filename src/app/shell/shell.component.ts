@@ -56,6 +56,12 @@ export class ShellComponent implements OnInit {
       route: "/news"
     },
     {
+      displayName: 'Player Map',
+      iconName: 'map',
+      children: [],
+      route: "/playerMap"
+    },
+    {
       displayName: 'Settings',
       iconName: 'settings',
       children: [],

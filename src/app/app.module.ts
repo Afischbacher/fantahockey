@@ -20,6 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material';
 import { NhlScoreModule } from './nhl-scores/nhl-score.module';
 import { NhlNewsModule } from './nhl-news/nhl-news.module';
+import { NhlPlayerMapModule } from './nhl-player-map/nhl-player-map.module';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { NhlNewsModule } from './nhl-news/nhl-news.module';
     ShellModule,
     TradeDashboardModule,
     NhlNewsModule,
+    NhlPlayerMapModule,
     AboutModule,
     NhlScoreModule,
     PlayerProfileModule,

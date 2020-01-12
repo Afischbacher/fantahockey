@@ -22,7 +22,7 @@ export class NhlDataService {
     }
 
     getCurrentTeams(): Observable<CurrentLeauge> {
-        return this.http.get<CurrentLeauge>(`   `);
+        return this.http.get<CurrentLeauge>(`https://statsapi.web.nhl.com/api/v1/teams`);
     }
 
     getCurrentRoster(id: number): Observable<any> {
